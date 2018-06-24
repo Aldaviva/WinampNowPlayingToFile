@@ -1,10 +1,8 @@
 ﻿using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using Daniel15.Sharpamp;
 using Mustache;
 using WinampNowPlayingToFile.Facade;
-using WinampNowPlayingToFile.Presentation;
 using WinampNowPlayingToFile.Settings;
 using Song = WinampNowPlayingToFile.Facade.Song;
 
@@ -16,8 +14,8 @@ namespace WinampNowPlayingToFile.Business
 
         public ISettings Settings { get; }
 
-        private readonly WinampController winampController;
         private Generator cachedTemplate;
+        private readonly WinampController winampController;
 
         public NowPlayingToFileManager(WinampController winampController, ISettings settings)
         {
@@ -46,6 +44,11 @@ namespace WinampNowPlayingToFile.Business
         private Generator GetTemplate()
         {
             return cachedTemplate ?? (cachedTemplate = TemplateCompiler.Compile(Settings.NowPlayingTemplate));
+        }
+
+        public void OnQuit()
+        {
+            Save(string.Empty);
         }
     }
 }

@@ -28,5 +28,10 @@ namespace WinampNowPlayingToFile
         {
             new SettingsDialog(manager.Settings).Show();
         }
+
+        public override void Quit()
+        {
+            manager.OnQuit();
+        }
     }
 }
