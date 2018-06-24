@@ -15,7 +15,7 @@ I wrote my own Winamp plugin to save information about the currently playing son
 
 ## Installation
 
-1. Download the latest release
+1. Download the [latest release](https://github.com/Aldaviva/WinampNowPlayingToFile/releases) ZIP file (not the source code file)
 2. Extract the archive to your Winamp installation directory
     ```
     C:\Program Files (x86)\Winamp
