@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WinampNowPlayingToFile")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Daniel15")]
+[assembly: AssemblyCompany("Ben Hutchison")]
 [assembly: AssemblyProduct("WinampNowPlayingToFile")]
-[assembly: AssemblyCopyright("Copyright © Daniel15 2009")]
+[assembly: AssemblyCopyright("Copyright 2018 Ben Hutchison")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -11,12 +11,12 @@ using namespace System::Security::Permissions;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly:AssemblyTitleAttribute("gen_PluginName")];
+[assembly:AssemblyTitleAttribute("gen_WinampNowPlayingToFile")];
 [assembly:AssemblyDescriptionAttribute("")];
 [assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("Daniel15")];
-[assembly:AssemblyProductAttribute("gen_PluginName")];
-[assembly:AssemblyCopyrightAttribute("Copyright (c) Daniel15 2009")];
+[assembly:AssemblyCompanyAttribute("Ben Hutchison")];
+[assembly:AssemblyProductAttribute("gen_WinampNowPlayingToFile")];
+[assembly:AssemblyCopyrightAttribute("Copyright 2018 Ben Hutchison")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 

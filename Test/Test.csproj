@@ -76,16 +76,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HelloWorldGUI\HelloWorldGUI\WinampNowPlayingToFile.csproj">
-      <Project>{705442b8-d5ea-4449-b24f-323b319c821f}</Project>
-      <Name>WinampNowPlayingToFile</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.7.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WinampNowPlayingToFile\WinampNowPlayingToFile\WinampNowPlayingToFile.csproj">
+      <Project>{705442b8-d5ea-4449-b24f-323b319c821f}</Project>
+      <Name>WinampNowPlayingToFile</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

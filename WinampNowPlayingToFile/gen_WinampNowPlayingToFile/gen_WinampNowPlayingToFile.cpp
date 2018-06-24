@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// Wrapper for HelloWorldGUI
+/// Wrapper for WinampNowPlayingToFile
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@ using namespace System;
 // this structure contains plugin information, version, name...
 winampGeneralPurposePlugin plugin =
 {
-	GPPHDR_VER,  // version of the plugin, defined in "gen_HelloWorldPlugin.h"
+	GPPHDR_VER,  // version of the plugin, defined in "gen_WinampNowPlayingToFile.h"
 	PluginWrapper::Name(),
 	init,        // function name which will be executed on init event
 	config,      // function name which will be executed on config event
