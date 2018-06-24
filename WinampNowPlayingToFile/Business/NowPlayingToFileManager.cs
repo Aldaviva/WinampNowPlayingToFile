@@ -24,6 +24,11 @@ namespace WinampNowPlayingToFile.Business
 
             this.winampController.SongChanged += delegate { Update(); };
             this.winampController.StatusChanged += delegate { Update(); };
+            Settings.SettingsUpdated += delegate
+            {
+                cachedTemplate = null;
+                Update();
+            };
         }
 
         public void Update()

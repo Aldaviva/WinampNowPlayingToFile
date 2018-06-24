@@ -35,6 +35,7 @@ namespace WinampNowPlayingToFile.Settings
                 {
                     key.SetValue(nameof(NowPlayingFilename), NowPlayingFilename);
                     key.SetValue(nameof(NowPlayingTemplate), NowPlayingTemplate);
+                    OnSettingsUpdated();
                 }
             }
         }
