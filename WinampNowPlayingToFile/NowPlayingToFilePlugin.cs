@@ -26,7 +26,7 @@ namespace WinampNowPlayingToFile
 
         public override void Config()
         {
-            new SettingsDialog(manager.Settings).Show();
+            new SettingsDialog(manager.Settings).ShowDialog();
         }
 
         public override void Quit()
