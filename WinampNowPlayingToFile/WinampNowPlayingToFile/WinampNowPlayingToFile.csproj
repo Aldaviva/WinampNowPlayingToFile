@@ -40,6 +40,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>winampIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Daniel15.Sharpamp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=35616e5bdafa6e04, processorArchitecture=MSIL" />
     <Reference Include="mustache-sharp, Version=0.2.10.0, Culture=neutral, PublicKeyToken=40ca26c1e088cef4, processorArchitecture=MSIL">
@@ -82,7 +85,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="winampIcon.ico" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Presentation\SettingsDialog.resx">
       <DependentUpon>SettingsDialog.cs</DependentUpon>

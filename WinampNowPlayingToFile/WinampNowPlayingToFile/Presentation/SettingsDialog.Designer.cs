@@ -225,9 +225,9 @@
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(24, 115);
+            this.label1.Location = new System.Drawing.Point(22, 115);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(541, 30);
+            this.label1.Size = new System.Drawing.Size(544, 30);
             this.label1.TabIndex = 9;
             this.label1.Text = resources.GetString("label1.Text");
             // 
@@ -257,8 +257,9 @@
             this.Controls.Add(this.writeToFileBrowseButton);
             this.Controls.Add(this.writeToFileLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SettingsDialog";
-            this.Text = "Now Playing to File";
+            this.Text = "Now Playing to File plug-in configuration";
             this.Load += new System.EventHandler(this.SettingsDialog_Load);
             this.insertTemplatePlaceholderMenu.ResumeLayout(false);
             this.ResumeLayout(false);
