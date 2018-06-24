@@ -4,8 +4,9 @@ namespace WinampNowPlayingToFile.Settings
 {
     public interface ISettings
     {
-        string NowPlayingFilename { get; set; }
-        string NowPlayingTemplate { get; set; }
+        string TextFilename { get; set; }
+        string AlbumArtFilename { get; set; }
+        string TextTemplate { get; set; }
 
         event EventHandler SettingsUpdated;
 

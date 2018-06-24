@@ -35,12 +35,16 @@ namespace WinampNowPlayingToFile.Presentation
 
         private void SettingsDialog_Load(object sender, EventArgs e)
         {
-            nowPlayingFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.NowPlayingFilename);
-            nowPlayingFilenameEditor.FileName = settings.NowPlayingFilename;
+            textFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.TextFilename);
+            textFilenameEditor.FileName = settings.TextFilename;
 
-            writeToFileFilename.Text = settings.NowPlayingFilename;
+            albumArtFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.AlbumArtFilename);
+            albumArtFilenameEditor.FileName = settings.AlbumArtFilename;
 
-            templateEditor.Text = settings.NowPlayingTemplate;
+            textFilename.Text = settings.TextFilename;
+            albumArtFilename.Text = settings.AlbumArtFilename;
+
+            templateEditor.Text = settings.TextTemplate;
             templateEditor.Select(templateEditor.TextLength, 0);
 
             winampController.SongChanged += delegate { RenderPreview(); };
@@ -50,8 +54,8 @@ namespace WinampNowPlayingToFile.Presentation
 
         private void WriteToFileBrowseButtonClick(object sender, EventArgs e)
         {
-            nowPlayingFilenameEditor.ShowDialog();
-            writeToFileFilename.Text = nowPlayingFilenameEditor.FileName;
+            textFilenameEditor.ShowDialog();
+            textFilename.Text = textFilenameEditor.FileName;
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -109,11 +113,6 @@ namespace WinampNowPlayingToFile.Presentation
             }
         }
 
-        private void NowPlayingFilenameEditor_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            OnFormDirty();
-        }
-
         private void OkButton_Click(object sender, EventArgs e)
         {
             try
@@ -145,8 +144,9 @@ namespace WinampNowPlayingToFile.Presentation
             {
                 TemplateCompiler.Compile(templateEditor.Text);
 
-                settings.NowPlayingFilename = nowPlayingFilenameEditor.FileName;
-                settings.NowPlayingTemplate = templateEditor.Text;
+                settings.TextFilename = textFilenameEditor.FileName;
+                settings.AlbumArtFilename = albumArtFilenameEditor.FileName;
+                settings.TextTemplate = templateEditor.Text;
                 settings.Save();
             }
             catch (FormatException e)
@@ -159,6 +159,22 @@ namespace WinampNowPlayingToFile.Presentation
         private void OnFormDirty()
         {
             applyButton.Enabled = true;
+        }
+
+        private void albumArtBrowseButton_Click(object sender, EventArgs e)
+        {
+            albumArtFilenameEditor.ShowDialog();
+            albumArtFilename.Text = albumArtFilenameEditor.FileName;
+        }
+
+        private void textFilenameEditor_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            OnFormDirty();
+        }
+
+        private void albumArtFilenameEditor_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            OnFormDirty();
         }
     }
 }

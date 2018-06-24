@@ -16,8 +16,9 @@ namespace WinampNowPlayingToFile.Settings
                 {
                     if (key != null)
                     {
-                        NowPlayingFilename = key.GetValue(nameof(NowPlayingFilename)) as string ?? NowPlayingFilename;
-                        NowPlayingTemplate = key.GetValue(nameof(NowPlayingTemplate)) as string ?? NowPlayingTemplate;
+                        TextFilename = key.GetValue(nameof(TextFilename)) as string ?? TextFilename;
+                        AlbumArtFilename = key.GetValue(nameof(AlbumArtFilename)) as string ?? AlbumArtFilename;
+                        TextTemplate = key.GetValue(nameof(TextTemplate)) as string ?? TextTemplate;
                     }
                 }
             }
@@ -33,8 +34,9 @@ namespace WinampNowPlayingToFile.Settings
             {
                 if (key != null)
                 {
-                    key.SetValue(nameof(NowPlayingFilename), NowPlayingFilename);
-                    key.SetValue(nameof(NowPlayingTemplate), NowPlayingTemplate);
+                    key.SetValue(nameof(TextFilename), TextFilename);
+                    key.SetValue(nameof(AlbumArtFilename), AlbumArtFilename);
+                    key.SetValue(nameof(TextTemplate), TextTemplate);
                     OnSettingsUpdated();
                 }
             }

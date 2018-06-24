@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Daniel15.Sharpamp;
 using Mustache;
+using TagLib;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
+using File = System.IO.File;
 using Song = WinampNowPlayingToFile.Facade.Song;
 
 namespace WinampNowPlayingToFile.Business
@@ -33,27 +37,44 @@ namespace WinampNowPlayingToFile.Business
 
         public void Update()
         {
-            Save(Render(winampController.CurrentSong));
+            SaveText(RenderText(winampController.CurrentSong));
+            ExtractAlbumArt();
         }
 
-        internal string Render(Song song)
+        private void ExtractAlbumArt()
+        {
+            IPicture artwork = TagLib.File.Create(winampController.CurrentSong.Filename)
+                .Tag.Pictures.ElementAtOrDefault(0);
+
+            if (artwork != null && winampController.Status == Status.Playing)
+            {
+                File.WriteAllBytes(settings.AlbumArtFilename, artwork.Data.Data);
+            }
+            else
+            {
+                File.Delete(settings.AlbumArtFilename);
+            }
+        }
+
+        internal string RenderText(Song song)
         {
             return winampController.Status == Status.Playing ? GetTemplate().Render(song) : string.Empty;
         }
 
-        private void Save(string nowPlayingText)
+        private void SaveText(string nowPlayingText)
         {
-            File.WriteAllText(settings.NowPlayingFilename, nowPlayingText, Encoding.UTF8);
+            File.WriteAllText(settings.TextFilename, nowPlayingText, Encoding.UTF8);
         }
 
         private Generator GetTemplate()
         {
-            return cachedTemplate ?? (cachedTemplate = TemplateCompiler.Compile(settings.NowPlayingTemplate));
+            return cachedTemplate ?? (cachedTemplate = TemplateCompiler.Compile(settings.TextTemplate));
         }
 
         public void OnQuit()
         {
-            Save(string.Empty);
+            SaveText(string.Empty);
+            File.Delete(settings.AlbumArtFilename);
         }
     }
 }

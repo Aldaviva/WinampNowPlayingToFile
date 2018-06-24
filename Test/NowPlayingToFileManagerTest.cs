@@ -17,7 +17,8 @@ namespace Test
     {
         private readonly WinampController winampController = A.Fake<WinampController>();
         private readonly NowPlayingToFileManager manager;
-        private readonly string filename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.txt");
+        private readonly string textFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.txt");
+        private readonly string albumArtFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.png");
         private readonly ISettings settings = A.Fake<ISettings>();
 
         private readonly Song song = new Song
@@ -35,8 +36,9 @@ namespace Test
 
             A.CallTo(() => winampController.Status).Returns(Status.Playing);
             A.CallTo(() => winampController.CurrentSong).Returns(song);
-            A.CallTo(() => settings.NowPlayingFilename).Returns(filename);
-            A.CallTo(() => settings.NowPlayingTemplate).Returns(new RegistrySettings().LoadDefaults().NowPlayingTemplate);
+            A.CallTo(() => settings.TextFilename).Returns(textFilename);
+            A.CallTo(() => settings.TextTemplate).Returns(new RegistrySettings().LoadDefaults().TextTemplate);
+            A.CallTo(() => settings.AlbumArtFilename).Returns(albumArtFilename);
 
             manager = new NowPlayingToFileManager(settings, winampController);
         }
@@ -48,13 +50,13 @@ namespace Test
 
         private void CleanUp()
         {
-            File.Delete(filename);
+            File.Delete(textFilename);
         }
 
         [Fact]
         public void RenderTemplateWithAlbum()
         {
-            string actual = manager.Render(song);
+            string actual = manager.RenderText(song);
 
             actual.Should().Be("artist \u2013 title \u2013 album");
         }
@@ -71,7 +73,7 @@ namespace Test
                 Filename = "filename.ogg"
             };
 
-            string actual = manager.Render(songWithoutAlbum);
+            string actual = manager.RenderText(songWithoutAlbum);
 
             actual.Should().Be("artist \u2013 title");
         }
@@ -81,7 +83,7 @@ namespace Test
         {
             A.CallTo(() => winampController.Status).Returns(Status.Paused);
 
-            manager.Render(song).Should().BeEmpty();
+            manager.RenderText(song).Should().BeEmpty();
         }
 
         [Fact]
@@ -89,7 +91,7 @@ namespace Test
         {
             A.CallTo(() => winampController.Status).Returns(Status.Stopped);
 
-            manager.Render(song).Should().BeEmpty();
+            manager.RenderText(song).Should().BeEmpty();
         }
 
         [Fact]
@@ -97,7 +99,7 @@ namespace Test
         {
             winampController.SongChanged += Raise.FreeForm.With(winampController, new SongChangedEventArgs(new Song()));
 
-            string actual = File.ReadAllText(filename, Encoding.UTF8);
+            string actual = File.ReadAllText(textFilename, Encoding.UTF8);
             actual.Should().Be("artist \u2013 title \u2013 album");
         }
 
@@ -106,8 +108,23 @@ namespace Test
         {
             winampController.StatusChanged += Raise.FreeForm.With(winampController, new StatusChangedEventArgs(Status.Playing));
 
-            string actual = File.ReadAllText(filename, Encoding.UTF8);
+            string actual = File.ReadAllText(textFilename, Encoding.UTF8);
             actual.Should().Be("artist \u2013 title \u2013 album");
+        }
+
+        [Fact]
+        public void DontCrashOnId3V1V24WithNoArtwork()
+        {
+            Song bloodRave = new Song
+            {
+                Filename = @"D:\Music\Big Beat\The Crystal Method\Blood Rave.mp3",
+                Artist = "The Crystal Method",
+                Title = "Blood Rave",
+                Album = "Mixes and Soundtracks"
+            };
+            A.CallTo(() => winampController.CurrentSong).Returns(bloodRave);
+
+            manager.Update();
         }
     }
 }
