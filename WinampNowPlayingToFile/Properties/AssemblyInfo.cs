@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WinampNowPlayingToFile")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Winamp Now Playing To File")]
+[assembly: AssemblyDescription("Winamp plug-in which saves information about currently playing track to a text file")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ben Hutchison")]
-[assembly: AssemblyProduct("WinampNowPlayingToFile")]
+[assembly: AssemblyProduct("Winamp Now Playing To File")]
 [assembly: AssemblyCopyright("Copyright 2018 Ben Hutchison")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,6 +32,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("1.0.1.0")]
 [assembly: InternalsVisibleTo("Test")]

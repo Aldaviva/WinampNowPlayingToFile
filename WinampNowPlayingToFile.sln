@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinampNowPlayingToFile", "WinampNowPlayingToFile\WinampNowPlayingToFile\WinampNowPlayingToFile.csproj", "{705442B8-D5EA-4449-B24F-323B319C821F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinampNowPlayingToFile", "WinampNowPlayingToFile\WinampNowPlayingToFile.csproj", "{705442B8-D5EA-4449-B24F-323B319C821F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gen_WinampNowPlayingToFile", "WinampNowPlayingToFile\gen_WinampNowPlayingToFile\gen_WinampNowPlayingToFile.vcxproj", "{F1C69AEC-4089-4404-B485-86C9B72C138A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gen_WinampNowPlayingToFile", "gen_WinampNowPlayingToFile\gen_WinampNowPlayingToFile.vcxproj", "{F1C69AEC-4089-4404-B485-86C9B72C138A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{B948111C-9EF9-4A58-9A0A-6601F6450346}"
 EndProject
