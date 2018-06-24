@@ -51,6 +51,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.horizontalRule1 = new System.Windows.Forms.Label();
+            this.applyButton = new System.Windows.Forms.Button();
             this.insertTemplatePlaceholderMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,13 +62,14 @@
             this.writeToFileLabel.Name = "writeToFileLabel";
             this.writeToFileLabel.Size = new System.Drawing.Size(47, 13);
             this.writeToFileLabel.TabIndex = 5;
-            this.writeToFileLabel.Text = "Save as";
+            this.writeToFileLabel.Text = "&Save as";
             // 
             // nowPlayingFilenameEditor
             // 
             this.nowPlayingFilenameEditor.DefaultExt = "txt";
             this.nowPlayingFilenameEditor.Filter = "Text files|*.txt";
             this.nowPlayingFilenameEditor.Title = "Choose file to save Now Playing text into";
+            this.nowPlayingFilenameEditor.FileOk += new System.ComponentModel.CancelEventHandler(this.NowPlayingFilenameEditor_FileOk);
             // 
             // writeToFileBrowseButton
             // 
@@ -76,7 +78,7 @@
             this.writeToFileBrowseButton.Name = "writeToFileBrowseButton";
             this.writeToFileBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.writeToFileBrowseButton.TabIndex = 7;
-            this.writeToFileBrowseButton.Text = "Browse…";
+            this.writeToFileBrowseButton.Text = "&Browse…";
             this.writeToFileBrowseButton.UseVisualStyleBackColor = true;
             this.writeToFileBrowseButton.Click += new System.EventHandler(this.WriteToFileBrowseButtonClick);
             // 
@@ -96,7 +98,7 @@
             this.templateLabel.Name = "templateLabel";
             this.templateLabel.Size = new System.Drawing.Size(53, 13);
             this.templateLabel.TabIndex = 0;
-            this.templateLabel.Text = "Template";
+            this.templateLabel.Text = "&Template";
             // 
             // templateEditor
             // 
@@ -115,18 +117,18 @@
             this.templateInsertButton.Name = "templateInsertButton";
             this.templateInsertButton.Size = new System.Drawing.Size(75, 23);
             this.templateInsertButton.TabIndex = 2;
-            this.templateInsertButton.Text = "Insert";
+            this.templateInsertButton.Text = "&Insert";
             this.templateInsertButton.UseVisualStyleBackColor = true;
             this.templateInsertButton.Click += new System.EventHandler(this.TemplateInsertButton_Click);
             // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.Location = new System.Drawing.Point(418, 157);
+            this.okButton.Location = new System.Drawing.Point(337, 157);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 10;
-            this.okButton.Text = "Save";
+            this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
@@ -134,7 +136,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(499, 157);
+            this.cancelButton.Location = new System.Drawing.Point(418, 157);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 11;
@@ -151,6 +153,7 @@
             this.templatePreview.ReadOnly = true;
             this.templatePreview.Size = new System.Drawing.Size(492, 20);
             this.templatePreview.TabIndex = 4;
+            this.templatePreview.TabStop = false;
             // 
             // previewLabel
             // 
@@ -240,6 +243,16 @@
             this.horizontalRule1.Size = new System.Drawing.Size(555, 2);
             this.horizontalRule1.TabIndex = 8;
             // 
+            // applyButton
+            // 
+            this.applyButton.Location = new System.Drawing.Point(499, 157);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(75, 23);
+            this.applyButton.TabIndex = 12;
+            this.applyButton.Text = "&Apply";
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.ApplyButton_Click);
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.okButton;
@@ -247,6 +260,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(586, 192);
+            this.Controls.Add(this.applyButton);
             this.Controls.Add(this.horizontalRule1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.templatePreview);
@@ -295,5 +309,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label horizontalRule1;
+        private System.Windows.Forms.Button applyButton;
     }
 }

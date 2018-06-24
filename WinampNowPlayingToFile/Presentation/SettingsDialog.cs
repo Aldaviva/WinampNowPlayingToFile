@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using Mustache;
 using WinampNowPlayingToFile.Facade;
+using WinampNowPlayingToFile.Settings;
 
 namespace WinampNowPlayingToFile.Presentation
 {
@@ -13,7 +14,8 @@ namespace WinampNowPlayingToFile.Presentation
     {
         private static readonly FormatCompiler TemplateCompiler = new FormatCompiler();
 
-        private readonly Settings.ISettings settings;
+        private readonly ISettings settings;
+        private readonly WinampControllerImpl winampController;
 
         private static readonly Song ExampleSong = new Song
         {
@@ -24,9 +26,10 @@ namespace WinampNowPlayingToFile.Presentation
             Year = 1987
         };
 
-        public SettingsDialog(Settings.ISettings settings)
+        public SettingsDialog(ISettings settings, WinampControllerImpl winampController)
         {
             this.settings = settings;
+            this.winampController = winampController;
             InitializeComponent();
         }
 
@@ -39,6 +42,10 @@ namespace WinampNowPlayingToFile.Presentation
 
             templateEditor.Text = settings.NowPlayingTemplate;
             templateEditor.Select(templateEditor.TextLength, 0);
+
+            winampController.SongChanged += delegate { RenderPreview(); };
+
+            applyButton.Enabled = false;
         }
 
         private void WriteToFileBrowseButtonClick(object sender, EventArgs e)
@@ -54,7 +61,24 @@ namespace WinampNowPlayingToFile.Presentation
 
         private void TemplateEditor_TextChanged(object sender, EventArgs e)
         {
-            templatePreview.Text = TemplateCompiler.Compile(templateEditor.Text).Render(ExampleSong);
+            RenderPreview();
+            OnFormDirty();
+        }
+
+        private void RenderPreview()
+        {
+            Song previewSong = string.IsNullOrEmpty(winampController.CurrentSong.Title)
+                ? ExampleSong
+                : winampController.CurrentSong;
+
+            try
+            {
+                templatePreview.Text = TemplateCompiler.Compile(templateEditor.Text).Render(previewSong);
+            }
+            catch (FormatException e)
+            {
+                templatePreview.Text = $"Template format error: {e.Message}";
+            }
         }
 
         private void TemplateInsertButton_Click(object sender, EventArgs e)
@@ -85,12 +109,56 @@ namespace WinampNowPlayingToFile.Presentation
             }
         }
 
+        private void NowPlayingFilenameEditor_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            OnFormDirty();
+        }
+
         private void OkButton_Click(object sender, EventArgs e)
         {
-            settings.NowPlayingFilename = nowPlayingFilenameEditor.FileName;
-            settings.NowPlayingTemplate = templateEditor.Text;
-            settings.Save();
-            Close();
+            try
+            {
+                Save();
+                Close();
+            }
+            catch (FormatException)
+            {
+                //leave form open, with invalid inputs unsaved
+            }
+        }
+
+        private void ApplyButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Save();
+            }
+            catch (FormatException)
+            {
+                //leave form open, with invalid inputs unsaved
+            }
+        }
+
+        private void Save()
+        {
+            try
+            {
+                TemplateCompiler.Compile(templateEditor.Text);
+
+                settings.NowPlayingFilename = nowPlayingFilenameEditor.FileName;
+                settings.NowPlayingTemplate = templateEditor.Text;
+                settings.Save();
+            }
+            catch (FormatException e)
+            {
+                MessageBox.Show($"Invalid template:\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            }
+        }
+
+        private void OnFormDirty()
+        {
+            applyButton.Enabled = true;
         }
     }
 }

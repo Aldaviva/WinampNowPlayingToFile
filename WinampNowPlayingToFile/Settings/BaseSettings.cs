@@ -15,7 +15,7 @@ namespace WinampNowPlayingToFile.Settings
         public ISettings LoadDefaults()
         {
             NowPlayingFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.txt");
-            NowPlayingTemplate = "{{Artist}} \u2013 {{Title}}{{#if Album}} \u2013 {{Album}}{{/if}}";
+            NowPlayingTemplate = "{{#if Artist}}{{Artist}} \u2013 {{/if}}{{Title}}{{#if Album}} \u2013 {{Album}}{{/if}}";
             return this;
         }
 

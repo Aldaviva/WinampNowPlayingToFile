@@ -12,19 +12,19 @@ namespace WinampNowPlayingToFile.Business
     {
         private static readonly FormatCompiler TemplateCompiler = new FormatCompiler();
 
-        public ISettings Settings { get; }
+        private readonly WinampController winampController;
+        private readonly ISettings settings;
 
         private Generator cachedTemplate;
-        private readonly WinampController winampController;
 
-        public NowPlayingToFileManager(WinampController winampController, ISettings settings)
+        public NowPlayingToFileManager(ISettings settings, WinampController winampController)
         {
             this.winampController = winampController;
-            Settings = settings;
+            this.settings = settings;
 
             this.winampController.SongChanged += delegate { Update(); };
             this.winampController.StatusChanged += delegate { Update(); };
-            Settings.SettingsUpdated += delegate
+            this.settings.SettingsUpdated += delegate
             {
                 cachedTemplate = null;
                 Update();
@@ -43,12 +43,12 @@ namespace WinampNowPlayingToFile.Business
 
         private void Save(string nowPlayingText)
         {
-            File.WriteAllText(Settings.NowPlayingFilename, nowPlayingText, Encoding.UTF8);
+            File.WriteAllText(settings.NowPlayingFilename, nowPlayingText, Encoding.UTF8);
         }
 
         private Generator GetTemplate()
         {
-            return cachedTemplate ?? (cachedTemplate = TemplateCompiler.Compile(Settings.NowPlayingTemplate));
+            return cachedTemplate ?? (cachedTemplate = TemplateCompiler.Compile(settings.NowPlayingTemplate));
         }
 
         public void OnQuit()

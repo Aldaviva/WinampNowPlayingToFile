@@ -38,7 +38,7 @@ namespace Test
             A.CallTo(() => settings.NowPlayingFilename).Returns(filename);
             A.CallTo(() => settings.NowPlayingTemplate).Returns(new RegistrySettings().LoadDefaults().NowPlayingTemplate);
 
-            manager = new NowPlayingToFileManager(winampController, settings);
+            manager = new NowPlayingToFileManager(settings, winampController);
         }
 
         public void Dispose()
