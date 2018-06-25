@@ -1,15 +1,44 @@
-﻿using FluentAssertions;
+﻿using System;
+using FakeItEasy;
+using FluentAssertions;
 using WinampNowPlayingToFile;
+using WinampNowPlayingToFile.Business;
 using Xunit;
 
 namespace Test
 {
     public class NowPlayingToFilePluginTest
     {
-        [Fact]
-        public void pluginName()
+        private readonly NowPlayingToFilePlugin plugin;
+        private readonly NowPlayingToFileManager manager;
+
+        public NowPlayingToFilePluginTest()
         {
-            new NowPlayingToFilePlugin().Name.Should().Be("Now Playing to File");
+            manager = A.Fake<NowPlayingToFileManager>();
+            plugin = new NowPlayingToFilePlugin { Manager = manager };
+        }
+
+        [Fact]
+        public void PluginName()
+        {
+            plugin.Name.Should().Be("Now Playing to File v1.0.1.0");
+        }
+
+        [Fact]
+        public void Initialize()
+        {
+            plugin.Init(IntPtr.Zero);
+            plugin.Initialize();
+        }
+
+        [Fact]
+        public void Quit()
+        {
+            A.CallTo(() => manager.OnQuit()).DoesNothing();
+
+            plugin.Quit();
+
+            A.CallTo(() => manager.OnQuit()).MustHaveHappened();
         }
     }
 }

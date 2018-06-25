@@ -123,9 +123,6 @@
   <metadata name="insertTemplatePlaceholderMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>161, 17</value>
   </metadata>
-  <data name="label1.Text" xml:space="preserve">
-    <value>When Winamp plays a track, this plug-in will save the track information to a file. The format of the information can be customized with the template. If Winamp is paused or stopped, the file will be empty.</value>
-  </data>
   <metadata name="albumArtFilenameEditor.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>374, 17</value>
   </metadata>

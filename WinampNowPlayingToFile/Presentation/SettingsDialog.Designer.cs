@@ -100,9 +100,9 @@
             this.templateLabel.AutoSize = true;
             this.templateLabel.Location = new System.Drawing.Point(13, 14);
             this.templateLabel.Name = "templateLabel";
-            this.templateLabel.Size = new System.Drawing.Size(53, 13);
+            this.templateLabel.Size = new System.Drawing.Size(74, 13);
             this.templateLabel.TabIndex = 0;
-            this.templateLabel.Text = "&Template";
+            this.templateLabel.Text = "&Text template";
             // 
             // templateEditor
             // 
@@ -131,7 +131,7 @@
             this.okButton.Location = new System.Drawing.Point(337, 192);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 10;
+            this.okButton.TabIndex = 13;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.OkButton_Click);
@@ -143,7 +143,7 @@
             this.cancelButton.Location = new System.Drawing.Point(418, 192);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 11;
+            this.cancelButton.TabIndex = 14;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
@@ -164,9 +164,9 @@
             this.previewLabel.AutoSize = true;
             this.previewLabel.Location = new System.Drawing.Point(13, 43);
             this.previewLabel.Name = "previewLabel";
-            this.previewLabel.Size = new System.Drawing.Size(47, 13);
+            this.previewLabel.Size = new System.Drawing.Size(71, 13);
             this.previewLabel.TabIndex = 3;
-            this.previewLabel.Text = "Preview";
+            this.previewLabel.Text = "Text preview";
             // 
             // insertTemplatePlaceholderMenu
             // 
@@ -238,8 +238,9 @@
             this.label1.Location = new System.Drawing.Point(22, 144);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(544, 30);
-            this.label1.TabIndex = 9;
-            this.label1.Text = resources.GetString("label1.Text");
+            this.label1.TabIndex = 12;
+            this.label1.Text = "When Winamp plays a track, this plug-in will save the track information and album" +
+    " art to files. The format of the text can be customized with the template.";
             // 
             // horizontalRule1
             // 
@@ -249,7 +250,7 @@
             this.horizontalRule1.Location = new System.Drawing.Point(17, 132);
             this.horizontalRule1.Name = "horizontalRule1";
             this.horizontalRule1.Size = new System.Drawing.Size(555, 2);
-            this.horizontalRule1.TabIndex = 8;
+            this.horizontalRule1.TabIndex = 11;
             // 
             // applyButton
             // 
@@ -257,7 +258,7 @@
             this.applyButton.Location = new System.Drawing.Point(499, 192);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
-            this.applyButton.TabIndex = 12;
+            this.applyButton.TabIndex = 15;
             this.applyButton.Text = "&Apply";
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.ApplyButton_Click);
@@ -268,7 +269,7 @@
             this.albumArtLabel.Location = new System.Drawing.Point(13, 101);
             this.albumArtLabel.Name = "albumArtLabel";
             this.albumArtLabel.Size = new System.Drawing.Size(96, 13);
-            this.albumArtLabel.TabIndex = 5;
+            this.albumArtLabel.TabIndex = 8;
             this.albumArtLabel.Text = "Save a&lbum art as";
             // 
             // albumArtBrowseButton
@@ -277,8 +278,8 @@
             this.albumArtBrowseButton.Location = new System.Drawing.Point(499, 96);
             this.albumArtBrowseButton.Name = "albumArtBrowseButton";
             this.albumArtBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.albumArtBrowseButton.TabIndex = 7;
-            this.albumArtBrowseButton.Text = "&Browse…";
+            this.albumArtBrowseButton.TabIndex = 10;
+            this.albumArtBrowseButton.Text = "B&rowse…";
             this.albumArtBrowseButton.UseVisualStyleBackColor = true;
             this.albumArtBrowseButton.Click += new System.EventHandler(this.albumArtBrowseButton_Click);
             // 
@@ -289,7 +290,7 @@
             this.albumArtFilename.Location = new System.Drawing.Point(127, 98);
             this.albumArtFilename.Name = "albumArtFilename";
             this.albumArtFilename.Size = new System.Drawing.Size(366, 20);
-            this.albumArtFilename.TabIndex = 6;
+            this.albumArtFilename.TabIndex = 9;
             // 
             // albumArtFilenameEditor
             // 

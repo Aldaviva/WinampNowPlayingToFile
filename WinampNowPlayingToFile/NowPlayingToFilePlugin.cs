@@ -12,7 +12,7 @@ namespace WinampNowPlayingToFile
     {
         public override string Name => $"Now Playing to File v{Assembly.GetAssembly(typeof(NowPlayingToFilePlugin)).GetName().Version}";
 
-        private NowPlayingToFileManager manager;
+        internal NowPlayingToFileManager Manager;
         private WinampControllerImpl winampController;
         private ISettings settings;
 
@@ -25,7 +25,7 @@ namespace WinampNowPlayingToFile
             settings.Load();
 
             winampController = new WinampControllerImpl(Winamp);
-            manager = new NowPlayingToFileManager(settings, winampController);
+            Manager = new NowPlayingToFileManager(settings, winampController);
         }
 
         public override void Config()
@@ -35,7 +35,7 @@ namespace WinampNowPlayingToFile
 
         public override void Quit()
         {
-            manager.OnQuit();
+            Manager.OnQuit();
         }
     }
 }

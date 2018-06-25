@@ -1,14 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using Daniel15.Sharpamp;
 using Mustache;
-using TagLib;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
 using File = System.IO.File;
-using Song = WinampNowPlayingToFile.Facade.Song;
 
 namespace WinampNowPlayingToFile.Business
 {
@@ -37,28 +33,13 @@ namespace WinampNowPlayingToFile.Business
 
         public void Update()
         {
-            SaveText(RenderText(winampController.CurrentSong));
-            ExtractAlbumArt();
+            SaveText(RenderText());
+            SaveImage(ExtractAlbumArt());
         }
 
-        private void ExtractAlbumArt()
+        internal string RenderText()
         {
-            IPicture artwork = TagLib.File.Create(winampController.CurrentSong.Filename)
-                .Tag.Pictures.ElementAtOrDefault(0);
-
-            if (artwork != null && winampController.Status == Status.Playing)
-            {
-                File.WriteAllBytes(settings.AlbumArtFilename, artwork.Data.Data);
-            }
-            else
-            {
-                File.Delete(settings.AlbumArtFilename);
-            }
-        }
-
-        internal string RenderText(Song song)
-        {
-            return winampController.Status == Status.Playing ? GetTemplate().Render(song) : string.Empty;
+            return winampController.Status == Status.Playing ? GetTemplate().Render(winampController.CurrentSong) : string.Empty;
         }
 
         private void SaveText(string nowPlayingText)
@@ -71,10 +52,30 @@ namespace WinampNowPlayingToFile.Business
             return cachedTemplate ?? (cachedTemplate = TemplateCompiler.Compile(settings.TextTemplate));
         }
 
-        public void OnQuit()
+        private byte[] ExtractAlbumArt()
+        {
+            return winampController.Status == Status.Playing
+                ? TagLib.File.Create(winampController.CurrentSong.Filename).Tag.Pictures.ElementAtOrDefault(0)?.Data.Data
+                : null;
+        }
+
+        private void SaveImage(byte[] imageData)
+        {
+            string filename = settings.AlbumArtFilename;
+            if (imageData != null)
+            {
+                File.WriteAllBytes(filename, imageData);
+            }
+            else
+            {
+                File.Delete(filename);
+            }
+        }
+
+        public virtual void OnQuit()
         {
             SaveText(string.Empty);
-            File.Delete(settings.AlbumArtFilename);
+            SaveImage(null);
         }
     }
 }

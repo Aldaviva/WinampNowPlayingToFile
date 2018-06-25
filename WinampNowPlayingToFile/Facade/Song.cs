@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WinampNowPlayingToFile.Facade
+﻿namespace WinampNowPlayingToFile.Facade
 {
     public class Song
     {
