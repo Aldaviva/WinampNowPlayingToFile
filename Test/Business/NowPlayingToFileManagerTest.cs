@@ -157,5 +157,36 @@ namespace Test.Business
 
             File.ReadAllText(textFilename).Should().Be("artist");
         }
+
+        [Fact]
+        public void ExtractDefaultAlbumArtWhenPlayingAndTrackHasNoAlbumArt()
+        {
+            A.CallTo(() => winampController.CurrentSong).Returns(new Song
+            {
+                Album = "",
+                Artist = "artist",
+                Title = "title",
+                Year = 2018,
+                Filename = @"Tracks\noalbumart.flac"
+            });
+
+            byte[] actual = manager.ExtractAlbumArt();
+            byte[] expected = WinampNowPlayingToFile.Resources.black_png;
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void AlbumArtFileShouldNotExistWhenPaused()
+        {
+            A.CallTo(() => winampController.Status).Returns(Status.Paused);
+            manager.ExtractAlbumArt().Should().BeNull();
+        }
+
+        [Fact]
+        public void AlbumArtFileShouldNotExistWhenStopped()
+        {
+            A.CallTo(() => winampController.Status).Returns(Status.Stopped);
+            manager.ExtractAlbumArt().Should().BeNull();
+        }
     }
 }

@@ -12,6 +12,20 @@ namespace WinampNowPlayingToFile.Business
     {
         private static readonly FormatCompiler TemplateCompiler = new FormatCompiler();
 
+        private static byte[] DefaultAlbumArt
+        {
+            get {
+                try
+                {
+                    return File.ReadAllBytes("emptyAlbumArt.png");
+                }
+                catch
+                {
+                    return Resources.black_png;
+                }
+            }
+        }
+
         private readonly WinampController winampController;
         private readonly ISettings settings;
 
@@ -52,10 +66,10 @@ namespace WinampNowPlayingToFile.Business
             return cachedTemplate ?? (cachedTemplate = TemplateCompiler.Compile(settings.TextTemplate));
         }
 
-        private byte[] ExtractAlbumArt()
+        internal byte[] ExtractAlbumArt()
         {
             return winampController.Status == Status.Playing
-                ? TagLib.File.Create(winampController.CurrentSong.Filename).Tag.Pictures.ElementAtOrDefault(0)?.Data.Data
+                ? TagLib.File.Create(winampController.CurrentSong.Filename).Tag.Pictures.ElementAtOrDefault(0)?.Data.Data ?? DefaultAlbumArt
                 : null;
         }
 
