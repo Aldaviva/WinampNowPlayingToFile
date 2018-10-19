@@ -98,7 +98,25 @@ namespace WinampNowPlayingToFile.Presentation
             }
             else
             {
-                string placeholder = $"{{{{{e.ClickedItem.Text}}}}}";
+                string textToInsert;
+                if (e.ClickedItem == newLineToolStripMenuItem)
+                {
+                    textToInsert = "#newline";
+                }
+                else if (e.ClickedItem == ifToolStripMenuItem)
+                {
+                    textToInsert = "#if Album}} - {{Album}}{{/if";
+                }
+                else if (e.ClickedItem == ifElseToolStripMenuItem)
+                {
+                    textToInsert = "#if Album}} - {{Album}}{{#else}} - (no album){{/if";
+                }
+                else
+                {
+                    textToInsert = e.ClickedItem.Text;
+                }
+
+                string placeholder = $"{{{{{textToInsert}}}}}";
                 string originalTemplate = templateEditor.Text;
                 int selectionEnd = templateEditor.SelectionStart + templateEditor.SelectionLength;
 
@@ -148,6 +166,8 @@ namespace WinampNowPlayingToFile.Presentation
                 settings.AlbumArtFilename = albumArtFilenameEditor.FileName;
                 settings.TextTemplate = templateEditor.Text;
                 settings.Save();
+
+                applyButton.Enabled = false;
             }
             catch (FormatException e)
             {

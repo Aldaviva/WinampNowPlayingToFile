@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Daniel15.Sharpamp;
 using Mustache;
+using TagLib;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
 using File = System.IO.File;
@@ -58,7 +61,7 @@ namespace WinampNowPlayingToFile.Business
 
         private void SaveText(string nowPlayingText)
         {
-            File.WriteAllText(settings.TextFilename, nowPlayingText, Encoding.UTF8);
+            File.WriteAllText(settings.TextFilename, nowPlayingText, new UTF8Encoding(false));
         }
 
         private Generator GetTemplate()
@@ -68,9 +71,21 @@ namespace WinampNowPlayingToFile.Business
 
         internal byte[] ExtractAlbumArt()
         {
-            return winampController.Status == Status.Playing
-                ? TagLib.File.Create(winampController.CurrentSong.Filename).Tag.Pictures.ElementAtOrDefault(0)?.Data.Data ?? DefaultAlbumArt
-                : null;
+            try
+            {
+                return winampController.Status == Status.Playing
+                    ? TagLib.File.Create(winampController.CurrentSong.Filename)
+                          .Tag
+                          .Pictures
+                          .ElementAtOrDefault(0)?
+                          .Data
+                          .Data ?? DefaultAlbumArt
+                    : null;
+            }
+            catch (Exception e) when(e is UnsupportedFormatException || e is CorruptFileException)
+            {
+                return null;
+            }
         }
 
         private void SaveImage(byte[] imageData)
