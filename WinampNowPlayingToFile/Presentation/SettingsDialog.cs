@@ -31,6 +31,16 @@ namespace WinampNowPlayingToFile.Presentation
             this.settings = settings;
             this.winampController = winampController;
             InitializeComponent();
+
+            // Make buttons have animated state transitions, like every other program in the OS
+            // https://stackoverflow.com/q/53456865/979493
+            foreach (Control control in Controls)
+            {
+                if (control is ButtonBase flatStylableControl)
+                {
+                    flatStylableControl.FlatStyle = FlatStyle.System;
+                }
+            }
         }
 
         private void SettingsDialog_Load(object sender, EventArgs e)
