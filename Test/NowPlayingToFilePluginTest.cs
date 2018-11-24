@@ -21,7 +21,7 @@ namespace Test
         [Fact]
         public void PluginName()
         {
-            plugin.Name.Should().Be("Now Playing to File v1.0.3.0");
+            plugin.Name.Should().StartWith("Now Playing to File v");
         }
 
         [Fact]
