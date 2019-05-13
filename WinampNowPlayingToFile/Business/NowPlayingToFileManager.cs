@@ -18,7 +18,8 @@ namespace WinampNowPlayingToFile.Business
 
         private static byte[] DefaultAlbumArt
         {
-            get {
+            get
+            {
                 try
                 {
                     return File.ReadAllBytes("emptyAlbumArt.png");
@@ -41,7 +42,10 @@ namespace WinampNowPlayingToFile.Business
             this.settings = settings;
 
             this.winampController.SongChanged += delegate { Update(); };
-            this.winampController.StatusChanged += delegate { Update(); }; //these two events can get fired together, which seems to trigger a large throttle in OBS. Maybe we can apply our own shorter throttle to prevent the staggered rerender?
+            this.winampController.StatusChanged += delegate
+            {
+                Update();
+            }; //these two events can get fired together, which seems to trigger a large throttle in OBS. Maybe we can apply our own shorter throttle to prevent the staggered rerender?
             this.settings.SettingsUpdated += delegate
             {
                 cachedTemplate = null;
@@ -91,11 +95,12 @@ namespace WinampNowPlayingToFile.Business
                           .Data ?? DefaultAlbumArt
                     : null;
             }
-            catch (FileNotFoundException) {
+            catch (Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException)
+            {
                 /*
                  * Probably just a race:
                  * 1. Stop playing a song
-                 * 2. Delete that song
+                 * 2. Delete that song or its parent directory
                  * 3. Start playing a new song
                  * 4. Status property changed, and StatusChanged event fired
                  * 5. CurrentSong property updated with new filename and other metadata, and SongChanged event fired
@@ -105,7 +110,7 @@ namespace WinampNowPlayingToFile.Business
                  */
                 return null;
             }
-            catch (Exception e) when(e is UnsupportedFormatException || e is CorruptFileException)
+            catch (Exception e) when (e is UnsupportedFormatException || e is CorruptFileException)
             {
                 /*
                  * TagLib cannot read the metadata from the given file. This can happen with MIDI music, for instance.
