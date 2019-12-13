@@ -33,7 +33,8 @@ namespace WinampNowPlayingToFile {
         }
 
         public override void Quit() {
-            manager.onQuit();
+            manager?.onQuit();
+            manager = null;
         }
 
     }

@@ -1,26 +1,30 @@
-﻿namespace WinampNowPlayingToFile.Facade {
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace WinampNowPlayingToFile.Facade {
+
+    [SuppressMessage("ReSharper", "InconsistentNaming", Justification =
+        "Property names are used in public-facing Mustache templates and cannot be changed.")]
     public class Song {
 
-        public string artist { get; set; }
-        public string album { get; set; }
-        public string title { get; set; }
-        public int? year { get; set; }
-        public string filename { get; set; }
+        public string Artist { get; set; }
+        public string Album { get; set; }
+        public string Title { get; set; }
+        public int? Year { get; set; }
+        public string Filename { get; set; }
 
         public Song() { }
 
         public Song(Daniel15.Sharpamp.Song song) {
-            artist = song.Artist;
-            album = song.Album;
-            title = song.Title;
-            this.year = int.TryParse(song.Year, out int year) ? year : (int?) null;
-            filename = song.Filename;
+            Artist = song.Artist;
+            Album = song.Album;
+            Title = song.Title;
+            this.Year = int.TryParse(song.Year, out int year) ? year : (int?) null;
+            Filename = song.Filename;
         }
 
         public override string ToString() {
             return
-                $"{nameof(artist)}: {artist}, {nameof(album)}: {album}, {nameof(title)}: {title}, {nameof(year)}: {year}, {nameof(filename)}: {filename}";
+                $"{nameof(Artist)}: {Artist}, {nameof(Album)}: {Album}, {nameof(Title)}: {Title}, {nameof(Year)}: {Year}, {nameof(Filename)}: {Filename}";
         }
 
     }

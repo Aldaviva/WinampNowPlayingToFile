@@ -18,11 +18,11 @@ namespace WinampNowPlayingToFile.Presentation {
         private readonly WinampControllerImpl winampController;
 
         private static readonly Song EXAMPLE_SONG = new Song {
-            album = "The Joshua Tree",
-            artist = "U2",
-            filename = "Exit.flac",
-            title = "Exit",
-            year = 1987
+            Album = "The Joshua Tree",
+            Artist = "U2",
+            Filename = "Exit.flac",
+            Title = "Exit",
+            Year = 1987
         };
 
         public SettingsDialog(ISettings settings, WinampControllerImpl winampController) {
@@ -72,7 +72,7 @@ namespace WinampNowPlayingToFile.Presentation {
         }
 
         private void renderPreview() {
-            Song previewSong = string.IsNullOrEmpty(winampController.currentSong.title)
+            Song previewSong = string.IsNullOrEmpty(winampController.currentSong.Title)
                 ? EXAMPLE_SONG
                 : winampController.currentSong;
 

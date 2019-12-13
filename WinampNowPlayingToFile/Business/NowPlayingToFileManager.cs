@@ -36,15 +36,13 @@ namespace WinampNowPlayingToFile.Business {
             this.settings = settings;
 
             this.winampController.songChanged += delegate { update(); };
-            this.winampController.statusChanged += delegate {
-                update();
-            }; //these two events can get fired together, which seems to trigger a large throttle in OBS. Maybe we can apply our own shorter throttle to prevent the staggered rerender?
+            this.winampController.statusChanged += delegate { update(); };
             this.settings.settingsUpdated += delegate {
                 cachedTemplate = null;
                 update();
             };
         }
-
+         
         public void update() {
             try {
                 saveText(renderText());
@@ -70,7 +68,7 @@ namespace WinampNowPlayingToFile.Business {
         internal byte[] extractAlbumArt() {
             try {
                 return winampController.status == Status.Playing
-                    ? TagLib.File.Create(winampController.currentSong.filename)
+                    ? TagLib.File.Create(winampController.currentSong.Filename)
                           .Tag
                           .Pictures
                           .ElementAtOrDefault(0)?
