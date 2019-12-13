@@ -6,18 +6,18 @@ using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Presentation;
 using WinampNowPlayingToFile.Settings;
 
-namespace WinampNowPlayingToFile
-{
-    public class NowPlayingToFilePlugin : GeneralPlugin
-    {
-        public override string Name => $"Now Playing to File v{Assembly.GetAssembly(typeof(NowPlayingToFilePlugin)).GetName().Version}";
+namespace WinampNowPlayingToFile {
+
+    public class NowPlayingToFilePlugin: GeneralPlugin {
+
+        public override string Name =>
+            $"Now Playing to File v{Assembly.GetAssembly(typeof(NowPlayingToFilePlugin)).GetName().Version}";
 
         internal NowPlayingToFileManager Manager;
         private WinampControllerImpl winampController;
         private ISettings settings;
 
-        public override void Initialize()
-        {
+        public override void Initialize() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -28,14 +28,14 @@ namespace WinampNowPlayingToFile
             Manager = new NowPlayingToFileManager(settings, winampController);
         }
 
-        public override void Config()
-        {
+        public override void Config() {
             new SettingsDialog(settings, winampController).ShowDialog();
         }
 
-        public override void Quit()
-        {
+        public override void Quit() {
             Manager.OnQuit();
         }
+
     }
+
 }

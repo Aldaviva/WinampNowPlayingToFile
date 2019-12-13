@@ -1,19 +1,16 @@
-﻿namespace WinampNowPlayingToFile.Facade
-{
-    public class Song
-    {
+﻿namespace WinampNowPlayingToFile.Facade {
+
+    public class Song {
+
         public string Artist { get; set; }
         public string Album { get; set; }
         public string Title { get; set; }
         public int? Year { get; set; }
         public string Filename { get; set; }
 
-        public Song()
-        {
-        }
+        public Song() { }
 
-        public Song(Daniel15.Sharpamp.Song song)
-        {
+        public Song(Daniel15.Sharpamp.Song song) {
             Artist = song.Artist;
             Album = song.Album;
             Title = song.Title;
@@ -21,10 +18,11 @@
             Filename = song.Filename;
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return
                 $"{nameof(Artist)}: {Artist}, {nameof(Album)}: {Album}, {nameof(Title)}: {Title}, {nameof(Year)}: {Year}, {nameof(Filename)}: {Filename}";
         }
+
     }
+
 }
