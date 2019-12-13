@@ -88,7 +88,7 @@
             this.writeToFileBrowseButton.TabIndex = 7;
             this.writeToFileBrowseButton.Text = "&Browse…";
             this.writeToFileBrowseButton.UseVisualStyleBackColor = true;
-            this.writeToFileBrowseButton.Click += new System.EventHandler(this.WriteToFileBrowseButtonClick);
+            this.writeToFileBrowseButton.Click += new System.EventHandler(this.writeToFileBrowseButtonClick);
             // 
             // textFilename
             // 

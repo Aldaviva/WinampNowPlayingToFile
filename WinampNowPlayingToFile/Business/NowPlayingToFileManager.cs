@@ -14,9 +14,9 @@ namespace WinampNowPlayingToFile.Business {
 
     public class NowPlayingToFileManager {
 
-        private static readonly FormatCompiler TemplateCompiler = new FormatCompiler();
+        private static readonly FormatCompiler TEMPLATE_COMPILER = new FormatCompiler();
 
-        private static byte[] DefaultAlbumArt {
+        private static byte[] defaultAlbumArt {
             get {
                 try {
                     return File.ReadAllBytes("emptyAlbumArt.png");
@@ -35,47 +35,47 @@ namespace WinampNowPlayingToFile.Business {
             this.winampController = winampController;
             this.settings = settings;
 
-            this.winampController.SongChanged += delegate { Update(); };
-            this.winampController.StatusChanged += delegate {
-                Update();
+            this.winampController.songChanged += delegate { update(); };
+            this.winampController.statusChanged += delegate {
+                update();
             }; //these two events can get fired together, which seems to trigger a large throttle in OBS. Maybe we can apply our own shorter throttle to prevent the staggered rerender?
-            this.settings.SettingsUpdated += delegate {
+            this.settings.settingsUpdated += delegate {
                 cachedTemplate = null;
-                Update();
+                update();
             };
         }
 
-        public void Update() {
+        public void update() {
             try {
-                SaveText(RenderText());
-                SaveImage(ExtractAlbumArt());
+                saveText(renderText());
+                saveImage(extractAlbumArt());
             } catch (Exception e) {
                 MessageBox.Show("Unhandled exception while updating song info on song change:\n" + e, "Now Playing To File error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        internal string RenderText() {
-            return winampController.Status == Status.Playing ? GetTemplate().Render(winampController.CurrentSong) : string.Empty;
+        internal string renderText() {
+            return winampController.status == Status.Playing ? getTemplate().Render(winampController.currentSong) : string.Empty;
         }
 
-        private void SaveText(string nowPlayingText) {
-            File.WriteAllText(settings.TextFilename, nowPlayingText, new UTF8Encoding(false));
+        private void saveText(string nowPlayingText) {
+            File.WriteAllText(settings.textFilename, nowPlayingText, new UTF8Encoding(false));
         }
 
-        private Generator GetTemplate() {
-            return cachedTemplate ?? (cachedTemplate = TemplateCompiler.Compile(settings.TextTemplate));
+        private Generator getTemplate() {
+            return cachedTemplate ?? (cachedTemplate = TEMPLATE_COMPILER.Compile(settings.textTemplate));
         }
 
-        internal byte[] ExtractAlbumArt() {
+        internal byte[] extractAlbumArt() {
             try {
-                return winampController.Status == Status.Playing
-                    ? TagLib.File.Create(winampController.CurrentSong.Filename)
+                return winampController.status == Status.Playing
+                    ? TagLib.File.Create(winampController.currentSong.filename)
                           .Tag
                           .Pictures
                           .ElementAtOrDefault(0)?
                           .Data
-                          .Data ?? DefaultAlbumArt
+                          .Data ?? defaultAlbumArt
                     : null;
             } catch (Exception e) when (e is FileNotFoundException || e is DirectoryNotFoundException) {
                 /*
@@ -98,8 +98,8 @@ namespace WinampNowPlayingToFile.Business {
             }
         }
 
-        private void SaveImage(byte[] imageData) {
-            string filename = settings.AlbumArtFilename;
+        private void saveImage(byte[] imageData) {
+            string filename = settings.albumArtFilename;
             if (imageData != null) {
                 File.WriteAllBytes(filename, imageData);
             } else {
@@ -107,9 +107,9 @@ namespace WinampNowPlayingToFile.Business {
             }
         }
 
-        public virtual void OnQuit() {
-            SaveText(string.Empty);
-            SaveImage(null);
+        public virtual void onQuit() {
+            saveText(string.Empty);
+            saveImage(null);
         }
 
     }

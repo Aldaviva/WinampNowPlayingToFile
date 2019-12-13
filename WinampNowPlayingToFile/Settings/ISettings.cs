@@ -4,15 +4,15 @@ namespace WinampNowPlayingToFile.Settings {
 
     public interface ISettings {
 
-        string TextFilename { get; set; }
-        string AlbumArtFilename { get; set; }
-        string TextTemplate { get; set; }
+        string textFilename { get; set; }
+        string albumArtFilename { get; set; }
+        string textTemplate { get; set; }
 
-        event EventHandler SettingsUpdated;
+        event EventHandler settingsUpdated;
 
-        void Load();
-        ISettings LoadDefaults();
-        void Save();
+        void load();
+        ISettings loadDefaults();
+        void save();
 
     }
 

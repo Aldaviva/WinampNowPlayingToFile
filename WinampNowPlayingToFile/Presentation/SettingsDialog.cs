@@ -12,17 +12,17 @@ namespace WinampNowPlayingToFile.Presentation {
 
     public partial class SettingsDialog: Form {
 
-        private static readonly FormatCompiler TemplateCompiler = new FormatCompiler();
+        private static readonly FormatCompiler TEMPLATE_COMPILER = new FormatCompiler();
 
         private readonly ISettings settings;
         private readonly WinampControllerImpl winampController;
 
-        private static readonly Song ExampleSong = new Song {
-            Album = "The Joshua Tree",
-            Artist = "U2",
-            Filename = "Exit.flac",
-            Title = "Exit",
-            Year = 1987
+        private static readonly Song EXAMPLE_SONG = new Song {
+            album = "The Joshua Tree",
+            artist = "U2",
+            filename = "Exit.flac",
+            title = "Exit",
+            year = 1987
         };
 
         public SettingsDialog(ISettings settings, WinampControllerImpl winampController) {
@@ -40,24 +40,24 @@ namespace WinampNowPlayingToFile.Presentation {
         }
 
         private void SettingsDialog_Load(object sender, EventArgs e) {
-            textFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.TextFilename);
-            textFilenameEditor.FileName = settings.TextFilename;
+            textFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.textFilename);
+            textFilenameEditor.FileName = settings.textFilename;
 
-            albumArtFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.AlbumArtFilename);
-            albumArtFilenameEditor.FileName = settings.AlbumArtFilename;
+            albumArtFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.albumArtFilename);
+            albumArtFilenameEditor.FileName = settings.albumArtFilename;
 
-            textFilename.Text = settings.TextFilename;
-            albumArtFilename.Text = settings.AlbumArtFilename;
+            textFilename.Text = settings.textFilename;
+            albumArtFilename.Text = settings.albumArtFilename;
 
-            templateEditor.Text = settings.TextTemplate;
+            templateEditor.Text = settings.textTemplate;
             templateEditor.Select(templateEditor.TextLength, 0);
 
-            winampController.SongChanged += delegate { RenderPreview(); };
+            winampController.songChanged += delegate { renderPreview(); };
 
             applyButton.Enabled = false;
         }
 
-        private void WriteToFileBrowseButtonClick(object sender, EventArgs e) {
+        private void writeToFileBrowseButtonClick(object sender, EventArgs e) {
             textFilenameEditor.ShowDialog();
             textFilename.Text = textFilenameEditor.FileName;
         }
@@ -67,17 +67,17 @@ namespace WinampNowPlayingToFile.Presentation {
         }
 
         private void TemplateEditor_TextChanged(object sender, EventArgs e) {
-            RenderPreview();
-            OnFormDirty();
+            renderPreview();
+            onFormDirty();
         }
 
-        private void RenderPreview() {
-            Song previewSong = string.IsNullOrEmpty(winampController.CurrentSong.Title)
-                ? ExampleSong
-                : winampController.CurrentSong;
+        private void renderPreview() {
+            Song previewSong = string.IsNullOrEmpty(winampController.currentSong.title)
+                ? EXAMPLE_SONG
+                : winampController.currentSong;
 
             try {
-                templatePreview.Text = TemplateCompiler.Compile(templateEditor.Text).Render(previewSong);
+                templatePreview.Text = TEMPLATE_COMPILER.Compile(templateEditor.Text).Render(previewSong);
             } catch (FormatException e) {
                 templatePreview.Text = $"Template format error: {e.Message}";
             }
@@ -119,7 +119,7 @@ namespace WinampNowPlayingToFile.Presentation {
 
         private void OkButton_Click(object sender, EventArgs e) {
             try {
-                Save();
+                save();
                 Close();
             } catch (FormatException) {
                 //leave form open, with invalid inputs unsaved
@@ -128,20 +128,20 @@ namespace WinampNowPlayingToFile.Presentation {
 
         private void ApplyButton_Click(object sender, EventArgs e) {
             try {
-                Save();
+                save();
             } catch (FormatException) {
                 //leave form open, with invalid inputs unsaved
             }
         }
 
-        private void Save() {
+        private void save() {
             try {
-                TemplateCompiler.Compile(templateEditor.Text);
+                TEMPLATE_COMPILER.Compile(templateEditor.Text);
 
-                settings.TextFilename = textFilenameEditor.FileName;
-                settings.AlbumArtFilename = albumArtFilenameEditor.FileName;
-                settings.TextTemplate = templateEditor.Text;
-                settings.Save();
+                settings.textFilename = textFilenameEditor.FileName;
+                settings.albumArtFilename = albumArtFilenameEditor.FileName;
+                settings.textTemplate = templateEditor.Text;
+                settings.save();
 
                 applyButton.Enabled = false;
             } catch (FormatException e) {
@@ -150,7 +150,7 @@ namespace WinampNowPlayingToFile.Presentation {
             }
         }
 
-        private void OnFormDirty() {
+        private void onFormDirty() {
             applyButton.Enabled = true;
         }
 
@@ -160,11 +160,11 @@ namespace WinampNowPlayingToFile.Presentation {
         }
 
         private void textFilenameEditor_FileOk(object sender, System.ComponentModel.CancelEventArgs e) {
-            OnFormDirty();
+            onFormDirty();
         }
 
         private void albumArtFilenameEditor_FileOk(object sender, System.ComponentModel.CancelEventArgs e) {
-            OnFormDirty();
+            onFormDirty();
         }
 
     }

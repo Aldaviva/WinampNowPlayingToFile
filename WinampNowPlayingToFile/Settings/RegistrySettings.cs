@@ -4,27 +4,27 @@ namespace WinampNowPlayingToFile.Settings {
 
     public class RegistrySettings: BaseSettings {
 
-        internal string Key = @"Software\WinampNowPlayingToFile";
+        internal string key = @"Software\WinampNowPlayingToFile";
 
-        public override void Load() {
-            LoadDefaults();
+        public override void load() {
+            loadDefaults();
 
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(Key)) {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(this.key)) {
                 if (key != null) {
-                    TextFilename = key.GetValue(nameof(TextFilename)) as string ?? TextFilename;
-                    AlbumArtFilename = key.GetValue(nameof(AlbumArtFilename)) as string ?? AlbumArtFilename;
-                    TextTemplate = key.GetValue(nameof(TextTemplate)) as string ?? TextTemplate;
+                    textFilename = key.GetValue(nameof(textFilename)) as string ?? textFilename;
+                    albumArtFilename = key.GetValue(nameof(albumArtFilename)) as string ?? albumArtFilename;
+                    textTemplate = key.GetValue(nameof(textTemplate)) as string ?? textTemplate;
                 }
             }
         }
 
-        public override void Save() {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(Key)) {
+        public override void save() {
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(this.key)) {
                 if (key != null) {
-                    key.SetValue(nameof(TextFilename), TextFilename);
-                    key.SetValue(nameof(AlbumArtFilename), AlbumArtFilename);
-                    key.SetValue(nameof(TextTemplate), TextTemplate);
-                    OnSettingsUpdated();
+                    key.SetValue(nameof(textFilename), textFilename);
+                    key.SetValue(nameof(albumArtFilename), albumArtFilename);
+                    key.SetValue(nameof(textTemplate), textTemplate);
+                    onSettingsUpdated();
                 }
             }
         }

@@ -5,17 +5,17 @@ namespace WinampNowPlayingToFile.Facade {
 
     public interface WinampController {
 
-        Status Status { get; }
-        Song CurrentSong { get; }
+        Status status { get; }
+        Song currentSong { get; }
 
-        void Play();
-        void PlayPause();
-        void Stop();
-        void NextTrack();
-        void PreviousTrack();
+        void play();
+        void playPause();
+        void stop();
+        void nextTrack();
+        void previousTrack();
 
-        event SongChangedEventHandler SongChanged;
-        event StatusChangedEventHandler StatusChanged;
+        event SongChangedEventHandler songChanged;
+        event StatusChangedEventHandler statusChanged;
 
     }
 
@@ -23,36 +23,36 @@ namespace WinampNowPlayingToFile.Facade {
 
         private readonly Winamp winamp;
 
-        public event SongChangedEventHandler SongChanged;
-        public event StatusChangedEventHandler StatusChanged;
+        public event SongChangedEventHandler songChanged;
+        public event StatusChangedEventHandler statusChanged;
 
         public WinampControllerImpl(Winamp winamp) {
             this.winamp = winamp;
-            winamp.SongChanged += (sender, args) => SongChanged?.Invoke(sender, new SongChangedEventArgs(args));
-            winamp.StatusChanged += (sender, args) => StatusChanged?.Invoke(sender, args);
+            winamp.SongChanged += (sender, args) => songChanged?.Invoke(sender, new SongChangedEventArgs(args));
+            winamp.StatusChanged += (sender, args) => statusChanged?.Invoke(sender, args);
         }
 
-        public Status Status => winamp.Status;
+        public Status status => winamp.Status;
 
-        public Song CurrentSong => new Song(winamp.CurrentSong);
+        public Song currentSong => new Song(winamp.CurrentSong);
 
-        public void NextTrack() {
+        public void nextTrack() {
             winamp.NextTrack();
         }
 
-        public void PlayPause() {
+        public void playPause() {
             winamp.PlayPause();
         }
 
-        public void Play() {
+        public void play() {
             winamp.Play();
         }
 
-        public void PreviousTrack() {
+        public void previousTrack() {
             winamp.PrevTrack();
         }
 
-        public void Stop() {
+        public void stop() {
             winamp.Stop();
         }
 
@@ -62,10 +62,10 @@ namespace WinampNowPlayingToFile.Facade {
 
     public class SongChangedEventArgs: EventArgs {
 
-        public Song Song { get; set; }
+        public Song song { get; set; }
 
         public SongChangedEventArgs(Song song) {
-            Song = song;
+            this.song = song;
         }
 
         public SongChangedEventArgs(Daniel15.Sharpamp.SongChangedEventArgs args): this(new Song(args.Song)) { }
