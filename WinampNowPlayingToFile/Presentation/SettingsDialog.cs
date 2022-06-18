@@ -92,7 +92,7 @@ public partial class SettingsDialog: Form {
 
     private void InsertTemplatePlaceholderMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
         if (e.ClickedItem == helpToolStripMenuItem) {
-            Process.Start("https://handlebarsjs.com/");
+            Process.Start("https://handlebarsjs.com/guide/#language-features");
         } else {
             string textToInsert;
             if (e.ClickedItem == newLineToolStripMenuItem) {
@@ -107,16 +107,18 @@ public partial class SettingsDialog: Form {
 
             string placeholder      = $"{{{{{textToInsert}}}}}";
             string originalTemplate = templateEditor.Text;
-            int    selectionEnd     = templateEditor.SelectionStart + templateEditor.SelectionLength;
+            int    selectionStart   = templateEditor.SelectionStart;
+            int    selectionEnd     = selectionStart + templateEditor.SelectionLength;
 
             StringBuilder newTemplate = new();
-            newTemplate.Append(originalTemplate.Substring(0, templateEditor.SelectionStart));
+            newTemplate.Append(originalTemplate.Substring(0, selectionStart));
             newTemplate.Append(placeholder);
             newTemplate.Append(originalTemplate.Substring(selectionEnd));
 
             templateEditor.Text            = newTemplate.ToString();
-            templateEditor.SelectionStart  = selectionEnd;
             templateEditor.SelectionLength = 0;
+            templateEditor.SelectionStart  = selectionStart + placeholder.Length;
+            templateEditor.Focus();
         }
     }
 
