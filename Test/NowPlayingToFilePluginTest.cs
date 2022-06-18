@@ -15,30 +15,27 @@ namespace Test
         public NowPlayingToFilePluginTest()
         {
             manager = A.Fake<NowPlayingToFileManager>();
-            plugin = new NowPlayingToFilePlugin { Manager = manager };
+            plugin  = new NowPlayingToFilePlugin { manager = manager };
         }
 
         [Fact]
-        public void PluginName()
-        {
+        public void pluginName() {
             plugin.Name.Should().StartWith("Now Playing to File v");
         }
 
         [Fact]
-        public void Initialize()
-        {
+        public void initialize() {
             plugin.Init(IntPtr.Zero);
             plugin.Initialize();
         }
 
         [Fact]
-        public void Quit()
-        {
-            A.CallTo(() => manager.OnQuit()).DoesNothing();
+        public void quit() {
+            A.CallTo(() => manager.onQuit()).DoesNothing();
 
             plugin.Quit();
 
-            A.CallTo(() => manager.OnQuit()).MustHaveHappened();
+            A.CallTo(() => manager.onQuit()).MustHaveHappened();
         }
     }
 }

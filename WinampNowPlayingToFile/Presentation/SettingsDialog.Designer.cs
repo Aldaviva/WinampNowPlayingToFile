@@ -66,9 +66,9 @@
             // writeToFileLabel
             // 
             this.writeToFileLabel.AutoSize = true;
-            this.writeToFileLabel.Location = new System.Drawing.Point(13, 72);
+            this.writeToFileLabel.Location = new System.Drawing.Point(13, 76);
             this.writeToFileLabel.Name = "writeToFileLabel";
-            this.writeToFileLabel.Size = new System.Drawing.Size(68, 13);
+            this.writeToFileLabel.Size = new System.Drawing.Size(66, 13);
             this.writeToFileLabel.TabIndex = 5;
             this.writeToFileLabel.Text = "&Save text as";
             // 
@@ -82,7 +82,7 @@
             // writeToFileBrowseButton
             // 
             this.writeToFileBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.writeToFileBrowseButton.Location = new System.Drawing.Point(499, 67);
+            this.writeToFileBrowseButton.Location = new System.Drawing.Point(499, 71);
             this.writeToFileBrowseButton.Name = "writeToFileBrowseButton";
             this.writeToFileBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.writeToFileBrowseButton.TabIndex = 7;
@@ -94,7 +94,7 @@
             // 
             this.textFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textFilename.Location = new System.Drawing.Point(127, 69);
+            this.textFilename.Location = new System.Drawing.Point(127, 73);
             this.textFilename.Name = "textFilename";
             this.textFilename.Size = new System.Drawing.Size(366, 20);
             this.textFilename.TabIndex = 6;
@@ -102,9 +102,9 @@
             // templateLabel
             // 
             this.templateLabel.AutoSize = true;
-            this.templateLabel.Location = new System.Drawing.Point(13, 14);
+            this.templateLabel.Location = new System.Drawing.Point(13, 18);
             this.templateLabel.Name = "templateLabel";
-            this.templateLabel.Size = new System.Drawing.Size(74, 13);
+            this.templateLabel.Size = new System.Drawing.Size(71, 13);
             this.templateLabel.TabIndex = 0;
             this.templateLabel.Text = "&Text template";
             // 
@@ -112,7 +112,7 @@
             // 
             this.templateEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.templateEditor.Location = new System.Drawing.Point(127, 11);
+            this.templateEditor.Location = new System.Drawing.Point(127, 15);
             this.templateEditor.Name = "templateEditor";
             this.templateEditor.Size = new System.Drawing.Size(366, 20);
             this.templateEditor.TabIndex = 1;
@@ -121,7 +121,7 @@
             // templateInsertButton
             // 
             this.templateInsertButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.templateInsertButton.Location = new System.Drawing.Point(499, 9);
+            this.templateInsertButton.Location = new System.Drawing.Point(499, 13);
             this.templateInsertButton.Name = "templateInsertButton";
             this.templateInsertButton.Size = new System.Drawing.Size(75, 23);
             this.templateInsertButton.TabIndex = 2;
@@ -132,7 +132,7 @@
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.Location = new System.Drawing.Point(337, 192);
+            this.okButton.Location = new System.Drawing.Point(337, 196);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 13;
@@ -144,7 +144,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(418, 192);
+            this.cancelButton.Location = new System.Drawing.Point(418, 196);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 14;
@@ -156,7 +156,7 @@
             // 
             this.templatePreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.templatePreview.Location = new System.Drawing.Point(127, 40);
+            this.templatePreview.Location = new System.Drawing.Point(127, 44);
             this.templatePreview.Name = "templatePreview";
             this.templatePreview.ReadOnly = true;
             this.templatePreview.Size = new System.Drawing.Size(447, 20);
@@ -166,9 +166,9 @@
             // previewLabel
             // 
             this.previewLabel.AutoSize = true;
-            this.previewLabel.Location = new System.Drawing.Point(13, 43);
+            this.previewLabel.Location = new System.Drawing.Point(13, 47);
             this.previewLabel.Name = "previewLabel";
-            this.previewLabel.Size = new System.Drawing.Size(71, 13);
+            this.previewLabel.Size = new System.Drawing.Size(68, 13);
             this.previewLabel.TabIndex = 3;
             this.previewLabel.Text = "Text preview";
             // 
@@ -189,76 +189,76 @@
             this.insertTemplatePlaceholderMenu.Name = "insertTemplatePlaceholderMenu";
             this.insertTemplatePlaceholderMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.insertTemplatePlaceholderMenu.ShowImageMargin = false;
-            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(93, 214);
+            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(96, 214);
             this.insertTemplatePlaceholderMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.InsertTemplatePlaceholderMenu_ItemClicked);
             // 
             // albumToolStripMenuItem
             // 
             this.albumToolStripMenuItem.Name = "albumToolStripMenuItem";
             this.albumToolStripMenuItem.ShowShortcutKeys = false;
-            this.albumToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.albumToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.albumToolStripMenuItem.Text = "Album";
             // 
             // artistToolStripMenuItem
             // 
             this.artistToolStripMenuItem.Name = "artistToolStripMenuItem";
             this.artistToolStripMenuItem.ShowShortcutKeys = false;
-            this.artistToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.artistToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.artistToolStripMenuItem.Text = "Artist";
             // 
             // filenameToolStripMenuItem
             // 
             this.filenameToolStripMenuItem.Name = "filenameToolStripMenuItem";
             this.filenameToolStripMenuItem.ShowShortcutKeys = false;
-            this.filenameToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.filenameToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.filenameToolStripMenuItem.Text = "Filename";
             // 
             // titleToolStripMenuItem
             // 
             this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
             this.titleToolStripMenuItem.ShowShortcutKeys = false;
-            this.titleToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.titleToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.titleToolStripMenuItem.Text = "Title";
             // 
             // yearToolStripMenuItem
             // 
             this.yearToolStripMenuItem.Name = "yearToolStripMenuItem";
             this.yearToolStripMenuItem.ShowShortcutKeys = false;
-            this.yearToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.yearToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.yearToolStripMenuItem.Text = "Year";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(89, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(92, 6);
             // 
             // newLineToolStripMenuItem
             // 
             this.newLineToolStripMenuItem.Name = "newLineToolStripMenuItem";
-            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.newLineToolStripMenuItem.Text = "New line";
             // 
             // ifToolStripMenuItem
             // 
             this.ifToolStripMenuItem.Name = "ifToolStripMenuItem";
-            this.ifToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.ifToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.ifToolStripMenuItem.Text = "If";
             // 
             // ifElseToolStripMenuItem
             // 
             this.ifElseToolStripMenuItem.Name = "ifElseToolStripMenuItem";
-            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.ifElseToolStripMenuItem.Text = "If else";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(89, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(92, 6);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // label1
@@ -266,7 +266,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(22, 144);
+            this.label1.Location = new System.Drawing.Point(22, 148);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(544, 30);
             this.label1.TabIndex = 12;
@@ -278,7 +278,7 @@
             this.horizontalRule1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.horizontalRule1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.horizontalRule1.Location = new System.Drawing.Point(17, 132);
+            this.horizontalRule1.Location = new System.Drawing.Point(17, 136);
             this.horizontalRule1.Name = "horizontalRule1";
             this.horizontalRule1.Size = new System.Drawing.Size(555, 2);
             this.horizontalRule1.TabIndex = 11;
@@ -286,7 +286,7 @@
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyButton.Location = new System.Drawing.Point(499, 192);
+            this.applyButton.Location = new System.Drawing.Point(499, 196);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
             this.applyButton.TabIndex = 15;
@@ -297,16 +297,16 @@
             // albumArtLabel
             // 
             this.albumArtLabel.AutoSize = true;
-            this.albumArtLabel.Location = new System.Drawing.Point(13, 101);
+            this.albumArtLabel.Location = new System.Drawing.Point(13, 105);
             this.albumArtLabel.Name = "albumArtLabel";
-            this.albumArtLabel.Size = new System.Drawing.Size(96, 13);
+            this.albumArtLabel.Size = new System.Drawing.Size(92, 13);
             this.albumArtLabel.TabIndex = 8;
             this.albumArtLabel.Text = "Save a&lbum art as";
             // 
             // albumArtBrowseButton
             // 
             this.albumArtBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.albumArtBrowseButton.Location = new System.Drawing.Point(499, 96);
+            this.albumArtBrowseButton.Location = new System.Drawing.Point(499, 100);
             this.albumArtBrowseButton.Name = "albumArtBrowseButton";
             this.albumArtBrowseButton.Size = new System.Drawing.Size(75, 23);
             this.albumArtBrowseButton.TabIndex = 10;
@@ -318,7 +318,7 @@
             // 
             this.albumArtFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.albumArtFilename.Location = new System.Drawing.Point(127, 98);
+            this.albumArtFilename.Location = new System.Drawing.Point(127, 102);
             this.albumArtFilename.Name = "albumArtFilename";
             this.albumArtFilename.Size = new System.Drawing.Size(366, 20);
             this.albumArtFilename.TabIndex = 9;
@@ -336,7 +336,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(586, 227);
+            this.ClientSize = new System.Drawing.Size(586, 232);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.horizontalRule1);
             this.Controls.Add(this.label1);

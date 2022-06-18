@@ -4,6 +4,7 @@ using System.Text;
 using Daniel15.Sharpamp;
 using FakeItEasy;
 using FluentAssertions;
+using WinampNowPlayingToFile;
 using WinampNowPlayingToFile.Business;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
@@ -32,73 +33,66 @@ namespace Test.Business
 
         public NowPlayingToFileManagerTest()
         {
-            CleanUp();
+            cleanUp();
 
-            A.CallTo(() => winampController.Status).Returns(Status.Playing);
-            A.CallTo(() => winampController.CurrentSong).Returns(song);
-            A.CallTo(() => settings.TextFilename).Returns(textFilename);
-            A.CallTo(() => settings.TextTemplate).Returns(new RegistrySettings().LoadDefaults().TextTemplate);
-            A.CallTo(() => settings.AlbumArtFilename).Returns(albumArtFilename);
+            A.CallTo(() => winampController.status).Returns(Status.Playing);
+            A.CallTo(() => winampController.currentSong).Returns(song);
+            A.CallTo(() => settings.textFilename).Returns(textFilename);
+            A.CallTo(() => settings.textTemplate).Returns(new RegistrySettings().loadDefaults().textTemplate);
+            A.CallTo(() => settings.albumArtFilename).Returns(albumArtFilename);
 
             manager = new NowPlayingToFileManager(settings, winampController);
         }
 
-        public void Dispose()
-        {
-            CleanUp();
+        public void Dispose() {
+            cleanUp();
         }
 
-        private void CleanUp()
-        {
+        private void cleanUp() {
             File.Delete(textFilename);
             File.Delete(albumArtFilename);
         }
 
         [Fact]
-        public void RenderTemplateWithAlbum()
-        {
-            string actual = manager.RenderText();
+        public void renderTemplateWithAlbum() {
+            string actual = manager.renderText();
 
             actual.Should().Be("artist \u2013 title \u2013 album");
         }
 
         [Fact]
-        public void RenderTemplateWithoutAlbum()
-        {
-            A.CallTo(() => winampController.CurrentSong).Returns(new Song
-            {
-                Album = "",
-                Artist = "artist",
-                Title = "title",
-                Year = 2018,
+        public void renderTemplateWithoutAlbum() {
+            A.CallTo(() => winampController.currentSong).Returns(new Song {
+                Album    = "",
+                Artist   = "artist",
+                Title    = "title",
+                Year     = 2018,
                 Filename = "empty.ogg"
             });
 
-            string actual = manager.RenderText();
+            string actual = manager.renderText();
 
             actual.Should().Be("artist \u2013 title");
         }
 
         [Fact]
-        public void RenderTemplateWhenPaused()
-        {
-            A.CallTo(() => winampController.Status).Returns(Status.Paused);
+        public void renderTemplateWhenPaused() {
+            A.CallTo(() => winampController.status).Returns(Status.Paused);
 
-            manager.RenderText().Should().BeEmpty();
+            manager.renderText().Should().BeEmpty();
         }
 
         [Fact]
-        public void RenderTemplateWhenStopped()
-        {
-            A.CallTo(() => winampController.Status).Returns(Status.Stopped);
+        public void renderTemplateWhenStopped() {
+            A.CallTo(() => winampController.status).Returns(Status.Stopped);
 
-            manager.RenderText().Should().BeEmpty();
+            manager.renderText().Should().BeEmpty();
         }
 
         [Fact]
         public void WriteToFileOnSongChange()
         {
-            winampController.SongChanged += Raise.FreeForm.With(winampController, new SongChangedEventArgs(new Song()));
+            winampController.songChanged += Raise.FreeForm.With(winampController, new SongChangedEventArgs(new Song()));
 
             string actualText = File.ReadAllText(textFilename, Encoding.UTF8);
             actualText.Should().Be("artist \u2013 title \u2013 album");
@@ -111,7 +105,7 @@ namespace Test.Business
         [Fact]
         public void WriteToFileOnStatusChange()
         {
-            winampController.StatusChanged += Raise.FreeForm.With(winampController, new StatusChangedEventArgs(Status.Playing));
+            winampController.statusChanged += Raise.FreeForm.With(winampController, new StatusChangedEventArgs(Status.Playing));
 
             string actualText = File.ReadAllText(textFilename, Encoding.UTF8);
             actualText.Should().Be("artist \u2013 title \u2013 album");
@@ -124,15 +118,14 @@ namespace Test.Business
         [Fact]
         public void DontCrashOnId3V1V24WithNoArtwork()
         {
-            A.CallTo(() => winampController.CurrentSong).Returns(new Song
-            {
+            A.CallTo(() => winampController.currentSong).Returns(new Song {
                 Filename = @"D:\Music\Big Beat\The Crystal Method\Blood Rave.mp3",
-                Artist = "The Crystal Method",
-                Title = "Blood Rave",
-                Album = "Mixes and Soundtracks"
+                Artist   = "The Crystal Method",
+                Title    = "Blood Rave",
+                Album    = "Mixes and Soundtracks"
             });
 
-            manager.Update();
+            manager.update();
         }
 
         [Fact]
@@ -141,52 +134,47 @@ namespace Test.Business
             File.WriteAllText(textFilename, "test");
             File.WriteAllText(albumArtFilename, "test");
 
-            manager.OnQuit();
+            manager.onQuit();
 
             File.ReadAllText(textFilename).Should().BeEmpty();
             File.Exists(albumArtFilename).Should().BeFalse();
         }
 
         [Fact]
-        public void RecompileTemplateWhenSettingsChange()
-        {
-            manager.Update();
+        public void recompileTemplateWhenSettingsChange() {
+            manager.update();
 
-            A.CallTo(() => settings.TextTemplate).Returns("{{Artist}}");
-            settings.SettingsUpdated += Raise.WithEmpty();
+            A.CallTo(() => settings.textTemplate).Returns("{{Artist}}");
+            settings.settingsUpdated += Raise.WithEmpty();
 
             File.ReadAllText(textFilename).Should().Be("artist");
         }
 
         [Fact]
-        public void ExtractDefaultAlbumArtWhenPlayingAndTrackHasNoAlbumArt()
-        {
-            A.CallTo(() => winampController.CurrentSong).Returns(new Song
-            {
-                Album = "",
-                Artist = "artist",
-                Title = "title",
-                Year = 2018,
+        public void extractDefaultAlbumArtWhenPlayingAndTrackHasNoAlbumArt() {
+            A.CallTo(() => winampController.currentSong).Returns(new Song {
+                Album    = "",
+                Artist   = "artist",
+                Title    = "title",
+                Year     = 2018,
                 Filename = @"Tracks\noalbumart.flac"
             });
 
-            byte[] actual = manager.ExtractAlbumArt();
-            byte[] expected = WinampNowPlayingToFile.Resources.black_png;
+            byte[] actual   = manager.extractAlbumArt();
+            byte[] expected = Resources.black_png;
             actual.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
-        public void AlbumArtFileShouldNotExistWhenPaused()
-        {
-            A.CallTo(() => winampController.Status).Returns(Status.Paused);
-            manager.ExtractAlbumArt().Should().BeNull();
+        public void albumArtFileShouldNotExistWhenPaused() {
+            A.CallTo(() => winampController.status).Returns(Status.Paused);
+            manager.extractAlbumArt().Should().BeNull();
         }
 
         [Fact]
-        public void AlbumArtFileShouldNotExistWhenStopped()
-        {
-            A.CallTo(() => winampController.Status).Returns(Status.Stopped);
-            manager.ExtractAlbumArt().Should().BeNull();
+        public void albumArtFileShouldNotExistWhenStopped() {
+            A.CallTo(() => winampController.status).Returns(Status.Stopped);
+            manager.extractAlbumArt().Should().BeNull();
         }
     }
 }

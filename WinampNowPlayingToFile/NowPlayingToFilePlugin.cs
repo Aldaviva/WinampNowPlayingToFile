@@ -6,37 +6,35 @@ using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Presentation;
 using WinampNowPlayingToFile.Settings;
 
-namespace WinampNowPlayingToFile {
+namespace WinampNowPlayingToFile; 
 
-    public class NowPlayingToFilePlugin: GeneralPlugin {
+public class NowPlayingToFilePlugin: GeneralPlugin {
 
-        public override string Name =>
-            $"Now Playing to File v{Assembly.GetAssembly(typeof(NowPlayingToFilePlugin)).GetName().Version}";
+    public override string Name =>
+        $"Now Playing to File v{Assembly.GetAssembly(typeof(NowPlayingToFilePlugin)).GetName().Version}";
 
-        internal NowPlayingToFileManager manager;
-        private WinampControllerImpl winampController;
-        private ISettings settings;
+    internal NowPlayingToFileManager manager;
+    private  WinampControllerImpl    winampController;
+    private  ISettings               settings;
 
-        public override void Initialize() {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+    public override void Initialize() {
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
 
-            settings = new RegistrySettings();
-            settings.load();
+        settings = new RegistrySettings();
+        settings.load();
 
-            winampController = new WinampControllerImpl(Winamp);
-            manager = new NowPlayingToFileManager(settings, winampController);
-        }
+        winampController = new WinampControllerImpl(Winamp);
+        manager          = new NowPlayingToFileManager(settings, winampController);
+    }
 
-        public override void Config() {
-            new SettingsDialog(settings, winampController).ShowDialog();
-        }
+    public override void Config() {
+        new SettingsDialog(settings, winampController).ShowDialog();
+    }
 
-        public override void Quit() {
-            manager?.onQuit();
-            manager = null;
-        }
-
+    public override void Quit() {
+        manager?.onQuit();
+        manager = null;
     }
 
 }

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Ben Hutchison")]
 [assembly: AssemblyProduct("Winamp Now Playing To File")]
-[assembly: AssemblyCopyright("Copyright 2018 Ben Hutchison")]
+[assembly: AssemblyCopyright("© 2022 Ben Hutchison")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

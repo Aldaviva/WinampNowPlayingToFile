@@ -12,57 +12,45 @@ namespace Test.Settings
 
         public RegistrySettingsTest()
         {
-            settings = new RegistrySettings { Key = @"Software\WinampNowPlayingToFile-test" };
-            CleanUp();
+            settings = new RegistrySettings { keyPath = @"Software\WinampNowPlayingToFile-test" };
+            cleanUp();
         }
 
-        public void Dispose()
-        {
-            CleanUp();
+        public void Dispose() {
+            cleanUp();
         }
 
-        private void CleanUp()
-        {
-            try
-            {
-                Registry.CurrentUser.DeleteSubKeyTree(settings.Key);
-            }
-            catch (ArgumentException)
-            {
+        private void cleanUp() {
+            try {
+                Registry.CurrentUser.DeleteSubKeyTree(settings.keyPath);
+            } catch (ArgumentException) {
                 //key did not exist, which we want
             }
         }
 
         [Fact]
-        public void Load()
-        {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(settings.Key))
-            {
-                if (key != null)
-                {
-                    key.SetValue("TextFilename", "a");
-                    key.SetValue("AlbumArtFilename", "b");
-                    key.SetValue("TextTemplate", "c");
-                }
+        public void load() {
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(settings.keyPath)) {
+                key?.SetValue("TextFilename", "a");
+                key?.SetValue("AlbumArtFilename", "b");
+                key?.SetValue("TextTemplate", "c");
             }
 
-            settings.Load();
+            settings.load();
 
-            settings.TextFilename.Should().Be("a");
-            settings.AlbumArtFilename.Should().Be("b");
-            settings.TextTemplate.Should().Be("c");
+            settings.textFilename.Should().Be("a");
+            settings.albumArtFilename.Should().Be("b");
+            settings.textTemplate.Should().Be("c");
         }
 
         [Fact]
-        public void Save()
-        {
-            settings.AlbumArtFilename = "1";
-            settings.TextFilename = "2";
-            settings.TextTemplate = "3";
-            settings.Save();
+        public void save() {
+            settings.albumArtFilename = "1";
+            settings.textFilename     = "2";
+            settings.textTemplate     = "3";
+            settings.save();
 
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(settings.Key))
-            {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(settings.keyPath)) {
                 key.Should().NotBeNull();
                 // ReSharper disable once PossibleNullReferenceException
                 key.GetValue("AlbumArtFilename").Should().Be("1");
@@ -72,17 +60,16 @@ namespace Test.Settings
         }
 
         [Fact]
-        public void LeaveDefaultsLoadedWhenRegistryKeysAreMissing()
-        {
-            settings.LoadDefaults();
-            string defaultAlbumArtFilename = settings.AlbumArtFilename;
-            string defaultTextTemplate = settings.TextTemplate;
-            string defaultTextFilename = settings.TextFilename;
+        public void leaveDefaultsLoadedWhenRegistryKeysAreMissing() {
+            settings.loadDefaults();
+            string defaultAlbumArtFilename = settings.albumArtFilename;
+            string defaultTextTemplate     = settings.textTemplate;
+            string defaultTextFilename     = settings.textFilename;
 
-            settings.Load();
-            settings.AlbumArtFilename.Should().Be(defaultAlbumArtFilename);
-            settings.TextTemplate.Should().Be(defaultTextTemplate);
-            settings.TextFilename.Should().Be(defaultTextFilename);
+            settings.load();
+            settings.albumArtFilename.Should().Be(defaultAlbumArtFilename);
+            settings.textTemplate.Should().Be(defaultTextTemplate);
+            settings.textFilename.Should().Be(defaultTextFilename);
         }
     }
 }
