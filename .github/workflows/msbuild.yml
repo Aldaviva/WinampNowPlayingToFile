@@ -23,7 +23,9 @@ jobs:
       run: Invoke-WebRequest -Uri "https://github.com/Daniel15/Sharpamp/releases/download/release-0.1.0/Sharpamp.0.1.Beta.exe" -OutFile Sharpamp.exe
     
     - name: Install Sharpamp
-      run: ./Sharpamp.exe /VERYSILENT /SP- /NORESTART /SUPPRESSMSGBOXES
+      run: |
+        ./Sharpamp.exe /VERYSILENT /SP- /NORESTART /SUPPRESSMSGBOXES /LOG="Sharpamp.log"
+        Get-Content Sharpamp.log
     
     - name: Build
       run: msbuild /m /p:Configuration=Release WinampNowPlayingToFile.sln -t:build -restore
