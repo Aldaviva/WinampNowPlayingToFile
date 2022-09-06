@@ -12,27 +12,25 @@ using Xunit;
 using Song = WinampNowPlayingToFile.Facade.Song;
 using SongChangedEventArgs = WinampNowPlayingToFile.Facade.SongChangedEventArgs;
 
-namespace Test.Business
-{
-    public class NowPlayingToFileManagerTest : IDisposable
-    {
-        private readonly WinampController winampController = A.Fake<WinampController>();
-        private readonly NowPlayingToFileManager manager;
-        private readonly string textFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.txt");
-        private readonly string albumArtFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.png");
-        private readonly ISettings settings = A.Fake<ISettings>();
+namespace Test.Business {
 
-        private readonly Song song = new Song
-        {
-            Album = "album",
-            Artist = "artist",
-            Title = "title",
-            Year = 2018,
+    public class NowPlayingToFileManagerTest: IDisposable {
+
+        private readonly WinampController        winampController = A.Fake<WinampController>();
+        private readonly NowPlayingToFileManager manager;
+        private readonly string                  textFilename     = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.txt");
+        private readonly string                  albumArtFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.png");
+        private readonly ISettings               settings         = A.Fake<ISettings>();
+
+        private readonly Song song = new Song {
+            Album    = "album",
+            Artist   = "artist",
+            Title    = "title",
+            Year     = 2018,
             Filename = @"Tracks\empty.flac"
         };
 
-        public NowPlayingToFileManagerTest()
-        {
+        public NowPlayingToFileManagerTest() {
             cleanUp();
 
             A.CallTo(() => winampController.status).Returns(Status.Playing);
@@ -90,36 +88,33 @@ namespace Test.Business
         }
 
         [Fact]
-        public void WriteToFileOnSongChange()
-        {
+        public void writeToFileOnSongChange() {
             winampController.songChanged += Raise.FreeForm.With(winampController, new SongChangedEventArgs(new Song()));
 
             string actualText = File.ReadAllText(textFilename, Encoding.UTF8);
             actualText.Should().Be("artist \u2013 title \u2013 album");
 
-            byte[] actualAlbumArt = File.ReadAllBytes(albumArtFilename);
+            byte[] actualAlbumArt   = File.ReadAllBytes(albumArtFilename);
             byte[] expectedAlbumArt = File.ReadAllBytes(@"Tracks\albumart.png");
             actualAlbumArt.Should().BeEquivalentTo(expectedAlbumArt, "album art");
         }
 
         [Fact]
-        public void WriteToFileOnStatusChange()
-        {
+        public void writeToFileOnStatusChange() {
             winampController.statusChanged += Raise.FreeForm.With(winampController, new StatusChangedEventArgs(Status.Playing));
 
             string actualText = File.ReadAllText(textFilename, Encoding.UTF8);
             actualText.Should().Be("artist \u2013 title \u2013 album");
 
-            byte[] actualAlbumArt = File.ReadAllBytes(albumArtFilename);
+            byte[] actualAlbumArt   = File.ReadAllBytes(albumArtFilename);
             byte[] expectedAlbumArt = File.ReadAllBytes(@"Tracks\albumart.png");
             actualAlbumArt.Should().BeEquivalentTo(expectedAlbumArt, "album art");
         }
 
         [Fact]
-        public void DontCrashOnId3V1V24WithNoArtwork()
-        {
+        public void dontCrashOnId3V1V24WithNoArtwork() {
             A.CallTo(() => winampController.currentSong).Returns(new Song {
-                Filename = @"D:\Music\Big Beat\The Crystal Method\Blood Rave.mp3",
+                Filename = @"C:\Users\Ben\Music\Big Beat\The Crystal Method\Blood Rave.mp3",
                 Artist   = "The Crystal Method",
                 Title    = "Blood Rave",
                 Album    = "Mixes and Soundtracks"
@@ -129,8 +124,19 @@ namespace Test.Business
         }
 
         [Fact]
-        public void ClearFilesOnQuit()
-        {
+        public void dontCrashOnUrisWithFileExtensions() {
+            A.CallTo(() => winampController.currentSong).Returns(new Song {
+                Filename = @"http://135.125.239.164:8080/dance.mp3",
+                Artist   = "Test Artist",
+                Title    = "Test Title",
+                Album    = "Test Album"
+            });
+
+            manager.update();
+        }
+
+        [Fact]
+        public void clearFilesOnQuit() {
             File.WriteAllText(textFilename, "test");
             File.WriteAllText(albumArtFilename, "test");
 
@@ -176,5 +182,7 @@ namespace Test.Business
             A.CallTo(() => winampController.status).Returns(Status.Stopped);
             manager.extractAlbumArt().Should().BeNull();
         }
+
     }
+
 }

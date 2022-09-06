@@ -5,10 +5,8 @@ using System.Text;
 using System.Windows.Forms;
 using Daniel15.Sharpamp;
 using Mustache;
-using TagLib;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
-using File = System.IO.File;
 
 namespace WinampNowPlayingToFile.Business;
 
@@ -88,9 +86,9 @@ public class NowPlayingToFileManager {
              * We can ignore this because the SongChanged event will be fired immediately afterwards, so we will get the correct artwork from that.
              */
             return null;
-        } catch (Exception e) when (e is UnsupportedFormatException or CorruptFileException) {
+        } catch (Exception) {
             /*
-             * TagLib cannot read the metadata from the given file. This can happen with MIDI music, for instance.
+             * TagLib cannot read the metadata from the given file. This can happen with MIDI music or URIs, for instance.
              */
             return null;
         }
