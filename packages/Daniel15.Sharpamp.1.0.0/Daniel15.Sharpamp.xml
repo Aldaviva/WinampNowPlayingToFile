@@ -1,0 +1,348 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Daniel15.Sharpamp</name>
+    </assembly>
+    <members>
+        <member name="T:Daniel15.Sharpamp.Winamp">
+            <summary>
+            Winamp API for C#. Allows controlling of Winamp.
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.WINAMP_TITLE">
+            <summary>
+            Winamp window  title, for if we have to search for it (ie, we're not
+            using this as a plugin)
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.#ctor(System.IntPtr)">
+            <summary>
+            Create a new instance of the Winamp class
+            </summary>
+            <param name="hWnd">Window handle of Winamp</param>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.#ctor">
+            <summary>
+            Create a new instance of the Winamp class. If invoked with no window
+            handle, we try to find Winamp ourselves. This is so it can be used
+            outside of a Winamp plugin
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.Init">
+            <summary>
+            Initialise the Winamp class. Called from the constructor
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.Finalize">
+            <summary>
+            Destructor for Winamp API. Removes the subclassing
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.WinampWndProc(System.IntPtr,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Handle a message from the playlist window
+            </summary>
+            <param name="hWnd">Window handle of playlist</param>
+            <param name="msg">Message type</param>
+            <param name="wParam">wParam</param>
+            <param name="lParam">lParam</param>
+            <returns></returns>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.SendIPCCommand(Daniel15.Sharpamp.Winamp.IPCCommand)">
+            <summary>
+            Send a command to Winamp via SendMessage()
+            </summary>
+            <param name="command">Command to send</param>
+            <returns>Return value of command</returns>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.SendIPCCommandInt(Daniel15.Sharpamp.Winamp.IPCCommand)">
+            <summary>
+            Send an IPC command to Winamp via SendMessage(), and return an int result
+            </summary>
+            <param name="command">Command to send</param>
+            <returns>Return value of command</returns>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.SendIPCCommandString(Daniel15.Sharpamp.Winamp.IPCCommand)">
+            <summary>
+            Send a command to Winamp via SendMessage(), and receive a string result
+            </summary>
+            <param name="command">Command to send</param>
+            <returns>Return value of command</returns>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.SendCommand(Daniel15.Sharpamp.Winamp.Command)">
+            <summary>
+            Send a command to Winamp via SendMessage()
+            </summary>
+            <param name="command"></param>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.Play">
+            <summary>
+            Start playing the current song
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.Stop">
+            <summary>
+            Stop playing the current song
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.PlayPause">
+            <summary>
+            If currently playing, pause playback. If currently paused or stopped,
+            start playing.
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.PrevTrack">
+            <summary>
+            Go to the previous track
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.NextTrack">
+            <summary>
+            Go to the next track
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.GetVersion">
+            <summary>
+            Get the version of Winamp
+            </summary>
+            <returns>Version number (eg. 5.56)</returns>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.UpdateSongData">
+            <summary>
+            Update the data about the currently playing song
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.Winamp.GetMetadata(System.String,System.String)">
+            <summary>
+            Get metadata about a song.
+            </summary>
+            <param name="filename">Filename</param>
+            <param name="tag">Tag to get</param>
+            <returns>Data contained in this tag</returns>
+        </member>
+        <member name="E:Daniel15.Sharpamp.Winamp.SongChanged">
+            <summary>
+            Occurs when the currently playing song has been changed
+            </summary>
+        </member>
+        <member name="E:Daniel15.Sharpamp.Winamp.StatusChanged">
+            <summary>
+            Occurs when the playing status changes
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.Winamp.CurrentSong">
+            <summary>
+            Gets the currently playing song
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.Winamp.Status">
+            <summary>
+            Gets the current Winamp status
+            </summary>
+        </member>
+        <member name="T:Daniel15.Sharpamp.Winamp.IPCCommand">
+            <summary>
+            IPC commands we can send to Winamp
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.IPCCommand.GetVersion">
+            <summary>
+            Get the Winamp version number
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.IPCCommand.IsPlaying">
+            <summary>
+            Check whether Winamp is playing, paused, or stopped
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.IPCCommand.GetFilename">
+            <summary>
+            Get the file name of the currently playing file
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.IPCCommand.GetTitle">
+            <summary>
+            Get the title of the currently playing song
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.IPCCommand.ExtendedFileInfo">
+            <summary>
+            Get information about the currently playing song
+            </summary>
+        </member>
+        <member name="T:Daniel15.Sharpamp.Winamp.Command">
+            <summary>
+            Misc commands we can send to Winamp
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.Command.Play">
+            <summary>
+            Play the current song
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.Command.PlayPause">
+            <summary>
+            Play or pause the current song
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.Command.Stop">
+            <summary>
+            Stop the current song
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.Command.PrevTrack">
+            <summary>
+            Go to the previous track
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Winamp.Command.NextTrack">
+            <summary>
+            Go to the next track
+            </summary>
+        </member>
+        <member name="T:Daniel15.Sharpamp.SongChangedEventHandler">
+            <summary>
+            Represents the method that will handle the SongChangedEvent
+            </summary>
+            <param name="sender">Winamp object that sent the event</param>
+            <param name="e">Arguments for the event</param>
+        </member>
+        <member name="T:Daniel15.Sharpamp.SongChangedEventArgs">
+            <summary>
+            Provides data for the SongChanged event
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.SongChangedEventArgs.#ctor(Daniel15.Sharpamp.Song)">
+            <summary>
+            Create a new instance of SongChangedEventArgs for a specified song
+            </summary>
+            <param name="song">The current song</param>
+        </member>
+        <member name="P:Daniel15.Sharpamp.SongChangedEventArgs.Song">
+            <summary>
+            The song that is currently playing
+            </summary>
+        </member>
+        <member name="T:Daniel15.Sharpamp.StatusChangedEventHandler">
+            <summary>
+            Represents the method that will handle the StatusChangedEvent
+            </summary>
+            <param name="sender">Winamp object that sent the event</param>
+            <param name="e">Arguments for the event</param>
+        </member>
+        <member name="T:Daniel15.Sharpamp.StatusChangedEventArgs">
+            <summary>
+            Provides data for the StatusChanged event
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.StatusChangedEventArgs.#ctor(Daniel15.Sharpamp.Status)">
+            <summary>
+            Create a new instance of StatusChangedEventArgs
+            </summary>
+            <param name="status">The current status</param>
+        </member>
+        <member name="P:Daniel15.Sharpamp.StatusChangedEventArgs.Status">
+            <summary>
+            The current Winamp status
+            </summary>
+        </member>
+        <member name="T:Daniel15.Sharpamp.Status">
+            <summary>
+            Winamp status
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Status.Stopped">
+            <summary>
+            Winamp is currently not playing
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Status.Playing">
+            <summary>
+            Winamp is currently playing
+            </summary>
+        </member>
+        <member name="F:Daniel15.Sharpamp.Status.Paused">
+            <summary>
+            Winamp is currently paused
+            </summary>
+        </member>
+        <member name="T:Daniel15.Sharpamp.GeneralPlugin">
+            <summary>
+            A generic Winamp plugin. Do not use this unless you are making a Winamp
+            plugin. Generic Winamp plugins should inherit from this class.
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.GeneralPlugin.Initialize">
+            <summary>
+            Called when the plugin should be initialized
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.GeneralPlugin.Config">
+            <summary>
+            Configure the plugin. May open a configuration dialog, or just do
+            nothing.
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.GeneralPlugin.Quit">
+            <summary>
+            Quit the plugin
+            </summary>
+        </member>
+        <member name="M:Daniel15.Sharpamp.GeneralPlugin.Init(System.IntPtr)">
+            <summary>
+            Internal initialisation routine
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.GeneralPlugin.Winamp">
+            <summary>
+            Access to the Winamp API
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.GeneralPlugin.Name">
+            <summary>
+            Name of the plugin
+            </summary>
+        </member>
+        <member name="T:Daniel15.Sharpamp.Win32">
+            <summary>
+            Internal class containing all the Win32 calls used.
+            </summary>
+        </member>
+        <member name="T:Daniel15.Sharpamp.Song">
+            <summary>
+            Information about a song.
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.Song.Title">
+            <summary>
+            Title of the song
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.Song.Artist">
+            <summary>
+            Artist of the song
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.Song.Album">
+            <summary>
+            Album of the song
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.Song.Year">
+            <summary>
+            Year of the song
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.Song.HasMetadata">
+            <summary>
+            Whether the song has any metadata. If false, only the title will be
+            available.
+            </summary>
+        </member>
+        <member name="P:Daniel15.Sharpamp.Song.Filename">
+            <summary>
+            Filename of the song
+            </summary>
+        </member>
+    </members>
+</doc>

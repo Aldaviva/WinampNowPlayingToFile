@@ -19,27 +19,23 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
       
-    - name: Download Sharpamp installer
-      run: Invoke-WebRequest -Uri "https://github.com/Daniel15/Sharpamp/releases/download/release-0.1.0/Sharpamp.0.1.Beta.exe" -OutFile Sharpamp.exe
-    
-    - name: Install Sharpamp
+    - name: Install unmanaged dependencies
       run: |
-        ./Sharpamp.exe /VERYSILENT /SP- /NORESTART /SUPPRESSMSGBOXES /LOG="Sharpamp.log"
-        Get-Content Sharpamp.log
-    
+        mkdir -Force -ErrorAction Ignore .\WinampNowPlayingToFile\bin\Release\
+        copy .\packages\Daniel15.Sharpamp.1.0.0\Daniel15.Sharpamp.dll .\WinampNowPlayingToFile\bin\Release\
+
     - name: Build
-      run: msbuild /m /p:Configuration=Release WinampNowPlayingToFile.sln -t:build -restore
+      run: msbuild /m /p:Configuration=Release gen_WinampNowPlayingToFile -restore
       
     - name: Prepare artifacts
       run: |
-        mkdir ./artifact/
-        copy Release/*.dll ./artifact/
-        mkdir ./artifact/plugins/
-        move ./artifact/gen_WinampNowPlayingToFile.dll ./artifact/plugins/
+        mkdir .\artifact\plugins\
+        copy .\gen_WinampNowPlayingToFile\Release\*.dll .\artifact\
+        move .\artifact\gen_WinampNowPlayingToFile.dll .\artifact\plugins\
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3.1.0
       with:
         name: WinampNowPlayingToFile
-        path: ./artifact/
+        path: .\artifact\
         if-no-files-found: error
