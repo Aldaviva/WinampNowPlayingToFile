@@ -1,7 +1,9 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using Daniel15.Sharpamp;
 
-namespace WinampNowPlayingToFile.Facade; 
+namespace WinampNowPlayingToFile.Facade;
 
 public interface WinampController {
 
@@ -23,8 +25,8 @@ public class WinampControllerImpl: WinampController {
 
     private readonly Winamp winamp;
 
-    public event SongChangedEventHandler songChanged;
-    public event StatusChangedEventHandler statusChanged;
+    public event SongChangedEventHandler? songChanged;
+    public event StatusChangedEventHandler? statusChanged;
 
     public WinampControllerImpl(Winamp winamp) {
         this.winamp          =  winamp;

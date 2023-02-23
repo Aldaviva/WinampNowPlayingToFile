@@ -1,4 +1,7 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Daniel15.Sharpamp;
@@ -21,14 +24,17 @@ namespace Test.Business {
         private readonly string                  textFilename     = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.txt");
         private readonly string                  albumArtFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.png");
         private readonly ISettings               settings         = A.Fake<ISettings>();
+        private readonly Encoding                utf8             = new UTF8Encoding(false, true);
 
-        private readonly Song song = new Song {
+        private Song song = new() {
             Album    = "album",
             Artist   = "artist",
             Title    = "title",
             Year     = 2018,
             Filename = @"Tracks\empty.flac"
         };
+
+        private readonly IList<string> filesToDeleteOnDisposal = new List<string>();
 
         public NowPlayingToFileManagerTest() {
             cleanUp();
@@ -49,26 +55,29 @@ namespace Test.Business {
         private void cleanUp() {
             File.Delete(textFilename);
             File.Delete(albumArtFilename);
+            foreach (string file in filesToDeleteOnDisposal) {
+                File.Delete(file);
+            }
         }
 
         [Fact]
         public void renderTemplateWithAlbum() {
-            string actual = manager.renderText();
+            string actual = manager.renderText(song);
 
             actual.Should().Be("artist \u2013 title \u2013 album");
         }
 
         [Fact]
         public void renderTemplateWithoutAlbum() {
-            A.CallTo(() => winampController.currentSong).Returns(new Song {
+            song = new Song {
                 Album    = "",
                 Artist   = "artist",
                 Title    = "title",
                 Year     = 2018,
                 Filename = "empty.ogg"
-            });
+            };
 
-            string actual = manager.renderText();
+            string actual = manager.renderText(song);
 
             actual.Should().Be("artist \u2013 title");
         }
@@ -77,25 +86,25 @@ namespace Test.Business {
         public void renderTemplateWhenPaused() {
             A.CallTo(() => winampController.status).Returns(Status.Paused);
 
-            manager.renderText().Should().BeEmpty();
+            manager.renderText(song).Should().BeEmpty();
         }
 
         [Fact]
         public void renderTemplateWhenStopped() {
             A.CallTo(() => winampController.status).Returns(Status.Stopped);
 
-            manager.renderText().Should().BeEmpty();
+            manager.renderText(song).Should().BeEmpty();
         }
 
         [Fact]
         public void writeToFileOnSongChange() {
             winampController.songChanged += Raise.FreeForm.With(winampController, new SongChangedEventArgs(new Song()));
 
-            string actualText = File.ReadAllText(textFilename, Encoding.UTF8);
+            string actualText = File.ReadAllText(textFilename, utf8);
             actualText.Should().Be("artist \u2013 title \u2013 album");
 
             byte[] actualAlbumArt   = File.ReadAllBytes(albumArtFilename);
-            byte[] expectedAlbumArt = File.ReadAllBytes(@"Tracks\albumart.png");
+            byte[] expectedAlbumArt = File.ReadAllBytes(@"Tracks\expected.png");
             actualAlbumArt.Should().BeEquivalentTo(expectedAlbumArt, "album art");
         }
 
@@ -103,11 +112,11 @@ namespace Test.Business {
         public void writeToFileOnStatusChange() {
             winampController.statusChanged += Raise.FreeForm.With(winampController, new StatusChangedEventArgs(Status.Playing));
 
-            string actualText = File.ReadAllText(textFilename, Encoding.UTF8);
+            string actualText = File.ReadAllText(textFilename, utf8);
             actualText.Should().Be("artist \u2013 title \u2013 album");
 
             byte[] actualAlbumArt   = File.ReadAllBytes(albumArtFilename);
-            byte[] expectedAlbumArt = File.ReadAllBytes(@"Tracks\albumart.png");
+            byte[] expectedAlbumArt = File.ReadAllBytes(@"Tracks\expected.png");
             actualAlbumArt.Should().BeEquivalentTo(expectedAlbumArt, "album art");
         }
 
@@ -158,15 +167,15 @@ namespace Test.Business {
 
         [Fact]
         public void extractDefaultAlbumArtWhenPlayingAndTrackHasNoAlbumArt() {
-            A.CallTo(() => winampController.currentSong).Returns(new Song {
+            song = new Song {
                 Album    = "",
                 Artist   = "artist",
                 Title    = "title",
                 Year     = 2018,
                 Filename = @"Tracks\noalbumart.flac"
-            });
+            };
 
-            byte[] actual   = manager.extractAlbumArt();
+            byte[] actual   = manager.findAlbumArt(song);
             byte[] expected = Resources.black_png;
             actual.Should().BeEquivalentTo(expected);
         }
@@ -174,13 +183,77 @@ namespace Test.Business {
         [Fact]
         public void albumArtFileShouldNotExistWhenPaused() {
             A.CallTo(() => winampController.status).Returns(Status.Paused);
-            manager.extractAlbumArt().Should().BeNull();
+            manager.findAlbumArt(song).Should().BeNull();
         }
 
         [Fact]
         public void albumArtFileShouldNotExistWhenStopped() {
             A.CallTo(() => winampController.status).Returns(Status.Stopped);
-            manager.extractAlbumArt().Should().BeNull();
+            manager.findAlbumArt(song).Should().BeNull();
+        }
+
+        [Fact]
+        public void copyAlbumArtFromSidecarFiles() {
+            song = new Song {
+                Album    = "My Album",
+                Artist   = "artist",
+                Title    = "title",
+                Year     = 2023,
+                Filename = @"Tracks\noalbumart.flac"
+            };
+
+            var albumArtFilenames = new List<string> {
+                "My Album.bmp", // highest priority
+                "My Album.gif",
+                "My Album.jpeg",
+                "My Album.jpg",
+                "My Album.png",
+                "NFO file.nfo",
+                "cover.bmp",
+                "cover.gif",
+                "cover.jpeg",
+                "cover.jpg",
+                "cover.png",
+                "folder.bmp",
+                "folder.gif",
+                "folder.jpeg",
+                "folder.jpg",
+                "folder.png",
+                "front.bmp",
+                "front.gif",
+                "front.jpeg",
+                "front.jpg",
+                "front.png",
+                "albumart.bmp",
+                "albumart.gif",
+                "albumart.jpeg",
+                "albumart.jpg",
+                "albumart.png",
+            };
+
+            foreach (string filename in albumArtFilenames) {
+                string absoluteFile = Path.GetFullPath($"Tracks\\{filename}");
+                File.WriteAllText(absoluteFile, filename, utf8);
+                filesToDeleteOnDisposal.Add(absoluteFile);
+
+                if (Path.GetExtension(filename) == ".nfo") {
+                    string albumArtFileFromNfo = Path.ChangeExtension(filename, "jpg");
+                    absoluteFile = Path.GetFullPath($"Tracks\\{albumArtFileFromNfo}");
+                    File.WriteAllText(absoluteFile, albumArtFileFromNfo, utf8);
+                    filesToDeleteOnDisposal.Add(absoluteFile);
+                }
+            }
+
+            foreach (string filename in albumArtFilenames) {
+                byte[]? actual       = manager.findAlbumArt(song);
+                string? actualString = actual != null ? utf8.GetString(actual) : null;
+                string  expected     = Path.GetExtension(filename) == ".nfo" ? Path.ChangeExtension(filename, "jpg") : filename;
+                actualString.Should().Be(expected);
+
+                File.Delete($"Tracks\\{filename}");
+            }
+
+            manager.findAlbumArt(song).Should().BeEquivalentTo(Resources.black_png);
         }
 
     }

@@ -1,6 +1,8 @@
-﻿using Microsoft.Win32;
+﻿#nullable enable
 
-namespace WinampNowPlayingToFile.Settings; 
+using Microsoft.Win32;
+
+namespace WinampNowPlayingToFile.Settings;
 
 public class RegistrySettings: BaseSettings {
 
@@ -9,7 +11,7 @@ public class RegistrySettings: BaseSettings {
     public override void load() {
         loadDefaults();
 
-        using RegistryKey key = Registry.CurrentUser.OpenSubKey(keyPath);
+        using RegistryKey? key = Registry.CurrentUser.OpenSubKey(keyPath);
         if (key != null) {
             textFilename     = key.GetValue(nameof(textFilename)) as string ?? textFilename;
             albumArtFilename = key.GetValue(nameof(albumArtFilename)) as string ?? albumArtFilename;
@@ -19,7 +21,7 @@ public class RegistrySettings: BaseSettings {
     }
 
     public override void save() {
-        using RegistryKey key = Registry.CurrentUser.CreateSubKey(keyPath);
+        using RegistryKey? key = Registry.CurrentUser.CreateSubKey(keyPath);
         if (key != null) {
             key.SetValue(nameof(textFilename), textFilename);
             key.SetValue(nameof(albumArtFilename), albumArtFilename);

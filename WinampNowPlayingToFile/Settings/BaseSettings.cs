@@ -1,14 +1,16 @@
-﻿using System;
+﻿#nullable enable
 
-namespace WinampNowPlayingToFile.Settings; 
+using System;
+
+namespace WinampNowPlayingToFile.Settings;
 
 public abstract class BaseSettings: ISettings {
 
-    public string textFilename { get; set; }
-    public string albumArtFilename { get; set; }
-    public string textTemplate { get; set; }
+    public string textFilename { get; set; } = null!;
+    public string albumArtFilename { get; set; } = null!;
+    public string textTemplate { get; set; } = null!;
 
-    public event EventHandler settingsUpdated;
+    public event EventHandler? settingsUpdated;
 
     public abstract void load();
     public abstract void save();

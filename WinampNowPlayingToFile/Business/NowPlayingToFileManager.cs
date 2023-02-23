@@ -1,4 +1,7 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +10,7 @@ using Daniel15.Sharpamp;
 using Mustache;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
+using Song = WinampNowPlayingToFile.Facade.Song;
 
 namespace WinampNowPlayingToFile.Business;
 
@@ -27,7 +31,7 @@ public class NowPlayingToFileManager {
     private readonly WinampController winampController;
     private readonly ISettings        settings;
 
-    private Generator cachedTemplate;
+    private Generator? cachedTemplate;
 
     public NowPlayingToFileManager(ISettings settings, WinampController winampController) {
         this.winampController = winampController;
@@ -43,36 +47,39 @@ public class NowPlayingToFileManager {
 
     internal void update() {
         try {
-            saveText(renderText());
-            saveImage(extractAlbumArt());
+            Song currentSong = winampController.currentSong;
+            saveText(renderText(currentSong));
+            saveImage(findAlbumArt(currentSong));
         } catch (Exception e) {
             MessageBox.Show("Unhandled exception while updating song info on song change:\n" + e, "Now Playing To File error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
-    internal string renderText() {
-        return winampController.status == Status.Playing ? getTemplate().Render(winampController.currentSong) : string.Empty;
+    internal string renderText(Song currentSong) {
+        return winampController.status == Status.Playing ? getTemplate().Render(currentSong) : string.Empty;
     }
 
     private void saveText(string nowPlayingText) {
-        File.WriteAllText(settings.textFilename, nowPlayingText, new UTF8Encoding(false));
+        File.WriteAllText(settings.textFilename, nowPlayingText, new UTF8Encoding(false, true));
     }
 
     private Generator getTemplate() {
         return cachedTemplate ??= TEMPLATE_COMPILER.Compile(settings.textTemplate);
     }
 
-    internal byte[] extractAlbumArt() {
+    internal byte[]? findAlbumArt(Song currentSong) {
+        return winampController.status == Status.Playing ? extractAlbumArt(currentSong) ?? findAlbumArtSidecarFile(currentSong) ?? defaultAlbumArt : null;
+    }
+
+    private static byte[]? extractAlbumArt(Song currentSong) {
         try {
-            return winampController.status == Status.Playing
-                ? TagLib.File.Create(winampController.currentSong.Filename)
-                    .Tag
-                    .Pictures
-                    .ElementAtOrDefault(0)?
-                    .Data
-                    .Data ?? defaultAlbumArt
-                : null;
+            return TagLib.File.Create(currentSong.Filename)
+                .Tag
+                .Pictures
+                .ElementAtOrDefault(0)?
+                .Data
+                .Data;
         } catch (Exception e) when (e is FileNotFoundException or DirectoryNotFoundException) {
             /*
              * Probably just a race:
@@ -86,7 +93,7 @@ public class NowPlayingToFileManager {
              * We can ignore this because the SongChanged event will be fired immediately afterwards, so we will get the correct artwork from that.
              */
             return null;
-        } catch (Exception) {
+        } catch (Exception e) when (e is not OutOfMemoryException) {
             /*
              * TagLib cannot read the metadata from the given file. This can happen with MIDI music or URIs, for instance.
              */
@@ -94,7 +101,50 @@ public class NowPlayingToFileManager {
         }
     }
 
-    private void saveImage(byte[] imageData) {
+    private static byte[]? findAlbumArtSidecarFile(Song currentSong) {
+        IEnumerable<string> artworkExtensions = new[] { ".bmp", ".gif", ".jpeg", ".jpg", ".png" };
+        IEnumerable<string> artworkBaseNames  = new[] { "cover", "folder", "front", "albumart" };
+        DirectoryInfo       songDirectory;
+
+        try {
+            if (Path.GetDirectoryName(currentSong.Filename) is { } dir) {
+                songDirectory = new DirectoryInfo(dir);
+            } else {
+                return null;
+            }
+        } catch (NotSupportedException) {
+            // currentSong.Filename is a URI
+            return null;
+        }
+
+        /*
+         * %album%.[bmp|gif|jpeg|jpg|png]
+         */
+        return songDirectory.EnumerateFiles(Path.GetInvalidFileNameChars().Aggregate(currentSong.Album, (album, invalid) => album.Replace(invalid.ToString(), string.Empty)) + ".*")
+            /*
+             * (.*)\.nfo → $1.[bmp|gif|jpeg|jpg|png]
+             */
+            .Concat(songDirectory.EnumerateFiles("*.nfo")
+                .SelectMany(nfoFile => songDirectory.EnumerateFiles(Path.GetFileNameWithoutExtension(nfoFile.Name) + ".*")))
+            /*
+             * cover.[bmp|gif|jpeg|jpg|png]
+             * folder.[bmp|gif|jpeg|jpg|png]
+             * front.[bmp|gif|jpeg|jpg|png]
+             * albumart.[bmp|gif|jpeg|jpg|png]
+             */
+            .Concat(artworkBaseNames.SelectMany(basename => songDirectory.EnumerateFiles(basename + ".*")))
+            .Where(file => artworkExtensions.Contains(file.Extension.ToLowerInvariant()))
+            .Select(file => {
+                try {
+                    return File.ReadAllBytes(file.FullName);
+                } catch (Exception e) when (e is not OutOfMemoryException) {
+                    return null;
+                }
+            })
+            .FirstOrDefault(bytes => bytes != null);
+    }
+
+    private void saveImage(byte[]? imageData) {
         string filename = settings.albumArtFilename;
         if (imageData != null) {
             File.WriteAllBytes(filename, imageData);

@@ -1,16 +1,18 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿#nullable enable
 
-namespace WinampNowPlayingToFile.Facade; 
+using System.Diagnostics.CodeAnalysis;
+
+namespace WinampNowPlayingToFile.Facade;
 
 [SuppressMessage("ReSharper", "InconsistentNaming", Justification =
     "Property names are used in public-facing Mustache templates and cannot be changed.")]
 public class Song {
 
-    public string Artist { get; set; }
-    public string Album { get; set; }
-    public string Title { get; set; }
+    public string Artist { get; set; } = null!;
+    public string Album { get; set; } = null!;
+    public string Title { get; set; } = null!;
     public int? Year { get; set; }
-    public string Filename { get; set; }
+    public string Filename { get; set; } = null!;
 
     public Song() { }
 
