@@ -33,9 +33,9 @@ jobs:
 
     - name: Test
       run: |
-        dotnet build Test --no-dependencies --configuration Debug
-        dotnet publish Test --no-build --configuration Debug
-        dotnet vstest Test\bin\Debug\net48\publish\Test.dll --collect:"XPlat code coverage" --settings:Test\Test.runsettings --logger:"trx;LogFileName=TestResults.xml"
+        dotnet build Test --no-dependencies --configuration Release
+        dotnet publish Test --no-build --configuration Release
+        dotnet vstest Test\bin\Release\net48\publish\Test.dll --collect:"XPlat code coverage" --settings:Test\Test.runsettings --logger:"trx;LogFileName=TestResults.xml"
         Out-File -InputObject "TEST_EXIT_CODE=$LASTEXITCODE" -FilePath $env:GITHUB_ENV -Append -Encoding UTF8
         Copy-Item Test/TestResults/*/coverage.info Test/TestResults -ErrorAction Continue
         exit 0
