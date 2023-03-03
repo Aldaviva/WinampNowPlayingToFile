@@ -19,7 +19,9 @@ You can customize where the files are saved, as well as the format of the text. 
 <a id="problem"></a>
 ## Problem
 
-I was broadcasting video game streams on [my Twitch.tv channel](https://twitch.tv/aldaviva), in which I also play music in the background. I wanted viewers to be able to tell which song I was playing at any given time in case they liked it and wanted to find it for themselves. I started using the [Advanced mIRC Integration Plug-In (AMIP)](http://amip.tools-for.net/wiki/), which is generally used for showing your Now Playing status in IRC using [mIRC](https://www.mirc.com/). It also lets you save the status to a text file, which I added as a Text Source in [OBS](https://obsproject.com/). Unfortunately, AMIP only supports encoding the text using ANSI, OEM (DOS), FIDO, or KOI8 character encodings, none of which are UTF-8, which OBS requires. For example, `Jävla Sladdar` by [Etnoscope](https://www.discogs.com/Etnoscope-Way-Over-Deadline/master/284523) was being shown in the video stream as `J�vla Sladdar`, because even though AMIP was saving `ä` using ANSI (`0xe4`), OBS was decoding the file with UTF-8, so the character was not properly decoded.
+I was broadcasting video game streams on [my Twitch.tv channel](https://twitch.tv/aldaviva), in which I also play music in the background. I wanted viewers to be able to tell which song I was playing at any given time in case they liked it and wanted to find it for themselves. I started using the [Advanced mIRC Integration Plug-In (AMIP)](http://amip.tools-for.net/wiki/), which is generally used for showing your Now Playing status in IRC using [mIRC](https://www.mirc.com/). It also lets you save the status to a text file, which I added as a Text Source in [OBS](https://obsproject.com/).
+
+Unfortunately, AMIP only supports encoding the text using ANSI, OEM (DOS), FIDO, or KOI8 character encodings, none of which are UTF-8, which OBS requires. For example, `Jävla Sladdar` by [Etnoscope](https://www.discogs.com/Etnoscope-Way-Over-Deadline/master/284523) was being shown in the video stream as `J�vla Sladdar`, because even though AMIP was saving `ä` using ANSI (`0xe4`), OBS was decoding the file with UTF-8, so the character was not properly decoded. In UTF-8, `ä` is supposed to be encoded as `0xc3 0xa4` because `0xe4` is greater than `0x7f` (i.e. `0x34` requires more than 7 bits to represent), so it spills over into a second code unit (byte).
 
 <a id="solution"></a>
 ## Solution
@@ -49,7 +51,7 @@ I wrote my own Winamp plugin to save information about the currently playing son
 <a id="text"></a>
 ### Text
 
-By default, this plugin saves textual information about the currently playing song to `winamp-now-playing.txt` in your temporary directory (`%TEMP%`), and the file contains the track Artist, Title, and Album (if applicable), for example
+By default, this plugin saves textual information about the currently playing song to `winamp_now_playing.txt` in your temporary directory (`%TEMP%`), and the file contains the track Artist, Title, and Album (if applicable), for example
 ```text
 U2 - Exit - The Joshua Tree
 ```
@@ -73,11 +75,11 @@ To customize the text file location and contents,
 <a id="album-art-image"></a>
 ### Album art image
 
-This plugin also saves the currently playing song's album art to `winamp-now-playing.png` in the same directory at the original format and resolution as it is saved in the song metadata tags.
+This plugin also copies the currently playing song's album art from the song metadata or folder to a file, by default `%TEMP%\winamp_now_playing.png`.
 
 Note that the file extension is not changed, even if the album art has a file type different from PNG, to make it easier to refer to this file from other programs like OBS without having to deal with multiple possible file extensions. This means that this file may be a JPEG with a `.png` file extension. Most programs, including OBS, can handle this case just fine, but it is a little silly looking.
 
-You can customize the album art filename and path using  **Save album art as** in the same configuration dialog as the text file above.
+You can customize the album art filename and path using **Save album art as** in the same configuration dialog as the text file above.
 
 <a id="integration"></a>
 ## Integration
@@ -88,9 +90,9 @@ You can customize the album art filename and path using  **Save album art as** i
 1. Start playing a song in Winamp.
 1. Create a new Text (GDI+) source in your OBS scene.
 1. In the Properties for your text source, enable Read From File.
-1. Select the text file created by this plugin (by default, `%TEMP%\winamp-now-playing.txt`).
+1. Select the text file created by this plugin (by default, `%TEMP%\winamp_now_playing.txt`).
 1. Create a new Image source in your scene.
-1. In the Properties for your image source, select the image file created by this plugin (by default, `%TEMP%\winamp-now-playing.png`).
+1. In the Properties for your image source, select the image file created by this plugin (by default, `%TEMP%\winamp_now_playing.png`).
 
 <a id="uninstallation"></a>
 ## Uninstallation
@@ -107,4 +109,4 @@ You can customize the album art filename and path using  **Save album art as** i
     ├── mustache-sharp.dll
     └── taglib-sharp.dll
     ```
-1. Delete the song information files (by default, `winamp-now-playing.txt` and `winamp-now-playing.png` in `%TEMP%`).
+1. Delete the song information files (by default, `winamp_now_playing.txt` and `winamp_now_playing.png` in `%TEMP%`).
