@@ -37,17 +37,17 @@ jobs:
         dotnet publish Test --no-build --configuration Release
         dotnet vstest Test\bin\Release\net48\publish\Test.dll --collect:"XPlat code coverage" --settings:Test\Test.runsettings --logger:"trx;LogFileName=TestResults.xml"
         Out-File -InputObject "TEST_EXIT_CODE=$LASTEXITCODE" -FilePath $env:GITHUB_ENV -Append -Encoding UTF8
-        Copy-Item Test/TestResults/*/coverage.info Test/TestResults -ErrorAction Continue
+        Copy-Item TestResults/*/coverage.info TestResults -ErrorAction Continue
         exit 0
 
     - name: Upload test report
-      run: testspace Tests/TestResults/TestResults.xml
+      run: testspace TestResults/TestResults.xml
 
     - name: Upload coverage
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: Tests/TestResults/coverage.info
+        path-to-lcov: TestResults/coverage.info
 
     - name: Stop if tests failed
       run: exit $env:TEST_EXIT_CODE
