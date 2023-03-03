@@ -175,8 +175,8 @@ namespace Test.Business {
                 Filename = @"Tracks\noalbumart.flac"
             };
 
-            byte[] actual   = manager.findAlbumArt(song);
-            byte[] expected = Resources.black_png;
+            byte[]? actual   = manager.findAlbumArt(song);
+            byte[]  expected = Resources.black_png;
             actual.Should().BeEquivalentTo(expected);
         }
 
@@ -228,7 +228,7 @@ namespace Test.Business {
                 "albumart.gif",
                 "albumart.jpeg",
                 "albumart.jpg",
-                "albumart.png",
+                "albumart.png"
             };
 
             foreach (string filename in albumArtFilenames) {

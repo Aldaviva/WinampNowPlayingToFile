@@ -49,23 +49,15 @@
     <ApplicationIcon>winampIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Daniel15.Sharpamp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=35616e5bdafa6e04, processorArchitecture=MSIL" />
+    <Reference Include="Daniel15.Sharpamp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=35616e5bdafa6e04, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Daniel15.Sharpamp.1.0.0\Daniel15.Sharpamp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <!--Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" /-->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NowPlayingToFilePlugin.cs" />
