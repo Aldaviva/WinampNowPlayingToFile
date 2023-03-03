@@ -28,6 +28,8 @@ public class NowPlayingToFilePlugin: GeneralPlugin {
 
         winampController = new WinampControllerImpl(Winamp);
         manager          = new NowPlayingToFileManager(settings, winampController);
+        manager.error += (_, e) => MessageBox.Show("Unhandled exception while updating song info on song change:\n" + e, "Now Playing To File error",
+            MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     public override void Config() {

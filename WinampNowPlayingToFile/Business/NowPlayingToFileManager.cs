@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using Daniel15.Sharpamp;
 using Mustache;
 using WinampNowPlayingToFile.Facade;
@@ -17,6 +16,7 @@ namespace WinampNowPlayingToFile.Business;
 public class NowPlayingToFileManager {
 
     private static readonly FormatCompiler TEMPLATE_COMPILER = new();
+    private static readonly UTF8Encoding   UTF8              = new(false, true);
 
     private static byte[] defaultAlbumArt {
         get {
@@ -32,6 +32,8 @@ public class NowPlayingToFileManager {
     private readonly ISettings        settings;
 
     private Generator? cachedTemplate;
+
+    public event EventHandler<Exception>? error;
 
     public NowPlayingToFileManager(ISettings settings, WinampController winampController) {
         this.winampController = winampController;
@@ -51,8 +53,7 @@ public class NowPlayingToFileManager {
             saveText(renderText(currentSong));
             saveImage(findAlbumArt(currentSong));
         } catch (Exception e) {
-            MessageBox.Show("Unhandled exception while updating song info on song change:\n" + e, "Now Playing To File error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            error?.Invoke(this, e);
         }
     }
 
@@ -61,7 +62,7 @@ public class NowPlayingToFileManager {
     }
 
     private void saveText(string nowPlayingText) {
-        File.WriteAllText(settings.textFilename, nowPlayingText, new UTF8Encoding(false, true));
+        File.WriteAllText(settings.textFilename, nowPlayingText, UTF8);
     }
 
     private Generator getTemplate() {
@@ -120,28 +121,32 @@ public class NowPlayingToFileManager {
         /*
          * %album%.[bmp|gif|jpeg|jpg|png]
          */
-        return songDirectory.EnumerateFiles(Path.GetInvalidFileNameChars().Aggregate(currentSong.Album, (album, invalid) => album.Replace(invalid.ToString(), string.Empty)) + ".*")
-            /*
-             * (.*)\.nfo → $1.[bmp|gif|jpeg|jpg|png]
-             */
-            .Concat(songDirectory.EnumerateFiles("*.nfo")
-                .SelectMany(nfoFile => songDirectory.EnumerateFiles(Path.GetFileNameWithoutExtension(nfoFile.Name) + ".*")))
-            /*
-             * cover.[bmp|gif|jpeg|jpg|png]
-             * folder.[bmp|gif|jpeg|jpg|png]
-             * front.[bmp|gif|jpeg|jpg|png]
-             * albumart.[bmp|gif|jpeg|jpg|png]
-             */
-            .Concat(artworkBaseNames.SelectMany(basename => songDirectory.EnumerateFiles(basename + ".*")))
-            .Where(file => artworkExtensions.Contains(file.Extension.ToLowerInvariant()))
-            .Select(file => {
-                try {
-                    return File.ReadAllBytes(file.FullName);
-                } catch (Exception e) when (e is not OutOfMemoryException) {
-                    return null;
-                }
-            })
-            .FirstOrDefault(bytes => bytes != null);
+        try {
+            return songDirectory.EnumerateFiles(Path.GetInvalidFileNameChars().Aggregate(currentSong.Album, (album, invalid) => album.Replace(invalid.ToString(), string.Empty)) + ".*")
+                /*
+                 * (.*)\.nfo → $1.[bmp|gif|jpeg|jpg|png]
+                 */
+                .Concat(songDirectory.EnumerateFiles("*.nfo")
+                    .SelectMany(nfoFile => songDirectory.EnumerateFiles(Path.GetFileNameWithoutExtension(nfoFile.Name) + ".*")))
+                /*
+                 * cover.[bmp|gif|jpeg|jpg|png]
+                 * folder.[bmp|gif|jpeg|jpg|png]
+                 * front.[bmp|gif|jpeg|jpg|png]
+                 * albumart.[bmp|gif|jpeg|jpg|png]
+                 */
+                .Concat(artworkBaseNames.SelectMany(basename => songDirectory.EnumerateFiles(basename + ".*")))
+                .Where(file => artworkExtensions.Contains(file.Extension.ToLowerInvariant()))
+                .Select(file => {
+                    try {
+                        return File.ReadAllBytes(file.FullName);
+                    } catch (Exception e) when (e is not OutOfMemoryException) {
+                        return null;
+                    }
+                })
+                .FirstOrDefault(bytes => bytes != null);
+        } catch (DirectoryNotFoundException) {
+            return null;
+        }
     }
 
     private void saveImage(byte[]? imageData) {

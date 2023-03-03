@@ -45,7 +45,8 @@ namespace Test.Business {
             A.CallTo(() => settings.textTemplate).Returns(new RegistrySettings().loadDefaults().textTemplate);
             A.CallTo(() => settings.albumArtFilename).Returns(albumArtFilename);
 
-            manager = new NowPlayingToFileManager(settings, winampController);
+            manager       =  new NowPlayingToFileManager(settings, winampController);
+            manager.error += (_, exception) => throw exception;
         }
 
         public void Dispose() {
@@ -123,10 +124,16 @@ namespace Test.Business {
         [Fact]
         public void dontCrashOnId3V1V24WithNoArtwork() {
             A.CallTo(() => winampController.currentSong).Returns(new Song {
-                Filename = @"C:\Users\Ben\Music\Big Beat\The Crystal Method\Blood Rave.mp3",
-                Artist   = "The Crystal Method",
-                Title    = "Blood Rave",
-                Album    = "Mixes and Soundtracks"
+                Filename = @"Tracks\silent.mp3"
+            });
+
+            manager.update();
+        }
+
+        [Fact]
+        public void dontCrashOnMissingFolder() {
+            A.CallTo(() => winampController.currentSong).Returns(new Song {
+                Filename = @"C:\A\Completely\Incorrect\Path\song.mp3"
             });
 
             manager.update();
