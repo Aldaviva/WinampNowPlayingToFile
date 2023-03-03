@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETFramework,Version=v4.7.2": {
+      "JetBrains.Annotations": {
+        "type": "Direct",
+        "requested": "[2022.3.1, )",
+        "resolved": "2022.3.1",
+        "contentHash": "11nsS3+lFICGkztVs9PP2NRItxf9fF+qD6xEW/T0YGto52zj07wseUeBdMAU1ah9HNVTDZyRC1u4NWdtJScwhw=="
+      },
+      "mustache-sharp": {
+        "type": "Direct",
+        "requested": "[1.0.0, )",
+        "resolved": "1.0.0",
+        "contentHash": "+RTxWGLH5p0ibl7XDbb8pOznAdqwxH3zic40eL1gq5xl8jZt3CFc04KSLLFWM3PgvlTzfbzDJfjzF7rCglqGAA=="
+      },
+      "taglib": {
+        "type": "Direct",
+        "requested": "[2.1.0, )",
+        "resolved": "2.1.0",
+        "contentHash": "PuBT0KO/RJqxVKcM4tE0GDQIOA3584d2pHaLLh+X7tBz9MzFn9/mrVYaA63M+n7ED2dBXVtJBoogGnSxaqE7vg=="
+      }
+    },
+    ".NETFramework,Version=v4.7.2/win": {},
+    ".NETFramework,Version=v4.7.2/win-x64": {},
+    ".NETFramework,Version=v4.7.2/win-x86": {}
+  }
+}
