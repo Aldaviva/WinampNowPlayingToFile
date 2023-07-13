@@ -152,11 +152,7 @@ public class NowPlayingToFileManager {
 
     private void saveImage(byte[]? imageData) {
         string filename = settings.albumArtFilename;
-        if (imageData != null) {
-            File.WriteAllBytes(filename, imageData);
-        } else {
-            File.Delete(filename);
-        }
+        File.WriteAllBytes(filename, imageData ?? defaultAlbumArt); // #11
     }
 
     public virtual void onQuit() {

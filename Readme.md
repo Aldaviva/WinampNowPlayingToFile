@@ -83,9 +83,7 @@ Note that the file extension is not changed, even if the album art has a file ty
 
 You can customize the album art filename and path using **Save album art as** in the same plugin configuration dialog as the text file above.
 
-When Winamp is playing a song with no album art, the image file will be replaced with a 1px × 1px opaque black PNG. To override this, save your desired image file as `emptyAlbumArt.png` in the Winamp installation directory.
-
-When Winamp is not playing a song, the image file will be deleted.
+When Winamp is playing a song with no album art, or when Winamp is paused, stopped, or closed, the image file will be replaced with a 1px × 1px opaque black PNG. To override this, save your desired image file as `emptyAlbumArt.png` in the Winamp installation directory.
 
 ## Integration
 

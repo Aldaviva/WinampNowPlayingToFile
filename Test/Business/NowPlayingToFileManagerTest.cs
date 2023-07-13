@@ -171,7 +171,8 @@ namespace Test.Business {
             manager.onQuit();
 
             File.ReadAllText(textFilename).Should().BeEmpty();
-            File.Exists(albumArtFilename).Should().BeFalse();
+            File.Exists(albumArtFilename).Should().BeTrue();
+            File.ReadAllBytes(albumArtFilename).Should().BeEquivalentTo(Resources.black_png);
         }
 
         [Fact]
