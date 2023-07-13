@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,10 +17,10 @@ namespace WinampNowPlayingToFile.Presentation;
 
 public partial class SettingsDialog: Form {
 
-    private static readonly FormatCompiler TEMPLATE_COMPILER = new();
-
     private readonly ISettings            settings;
     private readonly WinampControllerImpl winampController;
+
+    private static readonly FormatCompiler TEMPLATE_COMPILER = new();
 
     private static readonly Song EXAMPLE_SONG = new() {
         Album    = "The Joshua Tree",
@@ -58,16 +60,36 @@ public partial class SettingsDialog: Form {
         applyButton.Enabled = false;
     }
 
-    private void writeToFileBrowseButtonClick(object sender, EventArgs e) {
-        textFilenameEditor.ShowDialog();
-        textFilename.Text = textFilenameEditor.FileName;
+    private void onTextFileBrowseButtonClick(object sender, EventArgs e) {
+        onBrowseButtonClick(textFilenameEditor, textFilename);
     }
 
-    private void CancelButton_Click(object sender, EventArgs e) {
+    private void onAlbumArtBrowseButtonClick(object sender, EventArgs e) {
+        onBrowseButtonClick(albumArtFilenameEditor, albumArtFilename);
+    }
+
+    private static void onBrowseButtonClick(SaveFileDialog filenameEditor, TextBox filenameTextBox) {
+        try {
+            filenameEditor.FileName = Path.GetFileName(filenameTextBox.Text) ?? "";
+        } catch (ArgumentException) {
+            filenameEditor.FileName = "";
+        }
+
+        try {
+            filenameEditor.InitialDirectory = Path.GetDirectoryName(filenameTextBox.Text) ?? "";
+        } catch (ArgumentException) {
+            filenameEditor.InitialDirectory = "";
+        }
+
+        filenameEditor.ShowDialog();
+        filenameTextBox.Text = filenameEditor.FileName;
+    }
+
+    private void onCancel(object sender, EventArgs e) {
         Close();
     }
 
-    private void TemplateEditor_TextChanged(object sender, EventArgs e) {
+    private void onTemplateChange(object sender, EventArgs e) {
         renderPreview();
         onFormDirty();
     }
@@ -86,11 +108,11 @@ public partial class SettingsDialog: Form {
         }
     }
 
-    private void TemplateInsertButton_Click(object sender, EventArgs e) {
+    private void showTemplateMenu(object sender, EventArgs e) {
         insertTemplatePlaceholderMenu.Show(templateInsertButton, new Point(0, templateInsertButton.Height));
     }
 
-    private void InsertTemplatePlaceholderMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e) {
+    private void onTemplateMenuSelection(object sender, ToolStripItemClickedEventArgs e) {
         if (e.ClickedItem == helpToolStripMenuItem) {
             Process.Start("https://handlebarsjs.com/guide/#language-features");
         } else {
@@ -122,7 +144,7 @@ public partial class SettingsDialog: Form {
         }
     }
 
-    private void OkButton_Click(object sender, EventArgs args) {
+    private void onClickOk(object sender, EventArgs args) {
         try {
             save();
             Close();
@@ -131,7 +153,7 @@ public partial class SettingsDialog: Form {
         }
     }
 
-    private void ApplyButton_Click(object sender, EventArgs args) {
+    private void onClickApply(object sender, EventArgs args) {
         try {
             save();
         } catch (Exception e) when (e is FormatException or KeyNotFoundException) {
@@ -143,8 +165,8 @@ public partial class SettingsDialog: Form {
         try {
             TEMPLATE_COMPILER.Compile(templateEditor.Text).Render(EXAMPLE_SONG);
 
-            settings.textFilename     = textFilenameEditor.FileName;
-            settings.albumArtFilename = albumArtFilenameEditor.FileName;
+            settings.textFilename     = textFilename.Text;
+            settings.albumArtFilename = albumArtFilename.Text;
             settings.textTemplate     = templateEditor.Text;
             settings.save();
 
@@ -159,16 +181,11 @@ public partial class SettingsDialog: Form {
         applyButton.Enabled = true;
     }
 
-    private void albumArtBrowseButton_Click(object sender, EventArgs e) {
-        albumArtFilenameEditor.ShowDialog();
-        albumArtFilename.Text = albumArtFilenameEditor.FileName;
-    }
-
-    private void textFilenameEditor_FileOk(object sender, CancelEventArgs e) {
+    private void onSubmitFilename(object sender, CancelEventArgs e) {
         onFormDirty();
     }
 
-    private void albumArtFilenameEditor_FileOk(object sender, CancelEventArgs e) {
+    private void onFilenameChange(object sender, EventArgs e) {
         onFormDirty();
     }
 

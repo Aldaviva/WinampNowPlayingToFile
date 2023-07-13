@@ -1,11 +1,8 @@
 ﻿#nullable enable
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace WinampNowPlayingToFile.Facade;
 
-[SuppressMessage("ReSharper", "InconsistentNaming", Justification =
-    "Property names are used in public-facing Mustache templates and cannot be changed.")]
+// ReSharper disable InconsistentNaming - Property names are used in public-facing Mustache templates and cannot be changed.
 public class Song {
 
     public string Artist { get; set; } = string.Empty;

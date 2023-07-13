@@ -49,10 +49,11 @@ public class NowPlayingToFileManager {
 
     internal void update() {
         try {
-            Song currentSong = winampController.currentSong;
-            saveText(renderText(currentSong));
-            saveImage(findAlbumArt(currentSong));
-        } catch (Exception e) {
+            if (winampController.currentSong is { Filename: not "" } currentSong) {
+                saveText(renderText(currentSong));
+                saveImage(findAlbumArt(currentSong));
+            }
+        } catch (Exception e) when (e is not OutOfMemoryException) {
             error?.Invoke(this, e);
         }
     }

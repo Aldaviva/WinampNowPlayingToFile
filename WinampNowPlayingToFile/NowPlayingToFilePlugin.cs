@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System;
 using System.Reflection;
 using System.Windows.Forms;
 using Daniel15.Sharpamp;
@@ -21,6 +22,8 @@ public class NowPlayingToFilePlugin: GeneralPlugin {
     private  WinampControllerImpl?    winampController;
 
     public override void Initialize() {
+        AppContext.SetSwitch("Switch.System.IO.UseLegacyPathHandling", false); // #9
+
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
 

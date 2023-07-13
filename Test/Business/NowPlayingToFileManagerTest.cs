@@ -140,9 +140,21 @@ namespace Test.Business {
         }
 
         [Fact]
-        public void dontCrashOnUrisWithFileExtensions() {
+        public void dontCrashOnEmptyFilename() {
             A.CallTo(() => winampController.currentSong).Returns(new Song {
-                Filename = @"http://135.125.239.164:8080/dance.mp3",
+                Filename = ""
+            });
+
+            manager.update();
+        }
+
+        [Theory]
+        [InlineData("http://135.125.239.164:8080/dance.mp3")]
+        [InlineData("https://relay.rainwave.cc:443/all.mp3")]
+        [InlineData("http://allrelays.rainwave.cc/all.mp3")]
+        public void dontCrashOnUrisWithFileExtensions(string filename) {
+            A.CallTo(() => winampController.currentSong).Returns(new Song {
+                Filename = filename,
                 Artist   = "Test Artist",
                 Title    = "Test Title",
                 Album    = "Test Album"

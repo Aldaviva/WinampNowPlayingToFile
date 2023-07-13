@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
             this.writeToFileLabel = new System.Windows.Forms.Label();
             this.textFilenameEditor = new System.Windows.Forms.SaveFileDialog();
-            this.writeToFileBrowseButton = new System.Windows.Forms.Button();
+            this.textBrowseButton = new System.Windows.Forms.Button();
             this.textFilename = new System.Windows.Forms.TextBox();
             this.templateLabel = new System.Windows.Forms.Label();
             this.templateEditor = new System.Windows.Forms.TextBox();
@@ -77,18 +77,18 @@
             this.textFilenameEditor.DefaultExt = "txt";
             this.textFilenameEditor.Filter = "Text files|*.txt";
             this.textFilenameEditor.Title = "Choose file to save Now Playing text into";
-            this.textFilenameEditor.FileOk += new System.ComponentModel.CancelEventHandler(this.textFilenameEditor_FileOk);
+            this.textFilenameEditor.FileOk += new System.ComponentModel.CancelEventHandler(this.onSubmitFilename);
             // 
-            // writeToFileBrowseButton
+            // textBrowseButton
             // 
-            this.writeToFileBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.writeToFileBrowseButton.Location = new System.Drawing.Point(499, 71);
-            this.writeToFileBrowseButton.Name = "writeToFileBrowseButton";
-            this.writeToFileBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.writeToFileBrowseButton.TabIndex = 7;
-            this.writeToFileBrowseButton.Text = "&Browse…";
-            this.writeToFileBrowseButton.UseVisualStyleBackColor = true;
-            this.writeToFileBrowseButton.Click += new System.EventHandler(this.writeToFileBrowseButtonClick);
+            this.textBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBrowseButton.Location = new System.Drawing.Point(499, 71);
+            this.textBrowseButton.Name = "textBrowseButton";
+            this.textBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.textBrowseButton.TabIndex = 7;
+            this.textBrowseButton.Text = "&Browse…";
+            this.textBrowseButton.UseVisualStyleBackColor = true;
+            this.textBrowseButton.Click += new System.EventHandler(this.onTextFileBrowseButtonClick);
             // 
             // textFilename
             // 
@@ -98,6 +98,7 @@
             this.textFilename.Name = "textFilename";
             this.textFilename.Size = new System.Drawing.Size(366, 20);
             this.textFilename.TabIndex = 6;
+            this.textFilename.TextChanged += new System.EventHandler(this.onFilenameChange);
             // 
             // templateLabel
             // 
@@ -116,7 +117,7 @@
             this.templateEditor.Name = "templateEditor";
             this.templateEditor.Size = new System.Drawing.Size(366, 20);
             this.templateEditor.TabIndex = 1;
-            this.templateEditor.TextChanged += new System.EventHandler(this.TemplateEditor_TextChanged);
+            this.templateEditor.TextChanged += new System.EventHandler(this.onTemplateChange);
             // 
             // templateInsertButton
             // 
@@ -127,7 +128,7 @@
             this.templateInsertButton.TabIndex = 2;
             this.templateInsertButton.Text = "&Insert";
             this.templateInsertButton.UseVisualStyleBackColor = true;
-            this.templateInsertButton.Click += new System.EventHandler(this.TemplateInsertButton_Click);
+            this.templateInsertButton.Click += new System.EventHandler(this.showTemplateMenu);
             // 
             // okButton
             // 
@@ -138,7 +139,7 @@
             this.okButton.TabIndex = 13;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.OkButton_Click);
+            this.okButton.Click += new System.EventHandler(this.onClickOk);
             // 
             // cancelButton
             // 
@@ -150,7 +151,7 @@
             this.cancelButton.TabIndex = 14;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.cancelButton.Click += new System.EventHandler(this.onCancel);
             // 
             // templatePreview
             // 
@@ -190,7 +191,7 @@
             this.insertTemplatePlaceholderMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.insertTemplatePlaceholderMenu.ShowImageMargin = false;
             this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(96, 214);
-            this.insertTemplatePlaceholderMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.InsertTemplatePlaceholderMenu_ItemClicked);
+            this.insertTemplatePlaceholderMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
             // 
             // albumToolStripMenuItem
             // 
@@ -292,7 +293,7 @@
             this.applyButton.TabIndex = 15;
             this.applyButton.Text = "&Apply";
             this.applyButton.UseVisualStyleBackColor = true;
-            this.applyButton.Click += new System.EventHandler(this.ApplyButton_Click);
+            this.applyButton.Click += new System.EventHandler(this.onClickApply);
             // 
             // albumArtLabel
             // 
@@ -312,7 +313,7 @@
             this.albumArtBrowseButton.TabIndex = 10;
             this.albumArtBrowseButton.Text = "B&rowse…";
             this.albumArtBrowseButton.UseVisualStyleBackColor = true;
-            this.albumArtBrowseButton.Click += new System.EventHandler(this.albumArtBrowseButton_Click);
+            this.albumArtBrowseButton.Click += new System.EventHandler(this.onAlbumArtBrowseButtonClick);
             // 
             // albumArtFilename
             // 
@@ -322,13 +323,14 @@
             this.albumArtFilename.Name = "albumArtFilename";
             this.albumArtFilename.Size = new System.Drawing.Size(366, 20);
             this.albumArtFilename.TabIndex = 9;
+            this.albumArtFilename.TextChanged += new System.EventHandler(this.onFilenameChange);
             // 
             // albumArtFilenameEditor
             // 
-            this.albumArtFilenameEditor.DefaultExt = "txt";
+            this.albumArtFilenameEditor.DefaultExt = "png";
             this.albumArtFilenameEditor.Filter = "Image files|*.jpg,*.png";
             this.albumArtFilenameEditor.Title = "Choose file to save Now Playing album art into";
-            this.albumArtFilenameEditor.FileOk += new System.ComponentModel.CancelEventHandler(this.albumArtFilenameEditor_FileOk);
+            this.albumArtFilenameEditor.FileOk += new System.ComponentModel.CancelEventHandler(this.onSubmitFilename);
             // 
             // SettingsDialog
             // 
@@ -350,7 +352,7 @@
             this.Controls.Add(this.albumArtFilename);
             this.Controls.Add(this.textFilename);
             this.Controls.Add(this.albumArtBrowseButton);
-            this.Controls.Add(this.writeToFileBrowseButton);
+            this.Controls.Add(this.textBrowseButton);
             this.Controls.Add(this.albumArtLabel);
             this.Controls.Add(this.writeToFileLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -370,7 +372,7 @@
 
         private System.Windows.Forms.Label writeToFileLabel;
         private System.Windows.Forms.SaveFileDialog textFilenameEditor;
-        private System.Windows.Forms.Button writeToFileBrowseButton;
+        private System.Windows.Forms.Button textBrowseButton;
         private System.Windows.Forms.TextBox textFilename;
         private System.Windows.Forms.Label templateLabel;
         private System.Windows.Forms.TextBox templateEditor;
