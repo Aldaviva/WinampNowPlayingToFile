@@ -18,15 +18,8 @@ public class NowPlayingToFileManager {
     private static readonly FormatCompiler TEMPLATE_COMPILER = new();
     private static readonly UTF8Encoding   UTF8              = new(false, true);
 
-    private static byte[] defaultAlbumArt {
-        get {
-            try {
-                return File.ReadAllBytes("emptyAlbumArt.png");
-            } catch {
-                return Resources.black_png;
-            }
-        }
-    }
+    private static byte[] albumArtWhenMissingFromSong => getInstallationDirectoryImageOrFallback("emptyAlbumArt.png");
+    private static byte[] albumArtWhenStopped => getInstallationDirectoryImageOrFallback("stoppedAlbumArt.png");
 
     private readonly WinampController winampController;
     private readonly ISettings        settings;
@@ -45,6 +38,8 @@ public class NowPlayingToFileManager {
             cachedTemplate = null;
             update();
         };
+
+        update();
     }
 
     internal void update() {
@@ -70,8 +65,10 @@ public class NowPlayingToFileManager {
         return cachedTemplate ??= TEMPLATE_COMPILER.Compile(settings.textTemplate);
     }
 
-    internal byte[]? findAlbumArt(Song currentSong) {
-        return winampController.status == Status.Playing ? extractAlbumArt(currentSong) ?? findAlbumArtSidecarFile(currentSong) ?? defaultAlbumArt : null;
+    internal byte[] findAlbumArt(Song currentSong) {
+        return winampController.status == Status.Playing
+            ? extractAlbumArt(currentSong) ?? findAlbumArtSidecarFile(currentSong) ?? albumArtWhenMissingFromSong
+            : albumArtWhenStopped;
     }
 
     private static byte[]? extractAlbumArt(Song currentSong) {
@@ -150,14 +147,19 @@ public class NowPlayingToFileManager {
         }
     }
 
-    private void saveImage(byte[]? imageData) {
-        string filename = settings.albumArtFilename;
-        File.WriteAllBytes(filename, imageData ?? defaultAlbumArt); // #11
-    }
+    private void saveImage(byte[] imageData) => File.WriteAllBytes(settings.albumArtFilename, imageData);
 
     public virtual void onQuit() {
         saveText(string.Empty);
-        saveImage(null);
+        saveImage(albumArtWhenStopped);
+    }
+
+    private static byte[] getInstallationDirectoryImageOrFallback(string filename) {
+        try {
+            return File.ReadAllBytes(filename);
+        } catch (Exception) {
+            return Resources.black_png;
+        }
     }
 
 }
