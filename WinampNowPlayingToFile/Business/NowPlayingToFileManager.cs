@@ -26,7 +26,7 @@ public class NowPlayingToFileManager {
 
     private Generator? cachedTemplate;
 
-    public event EventHandler<Exception>? error;
+    public event EventHandler<NowPlayingException>? error;
 
     public NowPlayingToFileManager(ISettings settings, WinampController winampController) {
         this.winampController = winampController;
@@ -49,7 +49,7 @@ public class NowPlayingToFileManager {
                 saveImage(findAlbumArt(currentSong));
             }
         } catch (Exception e) when (e is not OutOfMemoryException) {
-            error?.Invoke(this, e);
+            error?.Invoke(this, new NowPlayingException("Exception while updating song", e, winampController.currentSong));
         }
     }
 

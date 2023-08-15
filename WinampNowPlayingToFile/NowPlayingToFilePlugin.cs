@@ -22,7 +22,7 @@ public class NowPlayingToFilePlugin: GeneralPlugin {
     private  WinampControllerImpl?    winampController;
 
     public override void Initialize() {
-        AppContext.SetSwitch("Switch.System.IO.UseLegacyPathHandling", false); // #9
+        AppContext.SetSwitch("Switch.System.IO.UseLegacyPathHandling", false); // #5
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
@@ -31,7 +31,7 @@ public class NowPlayingToFilePlugin: GeneralPlugin {
 
         winampController = new WinampControllerImpl(Winamp);
         manager          = new NowPlayingToFileManager(settings, winampController);
-        manager.error += (_, e) => MessageBox.Show("Unhandled exception while updating song info on song change:\n" + e, "Now Playing To File error",
+        manager.error += (_, e) => MessageBox.Show($"{e.Message}\nSong filename: {e.song?.Filename}\nStacktrace: {e.InnerException!.StackTrace}", "Now Playing To File error",
             MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 

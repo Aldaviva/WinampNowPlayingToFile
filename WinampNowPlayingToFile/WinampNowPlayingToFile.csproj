@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\NowPlayingException.cs" />
     <Compile Include="NowPlayingToFilePlugin.cs" />
     <Compile Include="Presentation\SettingsDialog.cs">
       <SubType>Form</SubType>
