@@ -38,7 +38,7 @@ I wrote my own Winamp plugin to save information about the currently playing son
     │   └── 📄 gen_WinampNowPlayingToFile.dll
     ├── 📄 WinampNowPlayingToFile.dll
     ├── 📄 Daniel15.Sharpamp.dll
-    └── 📄 mustache-sharp.dll
+    ├── 📄 mustache-sharp.dll
     └── 📄 taglib-sharp.dll
     ```
 
@@ -119,7 +119,7 @@ When Winamp is paused, stopped, or closed, the image file will be deleted. To ov
     │   └── 📄 gen_WinampNowPlayingToFile.dll
     ├── 📄 WinampNowPlayingToFile.dll
     ├── 📄 Daniel15.Sharpamp.dll
-    └── 📄 mustache-sharp.dll
+    ├── 📄 mustache-sharp.dll
     └── 📄 taglib-sharp.dll
     ```
 1. Delete the song information files (by default, `winamp_now_playing.txt` and `winamp_now_playing.png` in `%TEMP%`).
