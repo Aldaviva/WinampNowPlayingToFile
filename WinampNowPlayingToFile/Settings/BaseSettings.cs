@@ -13,7 +13,7 @@ public abstract class BaseSettings: ISettings {
     public event EventHandler? settingsUpdated;
 
     public abstract void load();
-    public abstract void save();
+    public virtual void save() { }
 
     public ISettings loadDefaults() {
         textFilename     = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.txt");

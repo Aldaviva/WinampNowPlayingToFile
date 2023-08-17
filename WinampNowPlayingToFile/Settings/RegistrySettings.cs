@@ -21,6 +21,7 @@ public class RegistrySettings: BaseSettings {
     }
 
     public override void save() {
+        base.save();
         using RegistryKey? key = Registry.CurrentUser.CreateSubKey(keyPath);
         if (key != null) {
             key.SetValue(nameof(textFilename), textFilename);

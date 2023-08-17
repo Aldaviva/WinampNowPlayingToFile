@@ -13,13 +13,23 @@ using Song = WinampNowPlayingToFile.Facade.Song;
 
 namespace WinampNowPlayingToFile.Business;
 
-public class NowPlayingToFileManager {
+public interface INowPlayingToFileManager {
 
-    private static readonly FormatCompiler TEMPLATE_COMPILER = new();
-    private static readonly UTF8Encoding   UTF8              = new(false, true);
+    event EventHandler<NowPlayingException>? error;
 
-    private static byte[] albumArtWhenMissingFromSong => getInstallationDirectoryImageOrFallback("emptyAlbumArt.png");
-    private static byte[] albumArtWhenStopped => getInstallationDirectoryImageOrFallback("stoppedAlbumArt.png");
+    void onQuit();
+
+}
+
+public class NowPlayingToFileManager: INowPlayingToFileManager {
+
+    private static readonly FormatCompiler      TEMPLATE_COMPILER  = new();
+    private static readonly UTF8Encoding        UTF8               = new(false, true);
+    private static readonly IEnumerable<string> ARTWORK_EXTENSIONS = new[] { ".bmp", ".gif", ".jpeg", ".jpg", ".png" };
+    private static readonly IEnumerable<string> ARTWORK_BASE_NAMES = new[] { "cover", "folder", "front", "albumart" };
+
+    private static byte[]? albumArtWhenMissingFromSong => getInstallationDirectoryImageOrFallback("emptyAlbumArt.png");
+    private static byte[]? albumArtWhenStopped => getInstallationDirectoryImageOrFallback("stoppedAlbumArt.png");
 
     private readonly WinampController winampController;
     private readonly ISettings        settings;
@@ -65,7 +75,7 @@ public class NowPlayingToFileManager {
         return cachedTemplate ??= TEMPLATE_COMPILER.Compile(settings.textTemplate);
     }
 
-    internal byte[] findAlbumArt(Song currentSong) {
+    internal byte[]? findAlbumArt(Song currentSong) {
         return winampController.status == Status.Playing
             ? extractAlbumArt(currentSong) ?? findAlbumArtSidecarFile(currentSong) ?? albumArtWhenMissingFromSong
             : albumArtWhenStopped;
@@ -101,9 +111,7 @@ public class NowPlayingToFileManager {
     }
 
     private static byte[]? findAlbumArtSidecarFile(Song currentSong) {
-        IEnumerable<string> artworkExtensions = new[] { ".bmp", ".gif", ".jpeg", ".jpg", ".png" };
-        IEnumerable<string> artworkBaseNames  = new[] { "cover", "folder", "front", "albumart" };
-        DirectoryInfo       songDirectory;
+        DirectoryInfo songDirectory;
 
         try {
             if (Path.GetDirectoryName(currentSong.Filename) is { } dir) {
@@ -132,8 +140,8 @@ public class NowPlayingToFileManager {
                  * front.[bmp|gif|jpeg|jpg|png]
                  * albumart.[bmp|gif|jpeg|jpg|png]
                  */
-                .Concat(artworkBaseNames.SelectMany(basename => songDirectory.EnumerateFiles(basename + ".*")))
-                .Where(file => artworkExtensions.Contains(file.Extension.ToLowerInvariant()))
+                .Concat(ARTWORK_BASE_NAMES.SelectMany(basename => songDirectory.EnumerateFiles(basename + ".*")))
+                .Where(file => ARTWORK_EXTENSIONS.Contains(file.Extension.ToLowerInvariant()))
                 .Select(file => {
                     try {
                         return File.ReadAllBytes(file.FullName);
@@ -147,18 +155,25 @@ public class NowPlayingToFileManager {
         }
     }
 
-    private void saveImage(byte[] imageData) => File.WriteAllBytes(settings.albumArtFilename, imageData);
+    private void saveImage(byte[]? imageData) {
+        string filename = settings.albumArtFilename;
+        if (imageData != null) {
+            File.WriteAllBytes(filename, imageData);
+        } else {
+            File.Delete(filename);
+        }
+    }
 
     public virtual void onQuit() {
         saveText(string.Empty);
         saveImage(albumArtWhenStopped);
     }
 
-    private static byte[] getInstallationDirectoryImageOrFallback(string filename) {
+    private static byte[]? getInstallationDirectoryImageOrFallback(string filename) {
         try {
             return File.ReadAllBytes(filename);
         } catch (Exception) {
-            return Resources.black_png;
+            return null;
         }
     }
 

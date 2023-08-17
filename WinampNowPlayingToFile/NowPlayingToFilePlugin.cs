@@ -13,13 +13,12 @@ namespace WinampNowPlayingToFile;
 
 public class NowPlayingToFilePlugin: GeneralPlugin {
 
-    public override string Name =>
-        $"Now Playing to File v{Assembly.GetAssembly(typeof(NowPlayingToFilePlugin)).GetName().Version.ToString(3)}";
+    public override string Name => $"Now Playing to File v{Assembly.GetAssembly(typeof(NowPlayingToFilePlugin)).GetName().Version.ToString(3)}";
 
-    private readonly ISettings settings = new RegistrySettings();
+    internal ISettings settings = new RegistrySettings();
 
-    internal NowPlayingToFileManager? manager;
-    private  WinampControllerImpl?    winampController;
+    internal INowPlayingToFileManager? manager;
+    private  WinampControllerImpl?     winampController;
 
     public override void Initialize() {
         AppContext.SetSwitch("Switch.System.IO.UseLegacyPathHandling", false); // #5
@@ -31,7 +30,12 @@ public class NowPlayingToFilePlugin: GeneralPlugin {
 
         winampController = new WinampControllerImpl(Winamp);
         manager          = new NowPlayingToFileManager(settings, winampController);
-        manager.error += (_, e) => MessageBox.Show($"{e.Message}\nSong filename: {e.song?.Filename}\nStacktrace: {e.InnerException!.StackTrace}", "Now Playing To File error",
+
+        initManager();
+    }
+
+    internal void initManager() {
+        manager!.error += (_, e) => MessageBox.Show($"{e.Message}\nSong filename: {e.song?.Filename}\nStacktrace: {e.InnerException!.StackTrace}", "Now Playing To File error",
             MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 

@@ -70,11 +70,6 @@
     <Compile Include="Presentation\SettingsDialog.Designer.cs">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Settings\BaseSettings.cs" />
     <Compile Include="Facade\Song.cs" />
     <Compile Include="Facade\WinampControllerImpl.cs" />
@@ -82,9 +77,9 @@
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Business\NowPlayingToFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\SimpleSettings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="black.png.bin" />
     <None Include="packages.lock.json" />
   </ItemGroup>
   <ItemGroup>
@@ -93,10 +88,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Presentation\SettingsDialog.resx">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
