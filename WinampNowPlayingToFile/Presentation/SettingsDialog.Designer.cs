@@ -29,6 +29,43 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ToolStripMenuItem albumToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem artistToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem filenameToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem yearToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem albumArtistToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem bitrateToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem bpmToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem categoryToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem commentToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem composerToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem conductorToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem directorToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem discToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem familyToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem gainToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem genreToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem isrcToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem keyToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem lengthToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem losslessToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem lyricistToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem mediaToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem producerToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem publisherToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem ratingToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem replayGainAlbumGainToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem replayGainAlbumPeakToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem replayGainTrackGainToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem replayGainTrackPeakToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem stereoToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem subtitleToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem toolToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem trackToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem typeToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem vbrToolStripMenuItem;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
             this.writeToFileLabel = new System.Windows.Forms.Label();
             this.textFilenameEditor = new System.Windows.Forms.SaveFileDialog();
@@ -42,26 +79,349 @@
             this.templatePreview = new System.Windows.Forms.TextBox();
             this.previewLabel = new System.Windows.Forms.Label();
             this.insertTemplatePlaceholderMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.artistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.filenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.titleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.yearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.newLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ifElseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
+            this.explanationLabel = new System.Windows.Forms.Label();
             this.horizontalRule1 = new System.Windows.Forms.Label();
             this.applyButton = new System.Windows.Forms.Button();
             this.albumArtLabel = new System.Windows.Forms.Label();
             this.albumArtBrowseButton = new System.Windows.Forms.Button();
             this.albumArtFilename = new System.Windows.Forms.TextBox();
             this.albumArtFilenameEditor = new System.Windows.Forms.SaveFileDialog();
+            albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            artistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            filenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            titleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            yearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            albumArtistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            bitrateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            bpmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            categoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            commentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            composerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            conductorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            directorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            discToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            familyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            gainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            genreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            isrcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            keyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            lengthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            losslessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            lyricistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            mediaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            producerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            publisherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ratingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            replayGainAlbumGainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            replayGainAlbumPeakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            replayGainTrackGainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            replayGainTrackPeakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            stereoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            subtitleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            trackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            typeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            vbrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertTemplatePlaceholderMenu.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // albumToolStripMenuItem
+            // 
+            albumToolStripMenuItem.Name = "albumToolStripMenuItem";
+            albumToolStripMenuItem.ShowShortcutKeys = false;
+            albumToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            albumToolStripMenuItem.Text = "Album";
+            // 
+            // artistToolStripMenuItem
+            // 
+            artistToolStripMenuItem.Name = "artistToolStripMenuItem";
+            artistToolStripMenuItem.ShowShortcutKeys = false;
+            artistToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            artistToolStripMenuItem.Text = "Artist";
+            // 
+            // filenameToolStripMenuItem
+            // 
+            filenameToolStripMenuItem.Name = "filenameToolStripMenuItem";
+            filenameToolStripMenuItem.ShowShortcutKeys = false;
+            filenameToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            filenameToolStripMenuItem.Text = "Filename";
+            filenameToolStripMenuItem.ToolTipText = "The absolute path to the file";
+            // 
+            // titleToolStripMenuItem
+            // 
+            titleToolStripMenuItem.Name = "titleToolStripMenuItem";
+            titleToolStripMenuItem.ShowShortcutKeys = false;
+            titleToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            titleToolStripMenuItem.Text = "Title";
+            // 
+            // yearToolStripMenuItem
+            // 
+            yearToolStripMenuItem.Name = "yearToolStripMenuItem";
+            yearToolStripMenuItem.ShowShortcutKeys = false;
+            yearToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            yearToolStripMenuItem.Text = "Year";
+            // 
+            // otherToolStripMenuItem
+            // 
+            otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            albumArtistToolStripMenuItem,
+            bitrateToolStripMenuItem,
+            bpmToolStripMenuItem,
+            categoryToolStripMenuItem,
+            commentToolStripMenuItem,
+            composerToolStripMenuItem,
+            conductorToolStripMenuItem,
+            directorToolStripMenuItem,
+            discToolStripMenuItem,
+            familyToolStripMenuItem,
+            gainToolStripMenuItem,
+            genreToolStripMenuItem,
+            isrcToolStripMenuItem,
+            keyToolStripMenuItem,
+            lengthToolStripMenuItem,
+            losslessToolStripMenuItem,
+            lyricistToolStripMenuItem,
+            mediaToolStripMenuItem,
+            producerToolStripMenuItem,
+            publisherToolStripMenuItem,
+            ratingToolStripMenuItem,
+            replayGainAlbumGainToolStripMenuItem,
+            replayGainAlbumPeakToolStripMenuItem,
+            replayGainTrackGainToolStripMenuItem,
+            replayGainTrackPeakToolStripMenuItem,
+            stereoToolStripMenuItem,
+            subtitleToolStripMenuItem,
+            toolToolStripMenuItem,
+            trackToolStripMenuItem,
+            typeToolStripMenuItem,
+            vbrToolStripMenuItem});
+            otherToolStripMenuItem.Name = "otherToolStripMenuItem";
+            otherToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            otherToolStripMenuItem.Text = "More";
+            otherToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
+            // 
+            // albumArtistToolStripMenuItem
+            // 
+            albumArtistToolStripMenuItem.Name = "albumArtistToolStripMenuItem";
+            albumArtistToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            albumArtistToolStripMenuItem.Tag = "AlbumArtist";
+            albumArtistToolStripMenuItem.Text = "Album artist";
+            // 
+            // bitrateToolStripMenuItem
+            // 
+            bitrateToolStripMenuItem.Name = "bitrateToolStripMenuItem";
+            bitrateToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            bitrateToolStripMenuItem.Text = "Bitrate";
+            bitrateToolStripMenuItem.ToolTipText = "Number of kilobits per second, e.g. \"320\"";
+            // 
+            // bpmToolStripMenuItem
+            // 
+            bpmToolStripMenuItem.Name = "bpmToolStripMenuItem";
+            bpmToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            bpmToolStripMenuItem.Tag = "BPM";
+            bpmToolStripMenuItem.Text = "BPM";
+            bpmToolStripMenuItem.ToolTipText = "Number of beats per minute, e.g. \"86\"";
+            // 
+            // categoryToolStripMenuItem
+            // 
+            categoryToolStripMenuItem.Name = "categoryToolStripMenuItem";
+            categoryToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            categoryToolStripMenuItem.Text = "Category";
+            categoryToolStripMenuItem.ToolTipText = "e.g. \"Rock\"";
+            // 
+            // commentToolStripMenuItem
+            // 
+            commentToolStripMenuItem.Name = "commentToolStripMenuItem";
+            commentToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            commentToolStripMenuItem.Text = "Comment";
+            // 
+            // composerToolStripMenuItem
+            // 
+            composerToolStripMenuItem.Name = "composerToolStripMenuItem";
+            composerToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            composerToolStripMenuItem.Text = "Composer";
+            // 
+            // conductorToolStripMenuItem
+            // 
+            conductorToolStripMenuItem.Name = "conductorToolStripMenuItem";
+            conductorToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            conductorToolStripMenuItem.Text = "Conductor";
+            // 
+            // directorToolStripMenuItem
+            // 
+            directorToolStripMenuItem.Name = "directorToolStripMenuItem";
+            directorToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            directorToolStripMenuItem.Text = "Director";
+            directorToolStripMenuItem.ToolTipText = "For video files";
+            // 
+            // discToolStripMenuItem
+            // 
+            discToolStripMenuItem.Name = "discToolStripMenuItem";
+            discToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            discToolStripMenuItem.Text = "Disc";
+            discToolStripMenuItem.ToolTipText = "e.g. \"1\" or \"1/2\"";
+            // 
+            // familyToolStripMenuItem
+            // 
+            familyToolStripMenuItem.Name = "familyToolStripMenuItem";
+            familyToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            familyToolStripMenuItem.Text = "Family";
+            familyToolStripMenuItem.ToolTipText = "e.g. \"MPEG Layer 3 Audio File\"";
+            // 
+            // gainToolStripMenuItem
+            // 
+            gainToolStripMenuItem.Name = "gainToolStripMenuItem";
+            gainToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            gainToolStripMenuItem.Text = "Gain";
+            gainToolStripMenuItem.ToolTipText = "e.g. \"+0.40 dB\"";
+            // 
+            // genreToolStripMenuItem
+            // 
+            genreToolStripMenuItem.Name = "genreToolStripMenuItem";
+            genreToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            genreToolStripMenuItem.Text = "Genre";
+            // 
+            // isrcToolStripMenuItem
+            // 
+            isrcToolStripMenuItem.Name = "isrcToolStripMenuItem";
+            isrcToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            isrcToolStripMenuItem.Tag = "ISRC";
+            isrcToolStripMenuItem.Text = "ISRC";
+            isrcToolStripMenuItem.ToolTipText = "e.g. \"USLZJ2006066\"";
+            // 
+            // keyToolStripMenuItem
+            // 
+            keyToolStripMenuItem.Name = "keyToolStripMenuItem";
+            keyToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            keyToolStripMenuItem.Text = "Key";
+            keyToolStripMenuItem.ToolTipText = "e.g. \"A\"";
+            // 
+            // lengthToolStripMenuItem
+            // 
+            lengthToolStripMenuItem.Name = "lengthToolStripMenuItem";
+            lengthToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            lengthToolStripMenuItem.Text = "Length";
+            lengthToolStripMenuItem.ToolTipText = "Duration of media in minutes and seconds, e.g. \"6:04\"";
+            // 
+            // losslessToolStripMenuItem
+            // 
+            losslessToolStripMenuItem.Name = "losslessToolStripMenuItem";
+            losslessToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            losslessToolStripMenuItem.Text = "Lossless";
+            losslessToolStripMenuItem.ToolTipText = "\"0\" (lossy) or \"1\" (lossless)";
+            // 
+            // lyricistToolStripMenuItem
+            // 
+            lyricistToolStripMenuItem.Name = "lyricistToolStripMenuItem";
+            lyricistToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            lyricistToolStripMenuItem.Text = "Lyricist";
+            // 
+            // mediaToolStripMenuItem
+            // 
+            mediaToolStripMenuItem.Name = "mediaToolStripMenuItem";
+            mediaToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            mediaToolStripMenuItem.Text = "Media";
+            mediaToolStripMenuItem.ToolTipText = "The MEDIATYPE ID3v2 tag";
+            // 
+            // producerToolStripMenuItem
+            // 
+            producerToolStripMenuItem.Name = "producerToolStripMenuItem";
+            producerToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            producerToolStripMenuItem.Text = "Producer";
+            // 
+            // publisherToolStripMenuItem
+            // 
+            publisherToolStripMenuItem.Name = "publisherToolStripMenuItem";
+            publisherToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            publisherToolStripMenuItem.Text = "Publisher";
+            // 
+            // ratingToolStripMenuItem
+            // 
+            ratingToolStripMenuItem.Name = "ratingToolStripMenuItem";
+            ratingToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            ratingToolStripMenuItem.Text = "Rating";
+            ratingToolStripMenuItem.ToolTipText = "\"1\", \"2\", \"3\", \"4\", \"5\", or empty";
+            // 
+            // replayGainAlbumGainToolStripMenuItem
+            // 
+            replayGainAlbumGainToolStripMenuItem.Name = "replayGainAlbumGainToolStripMenuItem";
+            replayGainAlbumGainToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            replayGainAlbumGainToolStripMenuItem.Tag = "ReplayGain_Album_Gain";
+            replayGainAlbumGainToolStripMenuItem.Text = "ReplayGain album gain";
+            replayGainAlbumGainToolStripMenuItem.ToolTipText = "e.g. \"-7.29 dB\"";
+            // 
+            // replayGainAlbumPeakToolStripMenuItem
+            // 
+            replayGainAlbumPeakToolStripMenuItem.Name = "replayGainAlbumPeakToolStripMenuItem";
+            replayGainAlbumPeakToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            replayGainAlbumPeakToolStripMenuItem.Tag = "ReplayGain_Album_Peak";
+            replayGainAlbumPeakToolStripMenuItem.Text = "ReplayGain album peak";
+            replayGainAlbumPeakToolStripMenuItem.ToolTipText = "e.g. \"0.965118408\"";
+            // 
+            // replayGainTrackGainToolStripMenuItem
+            // 
+            replayGainTrackGainToolStripMenuItem.Name = "replayGainTrackGainToolStripMenuItem";
+            replayGainTrackGainToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            replayGainTrackGainToolStripMenuItem.Tag = "ReplayGain_Track_Gain";
+            replayGainTrackGainToolStripMenuItem.Text = "ReplayGain track gain";
+            replayGainTrackGainToolStripMenuItem.ToolTipText = "e.g. \"-7.29 dB\"";
+            // 
+            // replayGainTrackPeakToolStripMenuItem
+            // 
+            replayGainTrackPeakToolStripMenuItem.Name = "replayGainTrackPeakToolStripMenuItem";
+            replayGainTrackPeakToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            replayGainTrackPeakToolStripMenuItem.Tag = "ReplayGain_Track_Peak";
+            replayGainTrackPeakToolStripMenuItem.Text = "ReplayGain track peak";
+            replayGainTrackPeakToolStripMenuItem.ToolTipText = "e.g. \"0.965118408\"";
+            // 
+            // stereoToolStripMenuItem
+            // 
+            stereoToolStripMenuItem.Name = "stereoToolStripMenuItem";
+            stereoToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            stereoToolStripMenuItem.Text = "Stereo";
+            stereoToolStripMenuItem.ToolTipText = "\"0\" (mono) or \"1\" (stereo)";
+            // 
+            // subtitleToolStripMenuItem
+            // 
+            subtitleToolStripMenuItem.Name = "subtitleToolStripMenuItem";
+            subtitleToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            subtitleToolStripMenuItem.Text = "Subtitle";
+            // 
+            // toolToolStripMenuItem
+            // 
+            toolToolStripMenuItem.Name = "toolToolStripMenuItem";
+            toolToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            toolToolStripMenuItem.Text = "Tool";
+            toolToolStripMenuItem.ToolTipText = "The ENCODEDBY ID3v2 tag, e.g. \"iTunes 10.5.1\"";
+            // 
+            // trackToolStripMenuItem
+            // 
+            trackToolStripMenuItem.Name = "trackToolStripMenuItem";
+            trackToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            trackToolStripMenuItem.Text = "Track";
+            trackToolStripMenuItem.ToolTipText = "e.g. \"1\" or \"1/5\"";
+            // 
+            // typeToolStripMenuItem
+            // 
+            typeToolStripMenuItem.Name = "typeToolStripMenuItem";
+            typeToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            typeToolStripMenuItem.Text = "Type";
+            typeToolStripMenuItem.ToolTipText = "\"0\" (audio) or \"1\" (video)";
+            // 
+            // vbrToolStripMenuItem
+            // 
+            vbrToolStripMenuItem.Name = "vbrToolStripMenuItem";
+            vbrToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            vbrToolStripMenuItem.Tag = "VBR";
+            vbrToolStripMenuItem.Text = "VBR";
+            vbrToolStripMenuItem.ToolTipText = "\"0\" (constant bitrate) or \"1\" (variable bitrate)";
             // 
             // writeToFileLabel
             // 
@@ -176,11 +536,12 @@
             // insertTemplatePlaceholderMenu
             // 
             this.insertTemplatePlaceholderMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.albumToolStripMenuItem,
-            this.artistToolStripMenuItem,
-            this.filenameToolStripMenuItem,
-            this.titleToolStripMenuItem,
-            this.yearToolStripMenuItem,
+            albumToolStripMenuItem,
+            artistToolStripMenuItem,
+            filenameToolStripMenuItem,
+            titleToolStripMenuItem,
+            yearToolStripMenuItem,
+            otherToolStripMenuItem,
             this.toolStripSeparator1,
             this.newLineToolStripMenuItem,
             this.ifToolStripMenuItem,
@@ -190,88 +551,53 @@
             this.insertTemplatePlaceholderMenu.Name = "insertTemplatePlaceholderMenu";
             this.insertTemplatePlaceholderMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.insertTemplatePlaceholderMenu.ShowImageMargin = false;
-            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(96, 214);
+            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(156, 258);
             this.insertTemplatePlaceholderMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
-            // 
-            // albumToolStripMenuItem
-            // 
-            this.albumToolStripMenuItem.Name = "albumToolStripMenuItem";
-            this.albumToolStripMenuItem.ShowShortcutKeys = false;
-            this.albumToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.albumToolStripMenuItem.Text = "Album";
-            // 
-            // artistToolStripMenuItem
-            // 
-            this.artistToolStripMenuItem.Name = "artistToolStripMenuItem";
-            this.artistToolStripMenuItem.ShowShortcutKeys = false;
-            this.artistToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.artistToolStripMenuItem.Text = "Artist";
-            // 
-            // filenameToolStripMenuItem
-            // 
-            this.filenameToolStripMenuItem.Name = "filenameToolStripMenuItem";
-            this.filenameToolStripMenuItem.ShowShortcutKeys = false;
-            this.filenameToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.filenameToolStripMenuItem.Text = "Filename";
-            // 
-            // titleToolStripMenuItem
-            // 
-            this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
-            this.titleToolStripMenuItem.ShowShortcutKeys = false;
-            this.titleToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.titleToolStripMenuItem.Text = "Title";
-            // 
-            // yearToolStripMenuItem
-            // 
-            this.yearToolStripMenuItem.Name = "yearToolStripMenuItem";
-            this.yearToolStripMenuItem.ShowShortcutKeys = false;
-            this.yearToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.yearToolStripMenuItem.Text = "Year";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(92, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
             // 
             // newLineToolStripMenuItem
             // 
             this.newLineToolStripMenuItem.Name = "newLineToolStripMenuItem";
-            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.newLineToolStripMenuItem.Text = "New line";
             // 
             // ifToolStripMenuItem
             // 
             this.ifToolStripMenuItem.Name = "ifToolStripMenuItem";
-            this.ifToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.ifToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.ifToolStripMenuItem.Text = "If";
             // 
             // ifElseToolStripMenuItem
             // 
             this.ifElseToolStripMenuItem.Name = "ifElseToolStripMenuItem";
-            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.ifElseToolStripMenuItem.Text = "If else";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(92, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.helpToolStripMenuItem.Text = "Help";
             // 
-            // label1
+            // explanationLabel
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.explanationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(22, 148);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(544, 30);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "When Winamp plays a track, this plug-in will save the track information and album" +
+            this.explanationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.explanationLabel.Location = new System.Drawing.Point(22, 148);
+            this.explanationLabel.Name = "explanationLabel";
+            this.explanationLabel.Size = new System.Drawing.Size(544, 30);
+            this.explanationLabel.TabIndex = 12;
+            this.explanationLabel.Text = "When Winamp plays a track, this plug-in will save the track information and album" +
     " art to files. The format of the text can be customized with the template.";
             // 
             // horizontalRule1
@@ -341,7 +667,7 @@
             this.ClientSize = new System.Drawing.Size(586, 232);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.horizontalRule1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.explanationLabel);
             this.Controls.Add(this.templatePreview);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
@@ -382,14 +708,9 @@
         private System.Windows.Forms.TextBox templatePreview;
         private System.Windows.Forms.Label previewLabel;
         private System.Windows.Forms.ContextMenuStrip insertTemplatePlaceholderMenu;
-        private System.Windows.Forms.ToolStripMenuItem albumToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem artistToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem filenameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem yearToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label explanationLabel;
         private System.Windows.Forms.Label horizontalRule1;
         private System.Windows.Forms.Button applyButton;
         private System.Windows.Forms.Label albumArtLabel;

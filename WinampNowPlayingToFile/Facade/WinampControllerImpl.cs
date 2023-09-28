@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System;
+using System.Reflection;
 using Daniel15.Sharpamp;
 
 namespace WinampNowPlayingToFile.Facade;
@@ -15,6 +16,7 @@ public interface WinampController {
     void stop();
     void nextTrack();
     void previousTrack();
+    string fetchMetadataFieldValue(string metadataFieldName);
 
     event SongChangedEventHandler songChanged;
     event StatusChangedEventHandler statusChanged;
@@ -23,7 +25,8 @@ public interface WinampController {
 
 public class WinampControllerImpl: WinampController {
 
-    private readonly Winamp winamp;
+    private readonly Winamp                       winamp;
+    private readonly Func<string, string, string> getMetadata;
 
     public event SongChangedEventHandler? songChanged;
     public event StatusChangedEventHandler? statusChanged;
@@ -32,6 +35,10 @@ public class WinampControllerImpl: WinampController {
         this.winamp          =  winamp;
         winamp.SongChanged   += (sender, args) => songChanged?.Invoke(sender, new SongChangedEventArgs(args));
         winamp.StatusChanged += (sender, args) => statusChanged?.Invoke(sender, args);
+
+        getMetadata = (Func<string, string, string>) winamp.GetType()
+            .GetMethod("GetMetadata", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(string), typeof(string) }, null)!
+            .CreateDelegate(typeof(Func<string, string, string>), winamp);
     }
 
     public Status status => winamp.Status;
@@ -56,6 +63,17 @@ public class WinampControllerImpl: WinampController {
 
     public void stop() {
         winamp.Stop();
+    }
+
+    public string fetchMetadataFieldValue(string metadataFieldName) {
+        string value = getMetadata(winamp.CurrentSong.Filename, metadataFieldName);
+
+        if (metadataFieldName.Equals("length", StringComparison.InvariantCultureIgnoreCase) && long.TryParse(value, out long numericLength)) {
+            TimeSpan duration = TimeSpan.FromMilliseconds(numericLength);
+            value = $"{duration.Minutes:D1}:{duration.Seconds:D2}";
+        }
+
+        return value;
     }
 
 }

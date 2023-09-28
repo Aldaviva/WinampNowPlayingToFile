@@ -72,7 +72,17 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     }
 
     private Generator getTemplate() {
-        return cachedTemplate ??= TEMPLATE_COMPILER.Compile(settings.textTemplate);
+        if (cachedTemplate == null) {
+            cachedTemplate             =  TEMPLATE_COMPILER.Compile(settings.textTemplate);
+            cachedTemplate.KeyNotFound += fetchExtraMetadata;
+        }
+
+        return cachedTemplate;
+    }
+
+    private void fetchExtraMetadata(object sender, KeyNotFoundEventArgs args) {
+        args.Substitute = winampController.fetchMetadataFieldValue(args.Key);
+        args.Handled    = true;
     }
 
     internal byte[]? findAlbumArt(Song currentSong) {

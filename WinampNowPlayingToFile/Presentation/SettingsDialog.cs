@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -25,10 +26,37 @@ public partial class SettingsDialog: Form {
     private static readonly Song EXAMPLE_SONG = new() {
         Album    = "The Joshua Tree",
         Artist   = "U2",
-        Filename = "Exit.flac",
+        Filename = "C:\\Exit.mp3",
         Title    = "Exit",
         Year     = 1987
     };
+
+    private static readonly IReadOnlyDictionary<string, string> EXAMPLE_SONG_EXTRA_METADATA = new ReadOnlyDictionary<string, string>(new Dictionary<string, string> {
+        { "albumartist", "U2" },
+        { "bitrate", "320" },
+        { "bpm", "123" },
+        { "category", "Rock" },
+        { "composer", "U2" },
+        { "disc", "1" },
+        { "family", "MPEG Layer 3 Audio File" },
+        { "gain", "+0.92 dB" },
+        { "genre", "Rock" },
+        { "key", "E minor" },
+        { "length", "4:11" },
+        { "lossless", "0" },
+        { "media", "LP" },
+        { "producer", "Brian Eno, Daniel Lanois" },
+        { "publisher", "Island Records" },
+        { "rating", "2" },
+        { "replaygain_album_gain", "-3.03 dB" },
+        { "replaygain_album_peak", "1.022630334" },
+        { "replaygain_track_gain", "-0.77 dB" },
+        { "replaygain_track_peak", "1.006227493" },
+        { "stereo", "1" },
+        { "track", "10" },
+        { "type", "0" },
+        { "vbr", "0" }
+    });
 
     public SettingsDialog(ISettings settings, WinampControllerImpl winampController) {
         this.settings         = settings;
@@ -95,17 +123,31 @@ public partial class SettingsDialog: Form {
     }
 
     private void renderPreview() {
-        Song previewSong = string.IsNullOrEmpty(winampController.currentSong.Title)
-            ? EXAMPLE_SONG
-            : winampController.currentSong;
+        Song previewSong = isSongPlaying() ? winampController.currentSong : EXAMPLE_SONG;
 
         try {
-            templatePreview.Text = TEMPLATE_COMPILER.Compile(templateEditor.Text).Render(previewSong);
+            templatePreview.Text = compileTemplate().Render(previewSong);
         } catch (KeyNotFoundException e) {
             templatePreview.Text = $"Template key not found: {e.Message}";
         } catch (FormatException e) {
             templatePreview.Text = $"Template format error: {e.Message}";
         }
+    }
+
+    private bool isSongPlaying() => !string.IsNullOrEmpty(winampController.currentSong.Title);
+
+    private Generator compileTemplate() {
+        Generator generator = TEMPLATE_COMPILER.Compile(templateEditor.Text);
+        generator.KeyNotFound += (_, args) => {
+            args.Substitute = isSongPlaying()
+                ? winampController.fetchMetadataFieldValue(args.Key)
+                : EXAMPLE_SONG_EXTRA_METADATA.TryGetValue(args.Key.ToLowerInvariant(), out string? value)
+                    ? value
+                    : string.Empty;
+
+            args.Handled = true;
+        };
+        return generator;
     }
 
     private void showTemplateMenu(object sender, EventArgs e) {
@@ -123,6 +165,8 @@ public partial class SettingsDialog: Form {
                 textToInsert = "#if Album}} - {{Album}}{{/if";
             } else if (e.ClickedItem == ifElseToolStripMenuItem) {
                 textToInsert = "#if Album}} - {{Album}}{{#else}} - (no album){{/if";
+            } else if (e.ClickedItem.Tag is string tag && !string.IsNullOrWhiteSpace(tag)) {
+                textToInsert = tag;
             } else {
                 textToInsert = e.ClickedItem.Text;
             }
@@ -163,7 +207,7 @@ public partial class SettingsDialog: Form {
 
     private void save() {
         try {
-            TEMPLATE_COMPILER.Compile(templateEditor.Text).Render(EXAMPLE_SONG);
+            compileTemplate().Render(EXAMPLE_SONG);
 
             settings.textFilename     = textFilename.Text;
             settings.albumArtFilename = albumArtFilename.Text;
@@ -171,7 +215,7 @@ public partial class SettingsDialog: Form {
             settings.save();
 
             applyButton.Enabled = false;
-        } catch (Exception e) when (e is FormatException or KeyNotFoundException) {
+        } catch (FormatException e) {
             MessageBox.Show($"Invalid template:\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             throw;
         }
