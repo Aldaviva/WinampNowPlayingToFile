@@ -31,31 +31,33 @@ public partial class SettingsDialog: Form {
         Year     = 1987
     };
 
-    private static readonly IReadOnlyDictionary<string, string> EXAMPLE_SONG_EXTRA_METADATA = new ReadOnlyDictionary<string, string>(new Dictionary<string, string> {
+    private static readonly IReadOnlyDictionary<string, object> EXAMPLE_SONG_EXTRA_METADATA = new ReadOnlyDictionary<string, object>(new Dictionary<string, object> {
         { "albumartist", "U2" },
-        { "bitrate", "320" },
-        { "bpm", "123" },
+        { "bitrate", 320 },
+        { "bpm", 123.0 },
         { "category", "Rock" },
         { "composer", "U2" },
-        { "disc", "1" },
+        { "disc", 1 },
         { "family", "MPEG Layer 3 Audio File" },
+        { "filebasename", "Exit.mp3" },
+        { "filebasenamewithoutextension", "Exit" },
         { "gain", "+0.92 dB" },
         { "genre", "Rock" },
         { "key", "E minor" },
-        { "length", "4:11" },
-        { "lossless", "0" },
+        { "length", TimeSpan.FromMilliseconds(251422) }, //4:11
+        { "lossless", false },
         { "media", "LP" },
         { "producer", "Brian Eno, Daniel Lanois" },
         { "publisher", "Island Records" },
-        { "rating", "2" },
+        { "rating", 2 },
         { "replaygain_album_gain", "-3.03 dB" },
-        { "replaygain_album_peak", "1.022630334" },
+        { "replaygain_album_peak", 1.022630334 },
         { "replaygain_track_gain", "-0.77 dB" },
-        { "replaygain_track_peak", "1.006227493" },
-        { "stereo", "1" },
-        { "track", "10" },
-        { "type", "0" },
-        { "vbr", "0" }
+        { "replaygain_track_peak", 1.006227493 },
+        { "stereo", true },
+        { "track", 10 },
+        { "type", "audio" },
+        { "vbr", false }
     });
 
     public SettingsDialog(ISettings settings, WinampControllerImpl winampController) {
@@ -141,7 +143,7 @@ public partial class SettingsDialog: Form {
         generator.KeyNotFound += (_, args) => {
             args.Substitute = isSongPlaying()
                 ? winampController.fetchMetadataFieldValue(args.Key)
-                : EXAMPLE_SONG_EXTRA_METADATA.TryGetValue(args.Key.ToLowerInvariant(), out string? value)
+                : EXAMPLE_SONG_EXTRA_METADATA.TryGetValue(args.Key.ToLowerInvariant(), out object? value)
                     ? value
                     : string.Empty;
 
@@ -171,7 +173,7 @@ public partial class SettingsDialog: Form {
                 textToInsert = e.ClickedItem.Text;
             }
 
-            string placeholder      = $"{{{{{textToInsert}}}}}";
+            string placeholder      = $$$"""{{{{{textToInsert}}}}}""";
             string originalTemplate = templateEditor.Text;
             int    selectionStart   = templateEditor.SelectionStart;
             int    selectionEnd     = selectionStart + templateEditor.SelectionLength;

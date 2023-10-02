@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System;
+using System.IO;
 using System.Reflection;
 using Daniel15.Sharpamp;
 
@@ -16,7 +17,7 @@ public interface WinampController {
     void stop();
     void nextTrack();
     void previousTrack();
-    string fetchMetadataFieldValue(string metadataFieldName);
+    object fetchMetadataFieldValue(string metadataFieldName);
 
     event SongChangedEventHandler songChanged;
     event StatusChangedEventHandler statusChanged;
@@ -65,15 +66,29 @@ public class WinampControllerImpl: WinampController {
         winamp.Stop();
     }
 
-    public string fetchMetadataFieldValue(string metadataFieldName) {
-        string value = getMetadata(winamp.CurrentSong.Filename, metadataFieldName);
+    public object fetchMetadataFieldValue(string metadataFieldName) {
+        metadataFieldName = metadataFieldName.ToLowerInvariant();
 
-        if (metadataFieldName.Equals("length", StringComparison.InvariantCultureIgnoreCase) && long.TryParse(value, out long numericLength)) {
-            TimeSpan duration = TimeSpan.FromMilliseconds(numericLength);
-            value = $"{duration.Minutes:D1}:{duration.Seconds:D2}";
+        try {
+            if (metadataFieldName == "filebasename") {
+                return Path.GetFileName(winamp.CurrentSong.Filename);
+            } else if (metadataFieldName == "filebasenamewithoutextension") {
+                return Path.GetFileNameWithoutExtension(winamp.CurrentSong.Filename);
+            }
+        } catch (ArgumentException) {
+            return string.Empty;
         }
 
-        return value;
+        string value = getMetadata(winamp.CurrentSong.Filename, metadataFieldName);
+
+        return metadataFieldName switch {
+            "length" when long.TryParse(value, out long length)                                                     => TimeSpan.FromMilliseconds(length),
+            "lossless" or "stereo" or "vbr"                                                                         => value == "1",
+            "replaygain_album_peak" or "replaygain_track_peak" when double.TryParse(value, out double parsedDouble) => parsedDouble,
+            "bitrate" or "bpm" or "track" or "disc" or "rating" when int.TryParse(value, out int parsedInt)         => parsedInt,
+            "type"                                                                                                  => value == "1" ? "video" : "audio",
+            _                                                                                                       => value
+        };
     }
 
 }
