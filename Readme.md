@@ -63,7 +63,7 @@ Configuration of this plugin is performed in Winamp.
 
 ### Text
 
-By default, this plugin saves textual information about the currently playing song to `winamp_now_playing.txt` in your user's temporary directory (`%TEMP%`), and the file contains the track Artist, Title, and Album (if applicable), for example
+By default, this plugin saves textual information about the currently playing song to `winamp_now_playing.txt` in your user's temporary directory (`%TEMP%`). The file contains the track's Artist, Title, and Album (if applicable), for example
 ```text
 U2 – Exit – The Joshua Tree
 ```
@@ -89,7 +89,7 @@ Metadata values that are missing or empty will be rendered as the empty string.
 |`AlbumArtist`|string|`U2`||
 |`Artist`|string|`U2`||
 |`Bitrate`|int|`320`||
-|`BPM`|int|`123`|beats per minute|
+|`BPM`|int|`123`|Beats per minute|
 |`Category`|string|`Rock`||
 |`Comment`|string|||
 |`Composer`|string|`U2`||
