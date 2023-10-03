@@ -27,7 +27,7 @@ This is a plugin for [Winamp](http://www.winamp.com/) that saves text informatio
 
 I was broadcasting video game streams on [my Twitch.tv channel](https://twitch.tv/aldaviva), in which I also play music in the background. I wanted viewers to be able to tell which song I was playing at any given time in case they liked it and wanted to find it for themselves. I started using the [Advanced mIRC Integration Plug-In (AMIP)](http://amip.tools-for.net/wiki/), which is generally used for showing your Now Playing status in IRC using [mIRC](https://www.mirc.com/). It also lets you save the status to a text file, which I added as a Text Source in [OBS](https://obsproject.com/).
 
-Unfortunately, AMIP only supports encoding the text using ANSI, OEM (DOS), FIDO, or KOI8 character encodings, none of which are UTF-8, which OBS requires. For example, [Jävla Sladdar](https://www.youtube.com/watch?v=zaCZ9VkJ-so) was being shown in the video stream as `J�vla Sladdar`, because even though AMIP was saving `ä` using ANSI (`0xe4`), OBS was decoding the file with UTF-8, so the character was not properly decoded. In UTF-8, `ä` is supposed to be encoded as `0xc3 0xa4` because `0xe4` is greater than `0x7f` (i.e. `0x34` requires more than 7 bits to represent), so it spills over into a second code unit (a multibyte character).
+Unfortunately, AMIP only supports encoding the text using ANSI, OEM (DOS), FIDO, or KOI8 character encodings, none of which are UTF-8, which OBS requires. For example, [Jävla Sladdar](https://www.youtube.com/watch?v=zaCZ9VkJ-so) was being shown in the video stream as `J�vla Sladdar`, because even though AMIP was saving `ä` using ANSI (`0xe4`), OBS was decoding the file with UTF-8, so the character was not properly decoded. In UTF-8, `ä` is supposed to be encoded as `0xc3 0xa4` because `0xe4` is greater than `0x7f` (i.e. `0x34` requires more than 7 bits to represent), so it spills over into a second code unit (it's a multibyte character).
 
 ## Solution
 
@@ -70,7 +70,7 @@ U2 – Exit – The Joshua Tree
 
 To customize the text file location and contents, go to the plugin preferences in Winamp.
 
-1. You can change the file contents by editing the **Text template** and inserting placeholders inside `{{` `}}`, either with the **Insert** button or by typing them manually. See [Metadata fields](#metadata-fields) below for all the fields you can use in a placeholder. For example, a template that could render the above example text is
+1. You can change the file contents by editing the **Text template** and inserting placeholders inside `{{` `}}`, either with the **Insert** button or by typing them manually. See [Metadata fields](#metadata-fields) below for all the fields you can use in a placeholder. For example, a simple template that could render the above example text is
     ```handlebars
     {{Artist}} – {{Title}} – {{Album}}
     ```
@@ -89,7 +89,7 @@ Metadata values that are missing or empty will be rendered as the empty string.
 |`AlbumArtist`|string|`U2`||
 |`Artist`|string|`U2`||
 |`Bitrate`|int|`320`||
-|`BPM`|int|`120`||
+|`BPM`|int|`123`|beats per minute|
 |`Category`|string|`Rock`||
 |`Comment`|string|||
 |`Composer`|string|`U2`||
@@ -100,13 +100,13 @@ Metadata values that are missing or empty will be rendered as the empty string.
 |`FileBasename`|string|`Exit.mp3`|Filename without path|
 |`FileBasenameWithoutExtension`|string|`Exit`|Filename without path or extension|
 |`Filename`|string|`C:\Users\Ben\Music\Exit.mp3`|Absolute path to file, or a stream URL|
-|`Gain`|string|`+0.40 dB`||
+|`Gain`|string|`+0.92 dB`||
 |`Genre`|string|`Rock`||
-|`ISRC`|string|||
+|`ISRC`|string|`GBUM70709782`|12-character [International Standard Recording Code](https://en.wikipedia.org/wiki/International_Standard_Recording_Code) for the track|
 |`Key`|string|`E minor`||
-|`Length`|TimeSpan|`00:05:34.6000000`|See [formatting](#formatting) for `m:ss` and other formats|
+|`Length`|TimeSpan|`00:04:11.4220000`|See [formatting](#formatting) for `m:ss` and other formats|
 |`Lossless`|bool|`false`|`true` for lossless compression, `false` for lossy|
-|`Lyricist`|string|||
+|`Lyricist`|string|`Bono`||
 |`Media`|string|`LP`||
 |`Producer`|string|`Brian Eno, Daniel Lanois`||
 |`Publisher`|string|`Island Records`||
@@ -121,7 +121,7 @@ Metadata values that are missing or empty will be rendered as the empty string.
 |`Tool`|string|`iTunes 10.5.1`|From the `ENCODEDBY` ID3v2 tag|
 |`Track`|int|`1`|If it can't be parsed as an int (like `1/5`) it will be a string|
 |`Type`|string|`audio`|`audio` or `video`|
-|`VBR`|bool|`true`|`true` for VBR, `false` for CBR|
+|`VBR`|bool|`false`|`true` for variable bitrate, `false` for constant bitrate|
 |`Year`|int|`1987`|If it can't be parsed as an int (like `1987-01-01`) it will be a string|
 
 Any other values you use in a placeholder will be requested directly from Winamp, and the response will be output as-is. If you can find other fields that Winamp handles for audio files, please [file an enhancement issue](https://github.com/Aldaviva/WinampNowPlayingToFile/issues/new?labels=enhancement&title=New%20metadata%20field:%20) so it can be added to this program and documentation.
@@ -135,7 +135,7 @@ For example, you can conditionally include artist and album only if those fields
 {{#if Artist}}{{Artist}} – {{/if}}{{Title}}{{#if Album}} – {{Album}}{{/if}}
 ```
 
-You can also convert booleans to strings.
+You can also render strings depending on a boolean value.
 ```handlebars
 {{#if Lossless}}lossless{{#else}}lossy{{/if}}
 ```
@@ -190,6 +190,7 @@ When Winamp is paused, stopped, or closed, the image file will be deleted. To ov
 
 1. In Winamp's Preferences, go to Plug-ins › General Purpose.
 1. Select the Now Playing to File plugin, then click the Uninstall Selected Plug-In button.
+1. Exit Winamp.
 1. Delete all the files you extracted to the Winamp installation directory when installing this plugin.
     ```
     📁 C:\Program Files (x86)\Winamp
