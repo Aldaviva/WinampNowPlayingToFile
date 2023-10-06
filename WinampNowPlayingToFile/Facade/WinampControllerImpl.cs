@@ -68,18 +68,19 @@ public class WinampControllerImpl: WinampController {
 
     public object fetchMetadataFieldValue(string metadataFieldName) {
         metadataFieldName = metadataFieldName.ToLowerInvariant();
+        string songFilename = winamp.CurrentSong.Filename;
 
         try {
             if (metadataFieldName == "filebasename") {
-                return Path.GetFileName(winamp.CurrentSong.Filename);
+                return Path.GetFileName(songFilename);
             } else if (metadataFieldName == "filebasenamewithoutextension") {
-                return Path.GetFileNameWithoutExtension(winamp.CurrentSong.Filename);
+                return Path.GetFileNameWithoutExtension(songFilename);
             }
         } catch (ArgumentException) {
             return string.Empty;
         }
 
-        string value = getMetadata(winamp.CurrentSong.Filename, metadataFieldName);
+        string value = getMetadata(songFilename, metadataFieldName);
 
         return metadataFieldName switch {
             "length" when long.TryParse(value, out long length)                                                     => TimeSpan.FromMilliseconds(length),

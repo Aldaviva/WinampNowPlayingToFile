@@ -327,4 +327,15 @@ public class NowPlayingToFileManagerTest: IDisposable {
         actual!.song.Should().BeSameAs(song);
     }
 
+    [Fact]
+    public void queryCustomMetadataFieldFromWinamp() {
+        A.CallTo(() => winampController.fetchMetadataFieldValue("CustomField")).Returns("CustomValue");
+
+        A.CallTo(() => settings.textTemplate).Returns("{{CustomField}}");
+        settings.settingsUpdated += Raise.WithEmpty();
+
+        File.ReadAllText(textFilename).Should().Be("CustomValue");
+        A.CallTo(() => winampController.fetchMetadataFieldValue("CustomField")).MustHaveHappenedOnceExactly();
+    }
+
 }
