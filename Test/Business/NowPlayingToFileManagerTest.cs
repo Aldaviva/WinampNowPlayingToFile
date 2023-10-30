@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Daniel15.Sharpamp;
+using FakeItEasy;
+using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Daniel15.Sharpamp;
-using FakeItEasy;
-using FluentAssertions;
+using System.Threading;
 using WinampNowPlayingToFile.Business;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
@@ -51,6 +52,7 @@ public class NowPlayingToFileManagerTest: IDisposable {
 
     public void Dispose() {
         cleanUp();
+        manager.renderTextTimer.Stop();
     }
 
     private void cleanUp() {
@@ -336,6 +338,23 @@ public class NowPlayingToFileManagerTest: IDisposable {
 
         File.ReadAllText(textFilename).Should().Be("CustomValue");
         A.CallTo(() => winampController.fetchMetadataFieldValue("CustomField")).MustHaveHappenedOnceExactly();
+    }
+
+    [Fact]
+    public void elapsedTriggersPeriodicRenders() {
+        CountdownEvent latch = new(5);
+
+        manager.renderTextTimer.Interval = 100;
+        A.CallTo(() => winampController.fetchMetadataFieldValue("Elapsed")).ReturnsLazily(() => {
+            latch.Signal();
+            return TimeSpan.FromSeconds(1);
+        });
+
+        A.CallTo(() => settings.textTemplate).Returns("{{Elapsed:m\\:ss}}");
+        settings.settingsUpdated += Raise.WithEmpty();
+
+        latch.Wait(10_000);
+        A.CallTo(() => winampController.fetchMetadataFieldValue("Elapsed")).MustHaveHappenedANumberOfTimesMatching(i => i >= latch.InitialCount);
     }
 
 }

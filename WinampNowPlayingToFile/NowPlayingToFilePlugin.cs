@@ -1,9 +1,9 @@
 ﻿#nullable enable
 
+using Daniel15.Sharpamp;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using Daniel15.Sharpamp;
 using WinampNowPlayingToFile.Business;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Presentation;

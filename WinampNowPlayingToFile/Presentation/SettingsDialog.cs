@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using Mustache;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,9 +11,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Mustache;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
+using Timer = System.Timers.Timer;
 
 namespace WinampNowPlayingToFile.Presentation;
 
@@ -20,6 +21,7 @@ public partial class SettingsDialog: Form {
 
     private readonly ISettings            settings;
     private readonly WinampControllerImpl winampController;
+    private readonly Timer                renderTextTimer = new() { Enabled = true, Interval = 1000 };
 
     private static readonly FormatCompiler TEMPLATE_COMPILER = new();
 
@@ -38,6 +40,7 @@ public partial class SettingsDialog: Form {
         { "category", "Rock" },
         { "composer", "U2" },
         { "disc", 1 },
+        { "elapsed", TimeSpan.FromMilliseconds(251422 / 2.0) },
         { "family", "MPEG Layer 3 Audio File" },
         { "filebasename", "Exit.mp3" },
         { "filebasenamewithoutextension", "Exit" },
@@ -86,6 +89,7 @@ public partial class SettingsDialog: Form {
         templateEditor.Select(templateEditor.TextLength, 0);
 
         winampController.songChanged += delegate { renderPreview(); };
+        renderTextTimer.Elapsed      += delegate { renderPreview(); };
 
         applyButton.Enabled = false;
     }
@@ -158,8 +162,8 @@ public partial class SettingsDialog: Form {
 
     private void onTemplateMenuSelection(object sender, ToolStripItemClickedEventArgs e) {
         if (e.ClickedItem == helpToolStripMenuItem) {
-            Process.Start("https://handlebarsjs.com/guide/#language-features");
-        } else {
+            Process.Start("https://github.com/jehugaleahsa/mustache-sharp/blob/v1.0/README.md#placeholders");
+        } else if (e.ClickedItem != otherToolStripMenuItem) {
             string textToInsert;
             if (e.ClickedItem == newLineToolStripMenuItem) {
                 textToInsert = "#newline";
@@ -233,6 +237,11 @@ public partial class SettingsDialog: Form {
 
     private void onFilenameChange(object sender, EventArgs e) {
         onFormDirty();
+    }
+
+    protected override void OnClosed(EventArgs e) {
+        renderTextTimer.Dispose();
+        base.OnClosed(e);
     }
 
 }

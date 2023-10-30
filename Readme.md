@@ -12,7 +12,7 @@ This is a plugin for [Winamp](http://www.winamp.com/) that saves text informatio
 - [Installation](#installation)
 - [Configuration](#configuration)
     - [Text](#text)
-        - [Metadata fields](#metadata-fields)
+        - [Placeholder fields](#placeholder-fields)
         - [Helpers](#helpers)
         - [Formatting](#formatting)
     - [Album art](#album-art)
@@ -70,7 +70,7 @@ U2 – Exit – The Joshua Tree
 
 To customize the text file location and contents, go to the plugin preferences in Winamp.
 
-1. You can change the file contents by editing the **Text template** and inserting placeholders inside `{{` `}}`, either with the **Insert** button or by typing them manually. See [Metadata fields](#metadata-fields) below for all the fields you can use in a placeholder. For example, a simple template that could render the above example text is
+1. You can change the file contents by editing the **Text template** and inserting placeholders inside `{{` `}}`, either with the **Insert** button or by typing them manually. See [Placeholder fields](#placeholder-fields) below for all the fields you can use in a placeholder. For example, a simple template that could render the above example text is
     ```handlebars
     {{Artist}} – {{Title}} – {{Album}}
     ```
@@ -79,9 +79,9 @@ To customize the text file location and contents, go to the plugin preferences i
 
 When Winamp is not playing a song, this text file will be truncated to 0 bytes.
 
-#### Metadata fields
+#### Placeholder fields
 
-Metadata values that are missing or empty will be rendered as the empty string.
+Placeholder values that are missing or empty will be rendered as the empty string.
 
 |Field name|Type|Examples|Notes|
 |-|-|-|-|
@@ -96,6 +96,7 @@ Metadata values that are missing or empty will be rendered as the empty string.
 |`Conductor`|string|||
 |`Director`|string||Most commonly used for video files|
 |`Disc`|int|`1`|If it can't be parsed as an int (like `1/2`) it will be a string|
+|`Elapsed`|TimeSpan|`00:00:28.5080000`|Updated 1hz, millisecond resolution. See [formatting](#formatting) for `m:ss` and other formats.|
 |`Family`|string|`MPEG Layer 3 Audio File`|Codec or container format|
 |`FileBasename`|string|`Exit.mp3`|Filename without path|
 |`FileBasenameWithoutExtension`|string|`Exit`|Filename without path or extension|
@@ -124,11 +125,11 @@ Metadata values that are missing or empty will be rendered as the empty string.
 |`VBR`|bool|`false`|`true` for variable bitrate, `false` for constant bitrate|
 |`Year`|int|`1987`|If it can't be parsed as an int (like `1987-01-01`) it will be a string|
 
-Any other values you use in a placeholder will be requested directly from Winamp, and the response will be output as-is. If you can find other fields that Winamp handles for audio files, please [file an enhancement issue](https://github.com/Aldaviva/WinampNowPlayingToFile/issues/new?labels=enhancement&title=New%20metadata%20field:%20) so it can be added to this program and documentation.
+Any other values you use in a placeholder will be requested directly from Winamp as file metadata, and the response will be output as-is. If you can find other fields that Winamp handles for audio files, please [file an enhancement issue](https://github.com/Aldaviva/WinampNowPlayingToFile/issues/new?labels=enhancement&title=New%20metadata%20field:%20) so it can be added to this program and documentation.
 
 #### Helpers
 
-Template logic can be added using [Handlebars expressions](https://handlebarsjs.com/), including the [built-in helpers](https://handlebarsjs.com/guide/builtin-helpers.html) like `{{#if expr}}`, `{{#elif expr}}`, `{{#else}}`, and `{{/if}}`. To output a line break (CRLF), use `{{#newline}}`.
+Template logic can be added using [Handlebars expressions](https://github.com/jehugaleahsa/mustache-sharp/blob/v1.0/README.md), including the [built-in helpers](https://github.com/jehugaleahsa/mustache-sharp/blob/v1.0/README.md#placeholders) like `{{#if expr}}`, `{{#elif expr}}`, `{{#else}}`, and `{{/if}}`. To output a line break (CRLF), use `{{#newline}}`.
 
 For example, you can conditionally include artist and album only if those fields exist on your song and are nonempty.
 ```handlebars

@@ -1,9 +1,9 @@
 ﻿#nullable enable
 
+using Daniel15.Sharpamp;
 using System;
 using System.IO;
 using System.Reflection;
-using Daniel15.Sharpamp;
 
 namespace WinampNowPlayingToFile.Facade;
 
@@ -26,7 +26,10 @@ public interface WinampController {
 
 public class WinampControllerImpl: WinampController {
 
-    private readonly Winamp                       winamp;
+    private readonly Winamp winamp;
+
+    // ReSharper disable once InconsistentNaming - this is how the method is named in Sharpamp
+    private readonly Func<int, int>               sendIPCCommandInt;
     private readonly Func<string, string, string> getMetadata;
 
     public event SongChangedEventHandler? songChanged;
@@ -40,6 +43,12 @@ public class WinampControllerImpl: WinampController {
         getMetadata = (Func<string, string, string>) winamp.GetType()
             .GetMethod("GetMetadata", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { typeof(string), typeof(string) }, null)!
             .CreateDelegate(typeof(Func<string, string, string>), winamp);
+
+        Type ipcCommand = winamp.GetType().GetNestedType("IPCCommand", BindingFlags.NonPublic);
+
+        sendIPCCommandInt = (Func<int, int>) winamp.GetType()
+            .GetMethod("SendIPCCommandInt", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] { ipcCommand }, null)!
+            .CreateDelegate(typeof(Func<int, int>), winamp);
     }
 
     public Status status => winamp.Status;
@@ -71,10 +80,13 @@ public class WinampControllerImpl: WinampController {
         string songFilename = winamp.CurrentSong.Filename;
 
         try {
-            if (metadataFieldName == "filebasename") {
-                return Path.GetFileName(songFilename);
-            } else if (metadataFieldName == "filebasenamewithoutextension") {
-                return Path.GetFileNameWithoutExtension(songFilename);
+            switch (metadataFieldName) {
+                case "filebasename":
+                    return Path.GetFileName(songFilename);
+                case "filebasenamewithoutextension":
+                    return Path.GetFileNameWithoutExtension(songFilename);
+                case "elapsed":
+                    return TimeSpan.FromMilliseconds(sendIPCCommandInt(105));
             }
         } catch (ArgumentException) {
             return string.Empty;

@@ -1,12 +1,13 @@
 ﻿#nullable enable
 
+using Daniel15.Sharpamp;
+using Mustache;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Daniel15.Sharpamp;
-using Mustache;
+using System.Timers;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
 using Song = WinampNowPlayingToFile.Facade.Song;
@@ -23,7 +24,6 @@ public interface INowPlayingToFileManager {
 
 public class NowPlayingToFileManager: INowPlayingToFileManager {
 
-    private static readonly FormatCompiler      TEMPLATE_COMPILER  = new();
     private static readonly UTF8Encoding        UTF8               = new(false, true);
     private static readonly IEnumerable<string> ARTWORK_EXTENSIONS = new[] { ".bmp", ".gif", ".jpeg", ".jpg", ".png" };
     private static readonly IEnumerable<string> ARTWORK_BASE_NAMES = new[] { "cover", "folder", "front", "albumart" };
@@ -31,10 +31,23 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     private static byte[]? albumArtWhenMissingFromSong => getInstallationDirectoryImageOrFallback("emptyAlbumArt.png");
     private static byte[]? albumArtWhenStopped => getInstallationDirectoryImageOrFallback("stoppedAlbumArt.png");
 
-    private readonly WinampController winampController;
-    private readonly ISettings        settings;
+    private readonly  WinampController winampController;
+    private readonly  ISettings        settings;
+    private readonly  FormatCompiler   templateCompiler = new();
+    internal readonly Timer            renderTextTimer  = new(1000);
 
     private Generator? cachedTemplate;
+    private bool       _textTemplateDependsOnTime;
+
+    private bool textTemplateDependsOnTime {
+        get => _textTemplateDependsOnTime;
+        set {
+            if (_textTemplateDependsOnTime != value) {
+                _textTemplateDependsOnTime = value;
+                startOrStopTextRenderingTimer();
+            }
+        }
+    }
 
     public event EventHandler<NowPlayingException>? error;
 
@@ -42,21 +55,38 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         this.winampController = winampController;
         this.settings         = settings;
 
-        this.winampController.songChanged   += delegate { update(); };
-        this.winampController.statusChanged += delegate { update(); };
+        this.winampController.songChanged += delegate { update(); };
+
+        this.winampController.statusChanged += (_, args) => {
+            update();
+            startOrStopTextRenderingTimer(args.Status);
+        };
+
         this.settings.settingsUpdated += delegate {
-            cachedTemplate = null;
+            cachedTemplate            = null;
+            textTemplateDependsOnTime = false;
             update();
         };
+
+        templateCompiler.PlaceholderFound += (_, args) => {
+            if (args.Key.Equals("Elapsed", StringComparison.CurrentCultureIgnoreCase)) {
+                textTemplateDependsOnTime = true;
+            }
+        };
+
+        renderTextTimer.Elapsed += (_, _) => { update(false); };
 
         update();
     }
 
-    internal void update() {
+    internal void update(bool updateAlbumArt = true) {
         try {
             if (winampController.currentSong is { Filename: not "" } currentSong) {
                 saveText(renderText(currentSong));
-                saveImage(findAlbumArt(currentSong));
+
+                if (updateAlbumArt) {
+                    saveImage(findAlbumArt(currentSong));
+                }
             }
         } catch (Exception e) when (e is not OutOfMemoryException) {
             error?.Invoke(this, new NowPlayingException("Exception while updating song", e, winampController.currentSong));
@@ -73,7 +103,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
 
     private Generator getTemplate() {
         if (cachedTemplate == null) {
-            cachedTemplate             =  TEMPLATE_COMPILER.Compile(settings.textTemplate);
+            cachedTemplate             =  templateCompiler.Compile(settings.textTemplate);
             cachedTemplate.KeyNotFound += fetchExtraMetadata;
         }
 
@@ -174,7 +204,13 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         }
     }
 
+    private void startOrStopTextRenderingTimer(Status? playbackStatus = null) {
+        playbackStatus          ??= winampController.status;
+        renderTextTimer.Enabled =   playbackStatus == Status.Playing && textTemplateDependsOnTime;
+    }
+
     public virtual void onQuit() {
+        renderTextTimer.Stop();
         saveText(string.Empty);
         saveImage(albumArtWhenStopped);
     }
