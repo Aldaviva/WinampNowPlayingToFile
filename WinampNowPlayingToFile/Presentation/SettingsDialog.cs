@@ -83,32 +83,20 @@ public partial class SettingsDialog: Form {
         albumArtFilenameEditor.FileName         = settings.albumArtFilename;
 
         textFilename.Text     = settings.textFilename;
-		text2Filename.Text = settings.secondaryTextFilename;
 		albumArtFilename.Text = settings.albumArtFilename;
 
         templateEditor.Text = settings.textTemplate;
         templateEditor.Select(templateEditor.TextLength, 0);
 
-        template2Editor.Text = settings.secondaryTextTemplate;
-        template2Editor.Select(template2Editor.TextLength, 0);
 
-        winampController.songChanged += delegate { renderPreview(templatePreview); renderPreview(template2Preview); };
-        renderTextTimer.Elapsed      += delegate { renderPreview(templatePreview); renderPreview(template2Preview); };
+        winampController.songChanged += delegate { renderPreview(templatePreview); };
+        renderTextTimer.Elapsed      += delegate { renderPreview(templatePreview); };
 
         applyButton.Enabled = false;
     }
 
     private void onTextFileBrowseButtonClick(object sender, EventArgs e) {
-		TextBox destinationControl;
-		switch (sender) {
-			case Control c when c == text2BrowseButton:
-				destinationControl = text2Filename; break;
-			case Control c when c == textBrowseButton:
-			default:
-				destinationControl = textFilename;
-				break;
-		}
-		onBrowseButtonClick(textFilenameEditor, destinationControl);
+		onBrowseButtonClick(textFilenameEditor, textFilename);
     }
 
     private void onAlbumArtBrowseButtonClick(object sender, EventArgs e) {
@@ -144,32 +132,19 @@ public partial class SettingsDialog: Form {
     private void renderPreview(object sender) {
         Song previewSong = isSongPlaying() ? winampController.currentSong : EXAMPLE_SONG;
 
-		Control destinationControl;
-		switch (sender) {
-			case TextBox c when c == template2Editor:
-				destinationControl = template2Preview; break;
-			case TextBox c when c == templateEditor:
-			default:
-				destinationControl = templatePreview;
-				break;
-		}
-
         try {
-			destinationControl.Text = compileTemplate(sender as TextBox).Render(previewSong);
+			templatePreview.Text = compileTemplate().Render(previewSong);
         } catch (KeyNotFoundException e) {
-			destinationControl.Text = $"Template key not found: {e.Message}";
+			templatePreview.Text = $"Template key not found: {e.Message}";
         } catch (FormatException e) {
-			destinationControl.Text = $"Template format error: {e.Message}";
+			templatePreview.Text = $"Template format error: {e.Message}";
         }
     }
 
     private bool isSongPlaying() => !string.IsNullOrEmpty(winampController.currentSong.Title);
 
-    private Generator compileTemplate(TextBox? source = null) {
-        if (source == null) {
-            source = templateEditor;
-        }
-        Generator generator = TEMPLATE_COMPILER.Compile(source.Text);
+    private Generator compileTemplate() {
+        Generator generator = TEMPLATE_COMPILER.Compile(templateEditor.Text);
         generator.KeyNotFound += (_, args) => {
             args.Substitute = isSongPlaying()
                 ? winampController.fetchMetadataFieldValue(args.Key)
@@ -184,8 +159,7 @@ public partial class SettingsDialog: Form {
 
 
     private void showTemplateMenu(object sender, EventArgs e) {
-        insertTemplatePlaceholderMenu.Tag = sender;
-		insertTemplatePlaceholderMenu.Show(sender as Control, new Point(0, (sender as Control).Height));
+		insertTemplatePlaceholderMenu.Show(templateEditor, new Point(0, templateEditor.Height));
     }
 
     private void onTemplateMenuSelection(object sender, ToolStripItemClickedEventArgs e) {
@@ -205,20 +179,10 @@ public partial class SettingsDialog: Form {
                 textToInsert = e.ClickedItem.Text;
             }
 
-			TextBox destinationControl;
-			switch (insertTemplatePlaceholderMenu.Tag) {
-				case Button c when c == template2InsertButton:
-					destinationControl = template2Editor; break;
-				case Button c when c == templateInsertButton:
-				default:
-					destinationControl = templateEditor;
-					break;
-			}
-
 			string placeholder      = $$$"""{{{{{textToInsert}}}}}""";
-            string originalTemplate = destinationControl.Text;
-            int    selectionStart   = destinationControl.SelectionStart;
-            int    selectionEnd     = selectionStart + destinationControl.SelectionLength;
+            string originalTemplate = templateEditor.Text;
+            int    selectionStart   = templatePreview.SelectionStart;
+            int    selectionEnd     = selectionStart + templatePreview.SelectionLength;
 
             StringBuilder newTemplate = new();
             newTemplate.Append(originalTemplate.Substring(0, selectionStart));
@@ -226,10 +190,10 @@ public partial class SettingsDialog: Form {
             newTemplate.Append(originalTemplate.Substring(selectionEnd));
 
 			
-			destinationControl.Text            = newTemplate.ToString();
-			destinationControl.SelectionLength = 0;
-			destinationControl.SelectionStart  = selectionStart + placeholder.Length;
-			destinationControl.Focus();
+			templatePreview.Text             = newTemplate.ToString();
+			templatePreview.SelectionLength = 0;
+			templatePreview.SelectionStart  = selectionStart + placeholder.Length;
+			templatePreview.Focus();
         }
     }
 
@@ -252,14 +216,11 @@ public partial class SettingsDialog: Form {
 
     private void save() {
         try {
-            compileTemplate(templateEditor).Render(EXAMPLE_SONG);
-			compileTemplate(template2Editor).Render(EXAMPLE_SONG);
+            compileTemplate().Render(EXAMPLE_SONG);
 
 			settings.textFilename          = textFilename.Text;
-            settings.secondaryTextFilename = text2Filename.Text;
             settings.albumArtFilename      = albumArtFilename.Text;
             settings.textTemplate          = templateEditor.Text;
-            settings.secondaryTextTemplate = template2Editor.Text;
             settings.save();
 
             applyButton.Enabled = false;
