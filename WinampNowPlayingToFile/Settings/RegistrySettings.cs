@@ -13,9 +13,11 @@ public class RegistrySettings: BaseSettings {
 
         using RegistryKey? key = Registry.CurrentUser.OpenSubKey(keyPath);
         if (key != null) {
-            textFilename     = key.GetValue(nameof(textFilename)) as string ?? textFilename;
-            albumArtFilename = key.GetValue(nameof(albumArtFilename)) as string ?? albumArtFilename;
-            textTemplate     = key.GetValue(nameof(textTemplate)) as string ?? textTemplate;
+            textFilename          = key.GetValue(nameof(textFilename)) as string ?? textFilename;
+            secondaryTextFilename = key.GetValue(nameof(textFilename)) as string ?? secondaryTextFilename;
+			albumArtFilename      = key.GetValue(nameof(albumArtFilename)) as string ?? albumArtFilename;
+            textTemplate          = key.GetValue(nameof(textTemplate)) as string ?? textTemplate;
+            secondaryTextTemplate = key.GetValue(nameof(secondaryTextTemplate)) as string ?? secondaryTextTemplate;
         }
 
     }
@@ -25,6 +27,7 @@ public class RegistrySettings: BaseSettings {
         using RegistryKey? key = Registry.CurrentUser.CreateSubKey(keyPath);
         if (key != null) {
             key.SetValue(nameof(textFilename), textFilename);
+            key.SetValue(nameof(secondaryTextFilename), secondaryTextFilename);
             key.SetValue(nameof(albumArtFilename), albumArtFilename);
             key.SetValue(nameof(textTemplate), textTemplate);
             onSettingsUpdated();
