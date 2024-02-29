@@ -269,7 +269,15 @@ public partial class SettingsDialog: Form {
 	}
 
 	private void onTemplateAdd(object sender, EventArgs e) {
-        settings.textTemplates.Add(settings.getDefault());
+        textTemplate newTemplate = settings.getDefault(); // Add an index to the new template's file name
+		FileInfo newTemplatePath = new FileInfo(newTemplate.fileName);
+		string newTemplateFileName = Path.Combine(
+            newTemplatePath.DirectoryName, 
+            $"{Path.GetFileNameWithoutExtension(newTemplatePath.FullName)}{(settings.textTemplates.Count+1)}{newTemplatePath.Extension}"
+        );
+        newTemplate.fileName = newTemplateFileName;
+		settings.textTemplates.Add(newTemplate);
+
         templateSelector.Items.Add(settings.textTemplates.Last());
         templateSelector.SelectedIndex = templateSelector.Items.Count - 1;
         onFormDirty();
