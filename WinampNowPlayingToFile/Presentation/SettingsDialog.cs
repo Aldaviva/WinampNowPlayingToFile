@@ -272,11 +272,13 @@ public partial class SettingsDialog: Form {
         settings.textTemplates.Add(settings.getDefault());
         templateSelector.Items.Add(settings.textTemplates.Last());
         templateSelector.SelectedIndex = templateSelector.Items.Count - 1;
+        onFormDirty();
 	}
 
 	private void onTemmplateRemove(object sender, EventArgs e) {
         settings.textTemplates.Remove((textTemplate)templateSelector.SelectedItem);
         templateSelector.Items.Remove(templateSelector.SelectedItem);
 		templateSelector.SelectedIndex = templateSelector.Items.Count - 1;
+		onFormDirty();
 	}
 }
