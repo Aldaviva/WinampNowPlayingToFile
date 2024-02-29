@@ -77,9 +77,6 @@ public partial class SettingsDialog: Form {
     }
 
     private void SettingsDialog_Load(object sender, EventArgs e) {
-        //templateEditor.Text = settings.textTemplates.First().text;
-        //templateEditor.Select(templateEditor.TextLength, 0);
-
         // Since the templateSelector holds all textTemplates let's not fire textBox events since those update the templateSelector too
         templateEditor.TextChanged -= onTemplateChange; 
         textFilename.TextChanged -= onFilenameChange; 
@@ -97,8 +94,6 @@ public partial class SettingsDialog: Form {
 		templateEditor.TextChanged += onTemplateChange;
 		textFilename.TextChanged += onFilenameChange;
 		albumArtFilename.TextChanged += onFilenameChange;
-		//onTemplateSelectorChanged(sender, e);
-
 
 		winampController.songChanged += delegate { renderPreview(templatePreview); };
         renderTextTimer.Elapsed      += delegate { renderPreview(templatePreview); };
@@ -137,9 +132,7 @@ public partial class SettingsDialog: Form {
 
     private void onTemplateChange(object sender, EventArgs e) {
         renderPreview(sender);
-        //templateSelector.SelectedIndexChanged -= onTemplateSelectorChanged;
         templateSelector.Items[templateSelector.SelectedIndex] = new textTemplate(textFilename.Text, templateEditor.Text);
-		//templateSelector.SelectedIndexChanged += onTemplateSelectorChanged;
 		onFormDirty();
     }
 
@@ -203,7 +196,6 @@ public partial class SettingsDialog: Form {
             newTemplate.Append(placeholder);
             newTemplate.Append(originalTemplate.Substring(selectionEnd));
 
-			
 			templateEditor.Text             = newTemplate.ToString();
 			templateEditor.SelectionLength = 0;
 			templateEditor.SelectionStart  = selectionStart + placeholder.Length;
@@ -232,7 +224,6 @@ public partial class SettingsDialog: Form {
         try {
             compileTemplate().Render(EXAMPLE_SONG);
 
-            //settings.textTemplates[templateSelector.SelectedIndex] = new textTemplate(textFilename.Text, templateEditor.Text);
             // Actually the templateSelector will hold all of the templates now
             settings.textTemplates = templateSelector.Items.Cast<textTemplate>().ToList();
 
@@ -271,23 +262,17 @@ public partial class SettingsDialog: Form {
 		textFilenameEditor.InitialDirectory = Path.GetDirectoryName(selectedTemplate.fileName);
 		textFilenameEditor.FileName = selectedTemplate.fileName;
 
-		//albumArtFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.albumArtFilename);
-		//albumArtFilenameEditor.FileName = settings.albumArtFilename;
-
 		textFilename.Text = selectedTemplate.fileName;
-		//albumArtFilename.Text = settings.albumArtFilename;
 
 		templateEditor.Text = selectedTemplate.text;
-		//templateEditor.Select(templateEditor.TextLength, 0);
 
-        applyButton.Enabled = applyButtonState;
+        applyButton.Enabled = applyButtonState; // Restore dirty state
 	}
 
 	private void onTemplateAdd(object sender, EventArgs e) {
         settings.textTemplates.Add(settings.getDefault());
         templateSelector.Items.Add(settings.textTemplates.Last());
         templateSelector.SelectedIndex = templateSelector.Items.Count - 1;
-        //onTemplateSelectorChanged(sender, e);
 	}
 
 	private void onTemmplateRemove(object sender, EventArgs e) {

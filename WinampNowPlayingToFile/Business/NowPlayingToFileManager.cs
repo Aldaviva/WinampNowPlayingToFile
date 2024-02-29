@@ -13,7 +13,6 @@ using WinampNowPlayingToFile.Settings;
 using Song = WinampNowPlayingToFile.Facade.Song;
 using static WinampNowPlayingToFile.Settings.ISettings;
 using System.Drawing.Text;
-//using System.Windows.Forms;
 
 namespace WinampNowPlayingToFile.Business;
 
