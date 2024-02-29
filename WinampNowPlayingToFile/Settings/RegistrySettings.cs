@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System.Linq;
+using System.Windows.Forms;
 
 using Microsoft.Win32;
 
@@ -33,6 +34,7 @@ public class RegistrySettings: BaseSettings {
 
     public override void save() {
         base.save();
+		Registry.CurrentUser.DeleteSubKey(keyPath); // Actually remove text templates removed in settings
         using RegistryKey? key = Registry.CurrentUser.CreateSubKey(keyPath);
         if (key != null) {
             for (int i = 0; i < textTemplates.Count; i++) {
