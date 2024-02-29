@@ -1,25 +1,37 @@
 ﻿#nullable enable
 
 using System;
+using System.Collections.Generic;
+
+using TagLib.Riff;
+
+using static WinampNowPlayingToFile.Settings.ISettings;
 
 namespace WinampNowPlayingToFile.Settings;
 
 public abstract class BaseSettings: ISettings {
 
-    public string textFilename { get; set; } = null!;
     public string albumArtFilename { get; set; } = null!;
-    public string textTemplate { get; set; } = null!;
+    public List<textTemplate> textTemplates { get; set; } = null!;
 
-    public event EventHandler? settingsUpdated;
+	public event EventHandler? settingsUpdated;
 
     public abstract void load();
     public virtual void save() { }
 
     public ISettings loadDefaults() {
-        textFilename     = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.txt");
+        textTemplates = new List<ISettings.textTemplate>() {
+            getDefault()
+        };
         albumArtFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.png");
-        textTemplate     = "{{#if Artist}}{{Artist}} \u2013 {{/if}}{{Title}}{{#if Album}} \u2013 {{Album}}{{/if}}";
         return this;
+    }
+
+    public textTemplate getDefault() {
+        return new textTemplate(
+			fileName: Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.txt"),
+			text: "{{#if Artist}}{{Artist}} \u2013 {{/if}}{{Title}}{{#if Album}} \u2013 {{Album}}{{/if}}"
+			);
     }
 
     protected void onSettingsUpdated() {

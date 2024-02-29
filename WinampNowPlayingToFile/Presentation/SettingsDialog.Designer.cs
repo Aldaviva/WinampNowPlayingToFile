@@ -97,8 +97,8 @@
 			this.albumArtFilenameEditor = new System.Windows.Forms.SaveFileDialog();
 			this.templateSelector = new System.Windows.Forms.ComboBox();
 			this.templateSelectorLabel = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
+			this.templateAdd = new System.Windows.Forms.Button();
+			this.templateRemove = new System.Windows.Forms.Button();
 			albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			artistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			filenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -697,11 +697,13 @@
 			// 
 			// templateSelector
 			// 
+			this.templateSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.templateSelector.FormattingEnabled = true;
 			this.templateSelector.Location = new System.Drawing.Point(119, 12);
 			this.templateSelector.Name = "templateSelector";
 			this.templateSelector.Size = new System.Drawing.Size(374, 21);
 			this.templateSelector.TabIndex = 16;
+			this.templateSelector.SelectedIndexChanged += new System.EventHandler(this.onTemplateSelectorChanged);
 			// 
 			// templateSelectorLabel
 			// 
@@ -712,23 +714,25 @@
 			this.templateSelectorLabel.TabIndex = 17;
 			this.templateSelectorLabel.Text = "Select template";
 			// 
-			// button1
+			// templateAdd
 			// 
-			this.button1.Location = new System.Drawing.Point(539, 10);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(35, 23);
-			this.button1.TabIndex = 18;
-			this.button1.Text = "+";
-			this.button1.UseVisualStyleBackColor = true;
+			this.templateAdd.Location = new System.Drawing.Point(539, 10);
+			this.templateAdd.Name = "templateAdd";
+			this.templateAdd.Size = new System.Drawing.Size(35, 23);
+			this.templateAdd.TabIndex = 18;
+			this.templateAdd.Text = "+";
+			this.templateAdd.UseVisualStyleBackColor = true;
+			this.templateAdd.Click += new System.EventHandler(this.onTemplateAdd);
 			// 
-			// button2
+			// templateRemove
 			// 
-			this.button2.Location = new System.Drawing.Point(499, 10);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(35, 23);
-			this.button2.TabIndex = 18;
-			this.button2.Text = "-";
-			this.button2.UseVisualStyleBackColor = true;
+			this.templateRemove.Location = new System.Drawing.Point(499, 10);
+			this.templateRemove.Name = "templateRemove";
+			this.templateRemove.Size = new System.Drawing.Size(35, 23);
+			this.templateRemove.TabIndex = 18;
+			this.templateRemove.Text = "-";
+			this.templateRemove.UseVisualStyleBackColor = true;
+			this.templateRemove.Click += new System.EventHandler(this.onTemmplateRemove);
 			// 
 			// SettingsDialog
 			// 
@@ -737,8 +741,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancelButton;
 			this.ClientSize = new System.Drawing.Size(586, 256);
-			this.Controls.Add(this.button2);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.templateRemove);
+			this.Controls.Add(this.templateAdd);
 			this.Controls.Add(this.templateSelectorLabel);
 			this.Controls.Add(this.templateSelector);
 			this.Controls.Add(this.applyButton);
@@ -801,7 +805,7 @@
         private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
 		private System.Windows.Forms.ComboBox templateSelector;
 		private System.Windows.Forms.Label templateSelectorLabel;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button templateAdd;
+		private System.Windows.Forms.Button templateRemove;
 	}
 }
