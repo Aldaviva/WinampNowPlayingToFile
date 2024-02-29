@@ -14,7 +14,6 @@ using System.Windows.Forms;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
 using Timer = System.Timers.Timer;
-using static WinampNowPlayingToFile.Settings.ISettings;
 
 namespace WinampNowPlayingToFile.Presentation;
 

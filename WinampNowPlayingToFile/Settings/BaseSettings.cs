@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using TagLib.Riff;
 
-using static WinampNowPlayingToFile.Settings.ISettings;
+using WinampNowPlayingToFile.Facade;
 
 namespace WinampNowPlayingToFile.Settings;
 
@@ -20,7 +20,7 @@ public abstract class BaseSettings: ISettings {
     public virtual void save() { }
 
     public ISettings loadDefaults() {
-        textTemplates = new List<ISettings.textTemplate>() {
+        textTemplates = new List<textTemplate>() {
             getDefault()
         };
         albumArtFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.png");

@@ -4,7 +4,7 @@ using System.Linq;
 
 using Microsoft.Win32;
 
-using static WinampNowPlayingToFile.Settings.ISettings;
+using WinampNowPlayingToFile.Facade;
 
 namespace WinampNowPlayingToFile.Settings;
 

@@ -1,23 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WinampNowPlayingToFile.Settings; 
+using WinampNowPlayingToFile.Facade;
 
-public interface ISettings {
+namespace WinampNowPlayingToFile.Settings;
 
-    struct textTemplate {
-		public textTemplate(string fileName = null!, string text = null!) {
-            this.fileName = fileName!;
-            this.text = text!;
-		}
-
-		public string fileName { get; set; }
-        public string text { get; set; }
-
-		public override string ToString() {
-			return text;
-		}
-	}
+public partial interface ISettings {
 
     string albumArtFilename { get; set; }
 
