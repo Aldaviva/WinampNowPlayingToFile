@@ -234,6 +234,9 @@
   <metadata name="insertTemplatePlaceholderMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>161, 17</value>
   </metadata>
+  <data name="explanationLabel.Text" xml:space="preserve">
+    <value>When Winamp plays a track, this plug-in will save the track information and album art to files. The format of the text can be customized with templates. Create more text files with different templates by adding more with the plus button. Note: All templates will be saved at once upon pressing OK or Apply.</value>
+  </data>
   <metadata name="albumArtFilenameEditor.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>374, 21</value>
   </metadata>

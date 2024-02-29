@@ -530,7 +530,7 @@
 			// okButton
 			// 
 			this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.okButton.Location = new System.Drawing.Point(337, 220);
+			this.okButton.Location = new System.Drawing.Point(337, 226);
 			this.okButton.Name = "okButton";
 			this.okButton.Size = new System.Drawing.Size(75, 23);
 			this.okButton.TabIndex = 13;
@@ -542,7 +542,7 @@
 			// 
 			this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancelButton.Location = new System.Drawing.Point(418, 220);
+			this.cancelButton.Location = new System.Drawing.Point(418, 226);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(75, 23);
 			this.cancelButton.TabIndex = 14;
@@ -632,10 +632,9 @@
 			this.explanationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.explanationLabel.Location = new System.Drawing.Point(30, 170);
 			this.explanationLabel.Name = "explanationLabel";
-			this.explanationLabel.Size = new System.Drawing.Size(544, 30);
+			this.explanationLabel.Size = new System.Drawing.Size(544, 49);
 			this.explanationLabel.TabIndex = 12;
-			this.explanationLabel.Text = "When Winamp plays a track, this plug-in will save the track information and album" +
-    " art to files. The format of the text can be customized with the template.";
+			this.explanationLabel.Text = resources.GetString("explanationLabel.Text");
 			// 
 			// horizontalRule1
 			// 
@@ -650,7 +649,7 @@
 			// applyButton
 			// 
 			this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.applyButton.Location = new System.Drawing.Point(499, 220);
+			this.applyButton.Location = new System.Drawing.Point(499, 226);
 			this.applyButton.Name = "applyButton";
 			this.applyButton.Size = new System.Drawing.Size(75, 23);
 			this.applyButton.TabIndex = 15;
@@ -740,7 +739,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancelButton;
-			this.ClientSize = new System.Drawing.Size(586, 256);
+			this.ClientSize = new System.Drawing.Size(586, 262);
 			this.Controls.Add(this.templateRemove);
 			this.Controls.Add(this.templateAdd);
 			this.Controls.Add(this.templateSelectorLabel);
