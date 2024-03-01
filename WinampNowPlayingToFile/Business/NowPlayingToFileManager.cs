@@ -11,6 +11,7 @@ using System.Timers;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Settings;
 using Song = WinampNowPlayingToFile.Facade.Song;
+using System.Drawing.Text;
 
 namespace WinampNowPlayingToFile.Business;
 
@@ -36,7 +37,13 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     private readonly  FormatCompiler   templateCompiler = new();
     internal readonly Timer            renderTextTimer  = new(1000);
 
-    private Generator? cachedTemplate;
+    internal struct templateWithGenerator {
+        internal string fileName { get; set; }
+        internal Generator generator { get; set; }
+    }
+
+    private List<templateWithGenerator> cachedTemplates = new List<templateWithGenerator>();
+
     private bool       _textTemplateDependsOnTime;
 
     private bool textTemplateDependsOnTime {
@@ -63,7 +70,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         };
 
         this.settings.settingsUpdated += delegate {
-            cachedTemplate            = null;
+            cachedTemplates.Clear();
             textTemplateDependsOnTime = false;
             update();
         };
@@ -82,7 +89,9 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     internal void update(bool updateAlbumArt = true) {
         try {
             if (winampController.currentSong is { Filename: not "" } currentSong) {
-                saveText(renderText(currentSong));
+                foreach (textTemplate template in settings.textTemplates) {
+                    saveText(template.fileName, renderText(currentSong, template));
+                }
 
                 if (updateAlbumArt) {
                     saveImage(findAlbumArt(currentSong));
@@ -93,21 +102,24 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         }
     }
 
-    internal string renderText(Song currentSong) {
-        return winampController.status == Status.Playing ? getTemplate().Render(currentSong) : string.Empty;
+    internal string renderText(Song currentSong, textTemplate template) {
+        return winampController.status == Status.Playing ? getTemplate(template).Render(currentSong) : string.Empty;
     }
 
-    private void saveText(string nowPlayingText) {
-        File.WriteAllText(settings.textFilename, nowPlayingText, UTF8);
+    private void saveText(string fileName, string nowPlayingText) {
+        File.WriteAllText(fileName, nowPlayingText, UTF8);
     }
 
-    private Generator getTemplate() {
-        if (cachedTemplate == null) {
-            cachedTemplate             =  templateCompiler.Compile(settings.textTemplate);
-            cachedTemplate.KeyNotFound += fetchExtraMetadata;
+    private Generator getTemplate(textTemplate template) {
+        Generator templateGenerator;
+        if (cachedTemplates.Exists(x => x.fileName == template.fileName)) {
+            templateGenerator = cachedTemplates.Single(x => x.fileName == template.fileName).generator;
+        } else {
+            templateGenerator = templateCompiler.Compile(template.text);
+            templateGenerator.KeyNotFound += fetchExtraMetadata;
+            cachedTemplates.Add(new templateWithGenerator() { fileName = template.fileName, generator = templateGenerator });
         }
-
-        return cachedTemplate;
+        return templateGenerator;
     }
 
     private void fetchExtraMetadata(object sender, KeyNotFoundEventArgs args) {
@@ -211,7 +223,9 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
 
     public virtual void onQuit() {
         renderTextTimer.Stop();
-        saveText(string.Empty);
+        foreach (textTemplate template in settings.textTemplates) {
+            saveText(template.fileName, string.Empty);
+		}
         saveImage(albumArtWhenStopped);
     }
 
