@@ -760,6 +760,7 @@
 			this.Controls.Add(this.textBrowseButton);
 			this.Controls.Add(this.albumArtLabel);
 			this.Controls.Add(this.writeToFileLabel);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
