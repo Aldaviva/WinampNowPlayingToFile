@@ -66,6 +66,7 @@
             System.Windows.Forms.ToolStripMenuItem typeToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem vbrToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem elapsedToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem playbackStateToolStripMenuItem;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
             this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileBasenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,6 +96,11 @@
             this.albumArtBrowseButton = new System.Windows.Forms.Button();
             this.albumArtFilename = new System.Windows.Forms.TextBox();
             this.albumArtFilenameEditor = new System.Windows.Forms.SaveFileDialog();
+            this.preserveAlbumArtWhenNotPlaying = new System.Windows.Forms.CheckBox();
+            this.textFileMenu = new System.Windows.Forms.ComboBox();
+            this.newTextFileButton = new System.Windows.Forms.Button();
+            this.removeTextFileButton = new System.Windows.Forms.Button();
+            this.preserveTextFileWhenNotPlaying = new System.Windows.Forms.CheckBox();
             albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             artistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             filenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,6 +138,7 @@
             typeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             vbrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             elapsedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            playbackStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertTemplatePlaceholderMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,21 +146,21 @@
             // 
             albumToolStripMenuItem.Name = "albumToolStripMenuItem";
             albumToolStripMenuItem.ShowShortcutKeys = false;
-            albumToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            albumToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             albumToolStripMenuItem.Text = "Album";
             // 
             // artistToolStripMenuItem
             // 
             artistToolStripMenuItem.Name = "artistToolStripMenuItem";
             artistToolStripMenuItem.ShowShortcutKeys = false;
-            artistToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            artistToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             artistToolStripMenuItem.Text = "Artist";
             // 
             // filenameToolStripMenuItem
             // 
             filenameToolStripMenuItem.Name = "filenameToolStripMenuItem";
             filenameToolStripMenuItem.ShowShortcutKeys = false;
-            filenameToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            filenameToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             filenameToolStripMenuItem.Text = "Filename";
             filenameToolStripMenuItem.ToolTipText = "The absolute path to the file, e.g. \"C:\\Users\\Ben\\Music\\Song.mp3\"";
             // 
@@ -161,14 +168,14 @@
             // 
             titleToolStripMenuItem.Name = "titleToolStripMenuItem";
             titleToolStripMenuItem.ShowShortcutKeys = false;
-            titleToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            titleToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             titleToolStripMenuItem.Text = "Title";
             // 
             // yearToolStripMenuItem
             // 
             yearToolStripMenuItem.Name = "yearToolStripMenuItem";
             yearToolStripMenuItem.ShowShortcutKeys = false;
-            yearToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            yearToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             yearToolStripMenuItem.Text = "Year";
             // 
             // albumArtistToolStripMenuItem
@@ -398,6 +405,14 @@
             elapsedToolStripMenuItem.ToolTipText = "Playback time position of the current media with millisecond resolution, updated " +
     "every second. To be formatted as a .NET TimeSpan.";
             // 
+            // playbackStateToolStripMenuItem
+            // 
+            playbackStateToolStripMenuItem.Name = "playbackStateToolStripMenuItem";
+            playbackStateToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            playbackStateToolStripMenuItem.Tag = "PlaybackState";
+            playbackStateToolStripMenuItem.Text = "Playback state";
+            playbackStateToolStripMenuItem.ToolTipText = "\"playing\", \"paused\", or \"stopped\"";
+            // 
             // otherToolStripMenuItem
             // 
             this.otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -422,6 +437,7 @@
             losslessToolStripMenuItem,
             lyricistToolStripMenuItem,
             mediaToolStripMenuItem,
+            playbackStateToolStripMenuItem,
             producerToolStripMenuItem,
             publisherToolStripMenuItem,
             ratingToolStripMenuItem,
@@ -436,7 +452,7 @@
             typeToolStripMenuItem,
             vbrToolStripMenuItem});
             this.otherToolStripMenuItem.Name = "otherToolStripMenuItem";
-            this.otherToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.otherToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.otherToolStripMenuItem.Text = "More";
             this.otherToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
             // 
@@ -459,10 +475,10 @@
             // writeToFileLabel
             // 
             this.writeToFileLabel.AutoSize = true;
-            this.writeToFileLabel.Location = new System.Drawing.Point(13, 76);
+            this.writeToFileLabel.Location = new System.Drawing.Point(21, 163);
             this.writeToFileLabel.Name = "writeToFileLabel";
             this.writeToFileLabel.Size = new System.Drawing.Size(66, 13);
-            this.writeToFileLabel.TabIndex = 5;
+            this.writeToFileLabel.TabIndex = 8;
             this.writeToFileLabel.Text = "&Save text as";
             // 
             // textFilenameEditor
@@ -475,10 +491,10 @@
             // textBrowseButton
             // 
             this.textBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBrowseButton.Location = new System.Drawing.Point(499, 71);
+            this.textBrowseButton.Location = new System.Drawing.Point(507, 158);
             this.textBrowseButton.Name = "textBrowseButton";
             this.textBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.textBrowseButton.TabIndex = 7;
+            this.textBrowseButton.TabIndex = 10;
             this.textBrowseButton.Text = "&Browse…";
             this.textBrowseButton.UseVisualStyleBackColor = true;
             this.textBrowseButton.Click += new System.EventHandler(this.onTextFileBrowseButtonClick);
@@ -487,49 +503,49 @@
             // 
             this.textFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textFilename.Location = new System.Drawing.Point(127, 73);
+            this.textFilename.Location = new System.Drawing.Point(135, 160);
             this.textFilename.Name = "textFilename";
             this.textFilename.Size = new System.Drawing.Size(366, 20);
-            this.textFilename.TabIndex = 6;
+            this.textFilename.TabIndex = 9;
             this.textFilename.TextChanged += new System.EventHandler(this.onFilenameChange);
             // 
             // templateLabel
             // 
             this.templateLabel.AutoSize = true;
-            this.templateLabel.Location = new System.Drawing.Point(13, 18);
+            this.templateLabel.Location = new System.Drawing.Point(21, 65);
             this.templateLabel.Name = "templateLabel";
             this.templateLabel.Size = new System.Drawing.Size(71, 13);
-            this.templateLabel.TabIndex = 0;
+            this.templateLabel.TabIndex = 3;
             this.templateLabel.Text = "&Text template";
             // 
             // templateEditor
             // 
             this.templateEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.templateEditor.Location = new System.Drawing.Point(127, 15);
+            this.templateEditor.Location = new System.Drawing.Point(135, 62);
             this.templateEditor.Name = "templateEditor";
-            this.templateEditor.Size = new System.Drawing.Size(366, 20);
-            this.templateEditor.TabIndex = 1;
+            this.templateEditor.Size = new System.Drawing.Size(330, 20);
+            this.templateEditor.TabIndex = 4;
             this.templateEditor.TextChanged += new System.EventHandler(this.onTemplateChange);
             // 
             // templateInsertButton
             // 
             this.templateInsertButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.templateInsertButton.Location = new System.Drawing.Point(499, 13);
+            this.templateInsertButton.Location = new System.Drawing.Point(471, 60);
             this.templateInsertButton.Name = "templateInsertButton";
-            this.templateInsertButton.Size = new System.Drawing.Size(75, 23);
-            this.templateInsertButton.TabIndex = 2;
-            this.templateInsertButton.Text = "&Insert";
+            this.templateInsertButton.Size = new System.Drawing.Size(111, 23);
+            this.templateInsertButton.TabIndex = 5;
+            this.templateInsertButton.Text = "&Insert placeholder";
             this.templateInsertButton.UseVisualStyleBackColor = true;
             this.templateInsertButton.Click += new System.EventHandler(this.showTemplateMenu);
             // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.Location = new System.Drawing.Point(337, 196);
+            this.okButton.Location = new System.Drawing.Point(337, 325);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 13;
+            this.okButton.TabIndex = 18;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.onClickOk);
@@ -538,10 +554,10 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(418, 196);
+            this.cancelButton.Location = new System.Drawing.Point(418, 325);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 14;
+            this.cancelButton.TabIndex = 19;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.onCancel);
@@ -550,20 +566,22 @@
             // 
             this.templatePreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.templatePreview.Location = new System.Drawing.Point(127, 44);
+            this.templatePreview.Location = new System.Drawing.Point(135, 91);
+            this.templatePreview.Multiline = true;
             this.templatePreview.Name = "templatePreview";
             this.templatePreview.ReadOnly = true;
-            this.templatePreview.Size = new System.Drawing.Size(447, 20);
-            this.templatePreview.TabIndex = 4;
+            this.templatePreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.templatePreview.Size = new System.Drawing.Size(446, 60);
+            this.templatePreview.TabIndex = 7;
             this.templatePreview.TabStop = false;
             // 
             // previewLabel
             // 
             this.previewLabel.AutoSize = true;
-            this.previewLabel.Location = new System.Drawing.Point(13, 47);
+            this.previewLabel.Location = new System.Drawing.Point(21, 94);
             this.previewLabel.Name = "previewLabel";
             this.previewLabel.Size = new System.Drawing.Size(68, 13);
-            this.previewLabel.TabIndex = 3;
+            this.previewLabel.TabIndex = 6;
             this.previewLabel.Text = "Text preview";
             // 
             // insertTemplatePlaceholderMenu
@@ -584,41 +602,41 @@
             this.insertTemplatePlaceholderMenu.Name = "insertTemplatePlaceholderMenu";
             this.insertTemplatePlaceholderMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.insertTemplatePlaceholderMenu.ShowImageMargin = false;
-            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(156, 258);
+            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(96, 236);
             this.insertTemplatePlaceholderMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(92, 6);
             // 
             // ifToolStripMenuItem
             // 
             this.ifToolStripMenuItem.Name = "ifToolStripMenuItem";
-            this.ifToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.ifToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.ifToolStripMenuItem.Text = "If";
             // 
             // ifElseToolStripMenuItem
             // 
             this.ifElseToolStripMenuItem.Name = "ifElseToolStripMenuItem";
-            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.ifElseToolStripMenuItem.Text = "If else";
             // 
             // newLineToolStripMenuItem
             // 
             this.newLineToolStripMenuItem.Name = "newLineToolStripMenuItem";
-            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.newLineToolStripMenuItem.Text = "New line";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(92, 6);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // explanationLabel
@@ -626,10 +644,10 @@
             this.explanationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.explanationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.explanationLabel.Location = new System.Drawing.Point(22, 148);
+            this.explanationLabel.Location = new System.Drawing.Point(30, 282);
             this.explanationLabel.Name = "explanationLabel";
             this.explanationLabel.Size = new System.Drawing.Size(544, 30);
-            this.explanationLabel.TabIndex = 12;
+            this.explanationLabel.TabIndex = 17;
             this.explanationLabel.Text = "When Winamp plays a track, this plug-in will save the track information and album" +
     " art to files. The format of the text can be customized with the template.";
             // 
@@ -638,18 +656,18 @@
             this.horizontalRule1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.horizontalRule1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.horizontalRule1.Location = new System.Drawing.Point(17, 136);
+            this.horizontalRule1.Location = new System.Drawing.Point(25, 270);
             this.horizontalRule1.Name = "horizontalRule1";
             this.horizontalRule1.Size = new System.Drawing.Size(555, 2);
-            this.horizontalRule1.TabIndex = 11;
+            this.horizontalRule1.TabIndex = 16;
             // 
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyButton.Location = new System.Drawing.Point(499, 196);
+            this.applyButton.Location = new System.Drawing.Point(499, 325);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
-            this.applyButton.TabIndex = 15;
+            this.applyButton.TabIndex = 20;
             this.applyButton.Text = "&Apply";
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.onClickApply);
@@ -657,19 +675,19 @@
             // albumArtLabel
             // 
             this.albumArtLabel.AutoSize = true;
-            this.albumArtLabel.Location = new System.Drawing.Point(13, 105);
+            this.albumArtLabel.Location = new System.Drawing.Point(21, 215);
             this.albumArtLabel.Name = "albumArtLabel";
             this.albumArtLabel.Size = new System.Drawing.Size(92, 13);
-            this.albumArtLabel.TabIndex = 8;
+            this.albumArtLabel.TabIndex = 12;
             this.albumArtLabel.Text = "Save a&lbum art as";
             // 
             // albumArtBrowseButton
             // 
             this.albumArtBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.albumArtBrowseButton.Location = new System.Drawing.Point(499, 100);
+            this.albumArtBrowseButton.Location = new System.Drawing.Point(507, 210);
             this.albumArtBrowseButton.Name = "albumArtBrowseButton";
             this.albumArtBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.albumArtBrowseButton.TabIndex = 10;
+            this.albumArtBrowseButton.TabIndex = 14;
             this.albumArtBrowseButton.Text = "B&rowse…";
             this.albumArtBrowseButton.UseVisualStyleBackColor = true;
             this.albumArtBrowseButton.Click += new System.EventHandler(this.onAlbumArtBrowseButtonClick);
@@ -678,10 +696,10 @@
             // 
             this.albumArtFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.albumArtFilename.Location = new System.Drawing.Point(127, 102);
+            this.albumArtFilename.Location = new System.Drawing.Point(135, 212);
             this.albumArtFilename.Name = "albumArtFilename";
             this.albumArtFilename.Size = new System.Drawing.Size(366, 20);
-            this.albumArtFilename.TabIndex = 9;
+            this.albumArtFilename.TabIndex = 13;
             this.albumArtFilename.TextChanged += new System.EventHandler(this.onFilenameChange);
             // 
             // albumArtFilenameEditor
@@ -691,13 +709,71 @@
             this.albumArtFilenameEditor.Title = "Choose file to save Now Playing album art into";
             this.albumArtFilenameEditor.FileOk += new System.ComponentModel.CancelEventHandler(this.onSubmitFilename);
             // 
+            // preserveAlbumArtWhenNotPlaying
+            // 
+            this.preserveAlbumArtWhenNotPlaying.AutoSize = true;
+            this.preserveAlbumArtWhenNotPlaying.Location = new System.Drawing.Point(135, 240);
+            this.preserveAlbumArtWhenNotPlaying.Name = "preserveAlbumArtWhenNotPlaying";
+            this.preserveAlbumArtWhenNotPlaying.Size = new System.Drawing.Size(231, 17);
+            this.preserveAlbumArtWhenNotPlaying.TabIndex = 15;
+            this.preserveAlbumArtWhenNotPlaying.Text = "Preserve the album art file when not playing";
+            this.preserveAlbumArtWhenNotPlaying.UseVisualStyleBackColor = true;
+            // 
+            // textFileMenu
+            // 
+            this.textFileMenu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.textFileMenu.FormattingEnabled = true;
+            this.textFileMenu.Items.AddRange(new object[] {
+            "Text 1",
+            "Text 2"});
+            this.textFileMenu.Location = new System.Drawing.Point(24, 23);
+            this.textFileMenu.Name = "textFileMenu";
+            this.textFileMenu.Size = new System.Drawing.Size(324, 21);
+            this.textFileMenu.TabIndex = 0;
+            this.textFileMenu.SelectedIndexChanged += new System.EventHandler(this.onTextFileMenuSelectionChanged);
+            // 
+            // newTextFileButton
+            // 
+            this.newTextFileButton.Location = new System.Drawing.Point(354, 22);
+            this.newTextFileButton.Name = "newTextFileButton";
+            this.newTextFileButton.Size = new System.Drawing.Size(111, 23);
+            this.newTextFileButton.TabIndex = 1;
+            this.newTextFileButton.Text = "&New text file";
+            this.newTextFileButton.UseVisualStyleBackColor = true;
+            this.newTextFileButton.Click += new System.EventHandler(this.addTextFile);
+            // 
+            // removeTextFileButton
+            // 
+            this.removeTextFileButton.Location = new System.Drawing.Point(471, 22);
+            this.removeTextFileButton.Name = "removeTextFileButton";
+            this.removeTextFileButton.Size = new System.Drawing.Size(111, 23);
+            this.removeTextFileButton.TabIndex = 2;
+            this.removeTextFileButton.Text = "&Remove text file";
+            this.removeTextFileButton.UseVisualStyleBackColor = true;
+            this.removeTextFileButton.Click += new System.EventHandler(this.removeTextFile);
+            // 
+            // preserveTextFileWhenNotPlaying
+            // 
+            this.preserveTextFileWhenNotPlaying.AutoSize = true;
+            this.preserveTextFileWhenNotPlaying.Location = new System.Drawing.Point(135, 188);
+            this.preserveTextFileWhenNotPlaying.Name = "preserveTextFileWhenNotPlaying";
+            this.preserveTextFileWhenNotPlaying.Size = new System.Drawing.Size(249, 17);
+            this.preserveTextFileWhenNotPlaying.TabIndex = 11;
+            this.preserveTextFileWhenNotPlaying.Text = "Preserve the text file contents when not playing";
+            this.preserveTextFileWhenNotPlaying.UseVisualStyleBackColor = true;
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(586, 232);
+            this.ClientSize = new System.Drawing.Size(586, 361);
+            this.Controls.Add(this.removeTextFileButton);
+            this.Controls.Add(this.newTextFileButton);
+            this.Controls.Add(this.textFileMenu);
+            this.Controls.Add(this.preserveTextFileWhenNotPlaying);
+            this.Controls.Add(this.preserveAlbumArtWhenNotPlaying);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.horizontalRule1);
             this.Controls.Add(this.explanationLabel);
@@ -719,7 +795,7 @@
             this.MinimizeBox = false;
             this.Name = "SettingsDialog";
             this.Text = "Now Playing to File plug-in configuration";
-            this.Load += new System.EventHandler(this.SettingsDialog_Load);
+            this.Load += new System.EventHandler(this.onSettingsDialogLoad);
             this.insertTemplatePlaceholderMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -756,5 +832,10 @@
         private System.Windows.Forms.ToolStripMenuItem fileBasenameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileBasenameWithoutExtensionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
+        private System.Windows.Forms.CheckBox preserveAlbumArtWhenNotPlaying;
+        private System.Windows.Forms.ComboBox textFileMenu;
+        private System.Windows.Forms.Button newTextFileButton;
+        private System.Windows.Forms.Button removeTextFileButton;
+        private System.Windows.Forms.CheckBox preserveTextFileWhenNotPlaying;
     }
 }

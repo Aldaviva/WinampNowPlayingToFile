@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using Mustache;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WinampNowPlayingToFile.Facade;
+using WinampNowPlayingToFile.Facade.Templating;
 using WinampNowPlayingToFile.Settings;
 using Timer = System.Timers.Timer;
 
@@ -19,11 +19,12 @@ namespace WinampNowPlayingToFile.Presentation;
 
 public partial class SettingsDialog: Form {
 
-    private readonly ISettings            settings;
-    private readonly WinampControllerImpl winampController;
-    private readonly Timer                renderTextTimer = new() { Enabled = true, Interval = 1000 };
+    private readonly ISettings        upstreamSettings;
+    private readonly ISettings        workingSettings;
+    private readonly WinampController winampController;
+    private readonly Timer            renderTextTimer = new() { Enabled = true, Interval = 1000 };
 
-    private static readonly FormatCompiler TEMPLATE_COMPILER = new();
+    private static readonly UnfuckedTemplateCompiler TEMPLATE_COMPILER = new UnfuckedMustacheCompiler();
 
     private static readonly Song EXAMPLE_SONG = new() {
         Album    = "The Joshua Tree",
@@ -50,6 +51,7 @@ public partial class SettingsDialog: Form {
         { "length", TimeSpan.FromMilliseconds(251422) }, //4:11
         { "lossless", false },
         { "media", "LP" },
+        { "playbackstate", "playing" },
         { "producer", "Brian Eno, Daniel Lanois" },
         { "publisher", "Island Records" },
         { "rating", 2 },
@@ -63,9 +65,13 @@ public partial class SettingsDialog: Form {
         { "vbr", false }
     });
 
-    public SettingsDialog(ISettings settings, WinampControllerImpl winampController) {
-        this.settings         = settings;
+    private int textFileIndex;
+
+    public SettingsDialog(ISettings upstreamSettings, WinampControllerImpl winampController) {
+        this.upstreamSettings = upstreamSettings;
         this.winampController = winampController;
+        workingSettings       = new InMemorySettings();
+        workingSettings.load(upstreamSettings);
         InitializeComponent();
 
         // Make buttons have animated state transitions, like every other program in the OS
@@ -75,23 +81,63 @@ public partial class SettingsDialog: Form {
         }
     }
 
-    private void SettingsDialog_Load(object sender, EventArgs e) {
-        textFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.textFilename);
-        textFilenameEditor.FileName         = settings.textFilename;
+    private void onSettingsDialogLoad(object sender, EventArgs e) {
+        loadTextFileSettings();
 
-        albumArtFilenameEditor.InitialDirectory = Path.GetDirectoryName(settings.albumArtFilename);
-        albumArtFilenameEditor.FileName         = settings.albumArtFilename;
+        albumArtFilenameEditor.InitialDirectory = Path.GetDirectoryName(workingSettings.albumArtFilename);
+        albumArtFilenameEditor.FileName         = workingSettings.albumArtFilename;
+        albumArtFilename.Text                   = workingSettings.albumArtFilename;
 
-        textFilename.Text     = settings.textFilename;
-        albumArtFilename.Text = settings.albumArtFilename;
+        preserveTextFileWhenNotPlaying.Checked = workingSettings.preserveTextFileWhenNotPlaying;
+        preserveAlbumArtWhenNotPlaying.Checked = workingSettings.preserveAlbumArtFileWhenNotPlaying;
 
-        templateEditor.Text = settings.textTemplate;
-        templateEditor.Select(templateEditor.TextLength, 0);
+        foreach (string filename in workingSettings.textFilenames) {
+            textFileMenu.Items.Add(Path.GetFileName(filename));
+        }
 
         winampController.songChanged += delegate { renderPreview(); };
         renderTextTimer.Elapsed      += delegate { renderPreview(); };
 
         applyButton.Enabled = false;
+    }
+
+    private void loadTextFileSettings() {
+        textFilenameEditor.InitialDirectory = Path.GetDirectoryName(workingSettings.textFilenames[textFileIndex]);
+        textFilenameEditor.FileName         = workingSettings.textFilenames[textFileIndex];
+
+        textFilename.Text = workingSettings.textFilenames[textFileIndex];
+
+        templateEditor.Text = workingSettings.textTemplates[textFileIndex];
+        templateEditor.Select(templateEditor.TextLength, 0);
+    }
+
+    private void onTextFileMenuSelectionChanged(object sender, EventArgs e) {
+        try {
+            saveWorking();
+            textFileIndex = textFileMenu.SelectedIndex;
+            loadTextFileSettings();
+        } catch (Exception ex) when (ex is FormatException or KeyNotFoundException) {
+            textFileMenu.SelectedIndex = textFileIndex;
+        }
+    }
+
+    private void addTextFile(object sender, EventArgs e) {
+        saveWorking();
+        textFileIndex++;
+        workingSettings.textFilenames.Insert(textFileIndex, string.Empty);
+        workingSettings.textTemplates.Insert(textFileIndex, string.Empty);
+        textFileMenu.Items.Insert(textFileIndex, string.Empty);
+        textFileMenu.SelectedIndex = textFileIndex;
+    }
+
+    private void removeTextFile(object sender, EventArgs e) {
+        if (workingSettings.textFilenames.Count >= 2) {
+            workingSettings.textFilenames.RemoveAt(textFileIndex);
+            workingSettings.textTemplates.RemoveAt(textFileIndex);
+            textFileMenu.Items.RemoveAt(textFileIndex);
+            textFileIndex = textFileMenu.SelectedIndex;
+            // TODO hopefully this selects the following or preceding index automatically
+        }
     }
 
     private void onTextFileBrowseButtonClick(object sender, EventArgs e) {
@@ -132,7 +178,7 @@ public partial class SettingsDialog: Form {
         Song previewSong = isSongPlaying() ? winampController.currentSong : EXAMPLE_SONG;
 
         try {
-            templatePreview.Text = compileTemplate().Render(previewSong);
+            templatePreview.Text = compileTemplate().render(previewSong);
         } catch (KeyNotFoundException e) {
             templatePreview.Text = $"Template key not found: {e.Message}";
         } catch (FormatException e) {
@@ -142,16 +188,16 @@ public partial class SettingsDialog: Form {
 
     private bool isSongPlaying() => !string.IsNullOrEmpty(winampController.currentSong.Title);
 
-    private Generator compileTemplate() {
-        Generator generator = TEMPLATE_COMPILER.Compile(templateEditor.Text);
-        generator.KeyNotFound += (_, args) => {
-            args.Substitute = isSongPlaying()
-                ? winampController.fetchMetadataFieldValue(args.Key)
-                : EXAMPLE_SONG_EXTRA_METADATA.TryGetValue(args.Key.ToLowerInvariant(), out object? value)
+    private UnfuckedGenerator compileTemplate() {
+        UnfuckedGenerator generator = TEMPLATE_COMPILER.compile(templateEditor.Text);
+        generator.keyNotFound += (_, args) => {
+            args.substitute = isSongPlaying()
+                ? winampController.fetchMetadataFieldValue(args.key)
+                : EXAMPLE_SONG_EXTRA_METADATA.TryGetValue(args.key.ToLowerInvariant(), out object? value)
                     ? value
                     : string.Empty;
 
-            args.Handled = true;
+            args.handled = true;
         };
         return generator;
     }
@@ -196,7 +242,7 @@ public partial class SettingsDialog: Form {
 
     private void onClickOk(object sender, EventArgs args) {
         try {
-            save();
+            saveUpstream();
             Close();
         } catch (Exception e) when (e is FormatException or KeyNotFoundException) {
             //leave form open, with invalid inputs unsaved
@@ -205,25 +251,43 @@ public partial class SettingsDialog: Form {
 
     private void onClickApply(object sender, EventArgs args) {
         try {
-            save();
+            saveUpstream();
         } catch (Exception e) when (e is FormatException or KeyNotFoundException) {
             //leave form open, with invalid inputs unsaved
         }
     }
 
-    private void save() {
+    private void saveWorking() {
         try {
-            compileTemplate().Render(EXAMPLE_SONG);
+            compileTemplate().render(EXAMPLE_SONG);
 
-            settings.textFilename     = textFilename.Text;
-            settings.albumArtFilename = albumArtFilename.Text;
-            settings.textTemplate     = templateEditor.Text;
-            settings.save();
-
-            applyButton.Enabled = false;
+            workingSettings.textFilenames[textFileIndex]       = textFilename.Text;
+            workingSettings.albumArtFilename                   = albumArtFilename.Text;
+            workingSettings.textTemplates[textFileIndex]       = templateEditor.Text;
+            workingSettings.preserveAlbumArtFileWhenNotPlaying = preserveAlbumArtWhenNotPlaying.Checked;
+            workingSettings.preserveTextFileWhenNotPlaying     = preserveTextFileWhenNotPlaying.Checked;
         } catch (FormatException e) {
             MessageBox.Show($"Invalid template:\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             throw;
+        }
+    }
+
+    private void saveUpstream() {
+        IEnumerable<string> oldtextFilenames = upstreamSettings.textFilenames.Select(Path.GetFullPath).ToList();
+
+        saveWorking();
+
+        upstreamSettings.load(workingSettings);
+        upstreamSettings.save();
+
+        applyButton.Enabled = false;
+
+        foreach (string removedFilename in oldtextFilenames.Except(upstreamSettings.textFilenames.Select(Path.GetFullPath), StringComparer.OrdinalIgnoreCase)) {
+            try {
+                File.Delete(removedFilename);
+            } catch (Exception e) when (e is not OutOfMemoryException) {
+                // continue
+            }
         }
     }
 
@@ -233,10 +297,20 @@ public partial class SettingsDialog: Form {
 
     private void onSubmitFilename(object sender, CancelEventArgs e) {
         onFormDirty();
+        if (sender == textBrowseButton) {
+            updateTextFileMenuEntryName();
+        }
     }
 
     private void onFilenameChange(object sender, EventArgs e) {
         onFormDirty();
+        if (sender == textFilename) {
+            updateTextFileMenuEntryName();
+        }
+    }
+
+    private void updateTextFileMenuEntryName() {
+        textFileMenu.Items[textFileIndex] = Path.GetFileName(textFilename.Text);
     }
 
     protected override void OnClosed(EventArgs e) {

@@ -1,6 +1,8 @@
 ﻿namespace WinampNowPlayingToFile.Settings;
 
-public class SimpleSettings: BaseSettings {
+#nullable enable
+
+public class InMemorySettings: BaseSettings {
 
     public override void load() { }
 

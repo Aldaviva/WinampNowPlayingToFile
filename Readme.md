@@ -35,7 +35,7 @@ I wrote my own Winamp plugin to save information about the currently playing son
 
 ## Installation
 
-1. Ensure you have [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework) Runtime or later installed. This is included in Windows 10 version 1803 and later.
+1. Ensure you have [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework) Runtime or later installed. This is included in Windows 10 version 1803, Windows Server 2019, and later versions.
 1. Exit Winamp if it's already running.
 1. Download [**`WinampNowPlayingToFile.zip`**](https://github.com/Aldaviva/WinampNowPlayingToFile/releases/latest/download/WinampNowPlayingToFile.zip) from the [latest release](https://github.com/Aldaviva/WinampNowPlayingToFile/releases) (not the source code ZIP file).
 1. Extract the archive to your Winamp installation directory.
@@ -70,7 +70,7 @@ U2 – Exit – The Joshua Tree
 
 To customize the text file location and contents, go to the plugin preferences in Winamp.
 
-1. You can change the file contents by editing the **Text template** and inserting placeholders inside `{{` `}}`, either with the **Insert** button or by typing them manually. See [Placeholder fields](#placeholder-fields) below for all the fields you can use in a placeholder. For example, a simple template that could render the above example text is
+1. You can change the file contents by editing the **Text template** and inserting placeholders inside `{{` `}}`, either with the **Insert placeholder** button or by typing them manually. See [Placeholder fields](#placeholder-fields) below for all the fields you can use in a placeholder. For example, a simple template that could render the above example text is
     ```handlebars
     {{Artist}} – {{Title}} – {{Album}}
     ```
@@ -109,6 +109,7 @@ Placeholder values that are missing or empty will be rendered as the empty strin
 |`Lossless`|bool|`false`|`true` for lossless compression, `false` for lossy|
 |`Lyricist`|string|`Bono`||
 |`Media`|string|`LP`||
+|`PlaybackState`|string|`playing`|`playing`, `paused`, or `stopped`|
 |`Producer`|string|`Brian Eno, Daniel Lanois`||
 |`Publisher`|string|`Island Records`||
 |`Rating`|int|`2`|In the range [1, 5]|
@@ -141,6 +142,13 @@ You can also render strings depending on a boolean value.
 {{#if Lossless}}lossless{{#else}}lossy{{/if}}
 ```
 
+There is also a custom helper for JSON value serialization, in case you're trying to generate a JSON file. Pass the field names to include in the object.
+```handlebars
+{{#jsonObject Artist Title Album}}
+```
+```json
+{"Artist":"U2","Title":"Exit","Album":"The Joshua Tree"}
+```
 #### Formatting
 
 Metadata values may optionally be formatted using the [.NET string formatting syntax](https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=netframework-4.7.2&redirectedfrom=MSDN#remarks).
@@ -152,7 +160,7 @@ Metadata values may optionally be formatted using the [.NET string formatting sy
 |Digit grouping|<pre lang="handlebars">{{Bitrate:N0}}kbps</pre>|`1,226kbps`|See [standard numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#numeric-format-specifier-n)|
 |Floating point precision|<pre lang="handlebars">{{ReplayGain_Album_Peak:F6}}</pre>|`0.986115`|See [standard numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#fixed-point-format-specifier-f)|
 |Zero padding|<pre lang="handlebars">#{{Track:00}}</pre>|`#06`|See [custom numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-numeric-format-strings#the-0-custom-specifier)|
-|Space padding|<pre lang="handlebars">{{Track,3}}.</pre>|`  1.`|See [spacing](https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=netframework-4.7.2&redirectedfrom=MSDN#control-spacing)|
+|Space padding|<pre lang="handlebars">{{Track,3}}.</pre>|`  1.`|See [spacing](https://learn.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting#alignment-component)|
 
 ### Album art
 

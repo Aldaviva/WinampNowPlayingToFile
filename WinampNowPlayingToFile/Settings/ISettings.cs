@@ -1,16 +1,22 @@
-﻿using System;
+﻿#nullable enable
 
-namespace WinampNowPlayingToFile.Settings; 
+using System;
+using System.Collections.Generic;
+
+namespace WinampNowPlayingToFile.Settings;
 
 public interface ISettings {
 
-    string textFilename { get; set; }
+    IList<string> textFilenames { get; }
     string albumArtFilename { get; set; }
-    string textTemplate { get; set; }
+    IList<string> textTemplates { get; }
+    bool preserveAlbumArtFileWhenNotPlaying { get; set; }
+    bool preserveTextFileWhenNotPlaying { get; set; }
 
     event EventHandler settingsUpdated;
 
     void load();
+    void load(ISettings source);
     ISettings loadDefaults();
     void save();
 

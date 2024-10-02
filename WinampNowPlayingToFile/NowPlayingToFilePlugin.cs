@@ -44,6 +44,7 @@ public class NowPlayingToFilePlugin: GeneralPlugin {
     }
 
     public override void Quit() {
+        winampController?.Dispose();
         manager?.onQuit();
         manager = null;
     }
