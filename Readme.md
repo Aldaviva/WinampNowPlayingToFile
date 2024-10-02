@@ -88,20 +88,20 @@ Placeholder values that are missing or empty will be rendered as the empty strin
 |`Album`|string|`The Joshua Tree`||
 |`AlbumArtist`|string|`U2`||
 |`Artist`|string|`U2`||
-|`Bitrate`|int|`320`||
+|`Bitrate`|int|`320`|Kilobits per second (kbps)|
 |`BPM`|int|`123`|Beats per minute|
 |`Category`|string|`Rock`||
 |`Comment`|string|||
 |`Composer`|string|`U2`||
 |`Conductor`|string|||
 |`Director`|string||Most commonly used for video files|
-|`Disc`|int|`1`|If it can't be parsed as an int (like `1/2`) it will be a string|
+|`Disc`|int|`1`|Fractions like `1/2` will be converted to just the numerator (`1`)|
 |`Elapsed`|TimeSpan|`00:00:28.5080000`|Updated 1hz, millisecond resolution. See [formatting](#formatting) for `m:ss` and other formats.|
 |`Family`|string|`MPEG Layer 3 Audio File`|Codec or container format|
 |`FileBasename`|string|`Exit.mp3`|Filename without path|
 |`FileBasenameWithoutExtension`|string|`Exit`|Filename without path or extension|
 |`Filename`|string|`C:\Users\Ben\Music\Exit.mp3`|Absolute path to file, or a stream URL|
-|`Gain`|string|`+0.92 dB`||
+|`Gain`|double|`0.92`|Decibels (dB)|
 |`Genre`|string|`Rock`||
 |`ISRC`|string|`GBUM70709782`|12-character [International Standard Recording Code](https://en.wikipedia.org/wiki/International_Standard_Recording_Code) for the track|
 |`Key`|string|`E minor`||
@@ -113,18 +113,18 @@ Placeholder values that are missing or empty will be rendered as the empty strin
 |`Producer`|string|`Brian Eno, Daniel Lanois`||
 |`Publisher`|string|`Island Records`||
 |`Rating`|int|`2`|In the range [1, 5]|
-|`ReplayGain_Album_Gain`|string|`-3.03 dB`||
+|`ReplayGain_Album_Gain`|double|`-3.03`|Decibels (dB)|
 |`ReplayGain_Album_Peak`|double|`1.022630334`||
-|`ReplayGain_Track_Gain`|string|`-0.77 dB`||
+|`ReplayGain_Track_Gain`|double|`-0.77`|Decibels (dB)|
 |`ReplayGain_Track_Peak`|double|`1.006227493`||
 |`Stereo`|bool|`true`|`true` for stereo, `false` for mono|
 |`Subtitle`|string|||
 |`Title`|string|`Exit`||
 |`Tool`|string|`iTunes 10.5.1`|From the `ENCODEDBY` ID3v2 tag|
-|`Track`|int|`1`|If it can't be parsed as an int (like `1/5`) it will be a string|
+|`Track`|int|`1`|Fractions like `1/5` will be converted to just the numerator (`1`)|
 |`Type`|string|`audio`|`audio` or `video`|
 |`VBR`|bool|`false`|`true` for variable bitrate, `false` for constant bitrate|
-|`Year`|int|`1987`|If it can't be parsed as an int (like `1987-01-01`) it will be a string|
+|`Year`|int|`1987`|Dates like `1987-01-01` and `1987-01` will be converted to the year only (`1987`), otherwise it will be `null`|
 
 Any other values you use in a placeholder will be requested directly from Winamp as file metadata, and the response will be output as-is. If you can find other fields that Winamp handles for audio files, please [file an enhancement issue](https://github.com/Aldaviva/WinampNowPlayingToFile/issues/new?labels=enhancement&title=New%20metadata%20field:%20) so it can be added to this program and documentation.
 

@@ -17,7 +17,7 @@ public interface WinampController: IDisposable {
     void stop();
     void nextTrack();
     void previousTrack();
-    object fetchMetadataFieldValue(string metadataFieldName);
+    object? fetchMetadataFieldValue(string metadataFieldName);
 
     event SongChangedEventHandler songChanged;
     event StatusChangedEventHandler statusChanged;
@@ -25,6 +25,8 @@ public interface WinampController: IDisposable {
 }
 
 public class WinampControllerImpl: WinampController {
+
+    private static readonly char[] TRACK_SEPARATORS = ['/'];
 
     private readonly Winamp winamp;
 
@@ -77,7 +79,7 @@ public class WinampControllerImpl: WinampController {
         winamp.Stop();
     }
 
-    public object fetchMetadataFieldValue(string metadataFieldName) {
+    public object? fetchMetadataFieldValue(string metadataFieldName) {
         metadataFieldName = metadataFieldName.ToLowerInvariant();
 
         try {
@@ -98,12 +100,15 @@ public class WinampControllerImpl: WinampController {
         string value = getMetadata(winamp.CurrentSong.Filename, metadataFieldName);
 
         return metadataFieldName switch {
-            "length" when long.TryParse(value, out long length)                                                     => TimeSpan.FromMilliseconds(length),
-            "lossless" or "stereo" or "vbr"                                                                         => value == "1",
-            "replaygain_album_peak" or "replaygain_track_peak" when double.TryParse(value, out double parsedDouble) => parsedDouble,
-            "bitrate" or "bpm" or "track" or "disc" or "rating" when int.TryParse(value, out int parsedInt)         => parsedInt,
-            "type"                                                                                                  => value == "1" ? "video" : "audio",
-            _                                                                                                       => value
+            "length"                                                     => long.TryParse(value, out long length) ? TimeSpan.FromMilliseconds(length) : null,
+            "lossless" or "stereo" or "vbr"                              => value == "1",
+            "replaygain_album_peak" or "replaygain_track_peak"           => double.TryParse(value, out double parsed) ? parsed : null,
+            "bitrate" or "bpm" or "rating"                               => int.TryParse(value, out int parsed) ? parsed : null,
+            "track" or "disc"                                            => int.TryParse(value.Split(TRACK_SEPARATORS, 2)[0], out int parsed) ? parsed : null,
+            "type"                                                       => value == "1" ? "video" : "audio",
+            "gain" or "replaygain_album_gain" or "replaygain_track_gain" => double.TryParse(value.Replace(" dB", ""), out double parsed) ? parsed : null,
+            _ when value is ""                                           => null,
+            _                                                            => value
         };
     }
 
