@@ -35,7 +35,7 @@ I wrote my own Winamp plugin to save information about the currently playing son
 
 ## Installation
 
-1. Ensure you have [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework) Runtime or later installed. This is included in Windows 10 version 1803 and later.
+1. Ensure you have [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework) Runtime or later installed. This is included in Windows 10 version 1803 and later (If you are not sure which version you have, you can check this with the [ASoft .NET Version Detector.](https://www.asoft.be/prod_netver.html)).
 1. Ensure you have [Microsoft Visual C++ 2015–2022 Redistributable x86](https://aka.ms/vs/17/release/vc_redist.x86.exe) installed.
 1. Exit Winamp if it's already running.
 1. Download [**`WinampNowPlayingToFile.zip`**](https://github.com/Aldaviva/WinampNowPlayingToFile/releases/latest/download/WinampNowPlayingToFile.zip) from the [latest release](https://github.com/Aldaviva/WinampNowPlayingToFile/releases) (not the source code ZIP file).
