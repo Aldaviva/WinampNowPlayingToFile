@@ -27,7 +27,7 @@ This is a plugin for [Winamp](http://www.winamp.com/) that saves text informatio
 
 I was broadcasting video game streams on [my Twitch.tv channel](https://twitch.tv/aldaviva), in which I also play music in the background. I wanted viewers to be able to tell which song I was playing at any given time in case they liked it and wanted to find it for themselves. I started using the [Advanced mIRC Integration Plug-In (AMIP)](http://amip.tools-for.net/wiki/), which is generally used for showing your Now Playing status in IRC using [mIRC](https://www.mirc.com/). It also lets you save the status to a text file, which I added as a Text Source in [OBS](https://obsproject.com/).
 
-Unfortunately, AMIP only supports encoding the text using ANSI, OEM (DOS), FIDO, or KOI8 character encodings, none of which are UTF-8, which OBS requires. For example, [Jävla Sladdar](https://www.youtube.com/watch?v=zaCZ9VkJ-so) was being shown in the video stream as `J�vla Sladdar`, because even though AMIP was saving `ä` using ANSI (`0xe4`), OBS was decoding the file with UTF-8, so the character was not properly decoded. In UTF-8, `ä` is supposed to be encoded as `0xc3 0xa4` because `0xe4` is greater than `0x7f` (i.e. `0x34` requires more than 7 bits to represent), so it spills over into a second code unit (it's a multibyte character).
+Unfortunately, AMIP only supports encoding the text using ANSI, OEM (DOS), FIDO, or KOI8 character encodings, none of which are UTF-8, which OBS requires. For example, [Jävla Sladdar](https://www.youtube.com/watch?v=zaCZ9VkJ-so) was being shown in the video stream as `J�vla Sladdar`, because even though AMIP was saving `ä` using ANSI (`0xe4`), OBS was decoding the file with UTF-8, so the character was not properly decoded. In UTF-8, `ä` is supposed to be encoded as `0xc3 0xa4` because `0xe4` is greater than `0x7f` (i.e. `0xe4` requires more than 7 bits to represent), so it spills over into a second code unit (it's a multibyte character).
 
 ## Solution
 
@@ -35,7 +35,9 @@ I wrote my own Winamp plugin to save information about the currently playing son
 
 ## Installation
 
-1. Ensure you have [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework) Runtime or later installed. This is included in Windows 10 version 1803 and later (If you are not sure which version you have, you can check this with the [ASoft .NET Version Detector.](https://www.asoft.be/prod_netver.html)).
+1. Ensure you have [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework) Runtime or later installed.
+    - This is included in Windows 10 version 1803 and later.
+    - If you are not sure which .NET version you have, you can check using [ASoft .NET Version Detector](https://www.asoft.be/prod_netver.html).
 1. Ensure you have [Microsoft Visual C++ 2015–2022 Redistributable x86](https://aka.ms/vs/17/release/vc_redist.x86.exe) installed.
 1. Exit Winamp if it's already running.
 1. Download [**`WinampNowPlayingToFile.zip`**](https://github.com/Aldaviva/WinampNowPlayingToFile/releases/latest/download/WinampNowPlayingToFile.zip) from the [latest release](https://github.com/Aldaviva/WinampNowPlayingToFile/releases) (not the source code ZIP file).
