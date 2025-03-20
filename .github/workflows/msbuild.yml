@@ -44,10 +44,11 @@ jobs:
       run: testspace TestResults/TestResults.xml
 
     - name: Upload coverage
-      uses: coverallsapp/github-action@master
+      uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: TestResults/coverage.info
+        file: TestResults/coverage.info
+        format: lcov
 
     - name: Stop if tests failed
       run: exit $env:TEST_EXIT_CODE

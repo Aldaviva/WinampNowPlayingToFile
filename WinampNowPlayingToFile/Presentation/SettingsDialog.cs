@@ -25,6 +25,7 @@ public partial class SettingsDialog: Form {
     private readonly Timer            renderTextTimer = new() { Enabled = true, Interval = 1000 };
 
     private static readonly UnfuckedTemplateCompiler TEMPLATE_COMPILER = new UnfuckedMustacheCompiler();
+    private static readonly string                   DEFAULT_DIRECTORY = Environment.GetEnvironmentVariable("TEMP") ?? string.Empty;
 
     private static readonly Song EXAMPLE_SONG = new() {
         Album    = "The Joshua Tree",
@@ -82,8 +83,6 @@ public partial class SettingsDialog: Form {
     }
 
     private void onSettingsDialogLoad(object sender, EventArgs e) {
-        loadTextFileSettings();
-
         albumArtFilenameEditor.InitialDirectory = Path.GetDirectoryName(workingSettings.albumArtFilename);
         albumArtFilenameEditor.FileName         = workingSettings.albumArtFilename;
         albumArtFilename.Text                   = workingSettings.albumArtFilename;
@@ -92,8 +91,10 @@ public partial class SettingsDialog: Form {
         preserveAlbumArtWhenNotPlaying.Checked = workingSettings.preserveAlbumArtFileWhenNotPlaying;
 
         foreach (string filename in workingSettings.textFilenames) {
-            textFileMenu.Items.Add(Path.GetFileName(filename));
+            textFileMenu.Items.Add(Path.GetFullPath(filename));
         }
+        loadTextFileSettings();
+        textFileMenu.SelectedIndex = textFileIndex;
 
         winampController.songChanged += delegate { renderPreview(); };
         renderTextTimer.Elapsed      += delegate { renderPreview(); };
@@ -102,16 +103,22 @@ public partial class SettingsDialog: Form {
     }
 
     private void loadTextFileSettings() {
-        textFilenameEditor.InitialDirectory = Path.GetDirectoryName(workingSettings.textFilenames[textFileIndex]);
+        string initialDirectory;
+        try {
+            initialDirectory = Path.GetDirectoryName(workingSettings.textFilenames[textFileIndex]) ?? DEFAULT_DIRECTORY;
+        } catch (ArgumentException) {
+            initialDirectory = DEFAULT_DIRECTORY;
+        }
+        textFilenameEditor.InitialDirectory = initialDirectory;
         textFilenameEditor.FileName         = workingSettings.textFilenames[textFileIndex];
 
-        textFilename.Text = workingSettings.textFilenames[textFileIndex];
-
         templateEditor.Text = workingSettings.textTemplates[textFileIndex];
-        templateEditor.Select(templateEditor.TextLength, 0);
+        templateEditor.Select(0, 0);
+
+        textFilename.Text = workingSettings.textFilenames[textFileIndex];
     }
 
-    private void onTextFileMenuSelectionChanged(object sender, EventArgs e) {
+    private void onTextFileMenuSelectionChanged(object? sender = null, EventArgs? e = null) {
         try {
             saveWorking();
             textFileIndex = textFileMenu.SelectedIndex;
@@ -127,16 +134,18 @@ public partial class SettingsDialog: Form {
         workingSettings.textFilenames.Insert(textFileIndex, string.Empty);
         workingSettings.textTemplates.Insert(textFileIndex, string.Empty);
         textFileMenu.Items.Insert(textFileIndex, string.Empty);
+        loadTextFileSettings();
         textFileMenu.SelectedIndex = textFileIndex;
     }
 
     private void removeTextFile(object sender, EventArgs e) {
-        if (workingSettings.textFilenames.Count >= 2) {
+        if (workingSettings.textFilenames.Count > 1) {
             workingSettings.textFilenames.RemoveAt(textFileIndex);
             workingSettings.textTemplates.RemoveAt(textFileIndex);
             textFileMenu.Items.RemoveAt(textFileIndex);
-            textFileIndex = textFileMenu.SelectedIndex;
-            // TODO hopefully this selects the following or preceding index automatically
+            textFileIndex = Math.Max(0, textFileIndex - 1);
+            loadTextFileSettings();
+            textFileMenu.SelectedIndex = textFileIndex;
         }
     }
 
@@ -150,15 +159,15 @@ public partial class SettingsDialog: Form {
 
     private static void onBrowseButtonClick(SaveFileDialog filenameEditor, TextBox filenameTextBox) {
         try {
-            filenameEditor.FileName = Path.GetFileName(filenameTextBox.Text) ?? "";
+            filenameEditor.FileName = Path.GetFileName(filenameTextBox.Text) ?? string.Empty;
         } catch (ArgumentException) {
             filenameEditor.FileName = "";
         }
 
         try {
-            filenameEditor.InitialDirectory = Path.GetDirectoryName(filenameTextBox.Text) ?? "";
+            filenameEditor.InitialDirectory = Path.GetDirectoryName(filenameTextBox.Text) ?? DEFAULT_DIRECTORY;
         } catch (ArgumentException) {
-            filenameEditor.InitialDirectory = "";
+            filenameEditor.InitialDirectory = DEFAULT_DIRECTORY;
         }
 
         filenameEditor.ShowDialog();
@@ -240,6 +249,28 @@ public partial class SettingsDialog: Form {
         }
     }
 
+    private void onCheckboxChange(object sender, EventArgs e) => onFormDirty();
+
+    private void onClickPreserveTextFileDetailsLink(object sender, LinkLabelLinkClickedEventArgs e) => MessageBox.Show(this,
+        """
+        This checkbox lets you control the text file contents when Winamp is paused, stopped, or exited.
+
+        When unchecked, the text file will be truncated to 0 characters when Winamp isn't playing.
+
+        When checked, the text file will contain the rendered template from the track that was most recently played.
+        """, "Now Playing to File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+    private void onClickPreserveAlbumArtDetailsLink(object sender, LinkLabelLinkClickedEventArgs e) => MessageBox.Show(this,
+        $"""
+         This checkbox lets you control the album art file when Winamp is paused, stopped, or exited.
+
+         When unchecked, the image file will be replaced with a copy of "{Path.GetFullPath("stoppedAlbumArt.png")}" when Winamp isn't playing, or a black 1×1px PNG if that optional custom file doesn't exist.
+
+         When checked, the image file will contain the album art from the track that was most recently played.
+
+         Separately, you may also supply a fallback image to use when the current track doesn't have album art by saving an image to "{Path.GetFullPath("emptyAlbumArt.png")}".
+         """, "Now Playing to File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
     private void onClickOk(object sender, EventArgs args) {
         try {
             saveUpstream();
@@ -291,9 +322,7 @@ public partial class SettingsDialog: Form {
         }
     }
 
-    private void onFormDirty() {
-        applyButton.Enabled = true;
-    }
+    private void onFormDirty() => applyButton.Enabled = true;
 
     private void onSubmitFilename(object sender, CancelEventArgs e) {
         onFormDirty();
@@ -310,7 +339,13 @@ public partial class SettingsDialog: Form {
     }
 
     private void updateTextFileMenuEntryName() {
-        textFileMenu.Items[textFileIndex] = Path.GetFileName(textFilename.Text);
+        string entryName;
+        try {
+            entryName = Path.GetFullPath(textFilename.Text);
+        } catch (ArgumentException) {
+            entryName = "new template";
+        }
+        textFileMenu.Items[textFileIndex] = entryName;
     }
 
     protected override void OnClosed(EventArgs e) {

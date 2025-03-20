@@ -101,6 +101,9 @@
             this.newTextFileButton = new System.Windows.Forms.Button();
             this.removeTextFileButton = new System.Windows.Forms.Button();
             this.preserveTextFileWhenNotPlaying = new System.Windows.Forms.CheckBox();
+            this.horizontalRule2 = new System.Windows.Forms.Label();
+            this.preserveTextFileDetailsLink = new System.Windows.Forms.LinkLabel();
+            this.preserveAlbumArtDetailsLink = new System.Windows.Forms.LinkLabel();
             albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             artistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             filenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -474,8 +477,9 @@
             // 
             // writeToFileLabel
             // 
+            this.writeToFileLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.writeToFileLabel.AutoSize = true;
-            this.writeToFileLabel.Location = new System.Drawing.Point(21, 163);
+            this.writeToFileLabel.Location = new System.Drawing.Point(14, 154);
             this.writeToFileLabel.Name = "writeToFileLabel";
             this.writeToFileLabel.Size = new System.Drawing.Size(66, 13);
             this.writeToFileLabel.TabIndex = 8;
@@ -490,10 +494,10 @@
             // 
             // textBrowseButton
             // 
-            this.textBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBrowseButton.Location = new System.Drawing.Point(507, 158);
+            this.textBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBrowseButton.Location = new System.Drawing.Point(533, 150);
             this.textBrowseButton.Name = "textBrowseButton";
-            this.textBrowseButton.Size = new System.Drawing.Size(75, 23);
+            this.textBrowseButton.Size = new System.Drawing.Size(75, 22);
             this.textBrowseButton.TabIndex = 10;
             this.textBrowseButton.Text = "&Browse…";
             this.textBrowseButton.UseVisualStyleBackColor = true;
@@ -501,18 +505,18 @@
             // 
             // textFilename
             // 
-            this.textFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textFilename.Location = new System.Drawing.Point(135, 160);
+            this.textFilename.Location = new System.Drawing.Point(128, 151);
             this.textFilename.Name = "textFilename";
-            this.textFilename.Size = new System.Drawing.Size(366, 20);
+            this.textFilename.Size = new System.Drawing.Size(398, 20);
             this.textFilename.TabIndex = 9;
             this.textFilename.TextChanged += new System.EventHandler(this.onFilenameChange);
             // 
             // templateLabel
             // 
             this.templateLabel.AutoSize = true;
-            this.templateLabel.Location = new System.Drawing.Point(21, 65);
+            this.templateLabel.Location = new System.Drawing.Point(14, 58);
             this.templateLabel.Name = "templateLabel";
             this.templateLabel.Size = new System.Drawing.Size(71, 13);
             this.templateLabel.TabIndex = 3;
@@ -522,18 +526,18 @@
             // 
             this.templateEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.templateEditor.Location = new System.Drawing.Point(135, 62);
+            this.templateEditor.Location = new System.Drawing.Point(128, 55);
             this.templateEditor.Name = "templateEditor";
-            this.templateEditor.Size = new System.Drawing.Size(330, 20);
+            this.templateEditor.Size = new System.Drawing.Size(362, 20);
             this.templateEditor.TabIndex = 4;
             this.templateEditor.TextChanged += new System.EventHandler(this.onTemplateChange);
             // 
             // templateInsertButton
             // 
             this.templateInsertButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.templateInsertButton.Location = new System.Drawing.Point(471, 60);
+            this.templateInsertButton.Location = new System.Drawing.Point(497, 54);
             this.templateInsertButton.Name = "templateInsertButton";
-            this.templateInsertButton.Size = new System.Drawing.Size(111, 23);
+            this.templateInsertButton.Size = new System.Drawing.Size(111, 22);
             this.templateInsertButton.TabIndex = 5;
             this.templateInsertButton.Text = "&Insert placeholder";
             this.templateInsertButton.UseVisualStyleBackColor = true;
@@ -542,10 +546,10 @@
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.Location = new System.Drawing.Point(337, 325);
+            this.okButton.Location = new System.Drawing.Point(371, 353);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 18;
+            this.okButton.TabIndex = 21;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.onClickOk);
@@ -554,31 +558,32 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(418, 325);
+            this.cancelButton.Location = new System.Drawing.Point(452, 353);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 19;
+            this.cancelButton.TabIndex = 22;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.onCancel);
             // 
             // templatePreview
             // 
-            this.templatePreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.templatePreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.templatePreview.Location = new System.Drawing.Point(135, 91);
+            this.templatePreview.Location = new System.Drawing.Point(128, 83);
             this.templatePreview.Multiline = true;
             this.templatePreview.Name = "templatePreview";
             this.templatePreview.ReadOnly = true;
             this.templatePreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.templatePreview.Size = new System.Drawing.Size(446, 60);
+            this.templatePreview.Size = new System.Drawing.Size(479, 60);
             this.templatePreview.TabIndex = 7;
             this.templatePreview.TabStop = false;
             // 
             // previewLabel
             // 
             this.previewLabel.AutoSize = true;
-            this.previewLabel.Location = new System.Drawing.Point(21, 94);
+            this.previewLabel.Location = new System.Drawing.Point(14, 86);
             this.previewLabel.Name = "previewLabel";
             this.previewLabel.Size = new System.Drawing.Size(68, 13);
             this.previewLabel.TabIndex = 6;
@@ -614,13 +619,13 @@
             // 
             this.ifToolStripMenuItem.Name = "ifToolStripMenuItem";
             this.ifToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.ifToolStripMenuItem.Text = "If";
+            this.ifToolStripMenuItem.Text = "if";
             // 
             // ifElseToolStripMenuItem
             // 
             this.ifElseToolStripMenuItem.Name = "ifElseToolStripMenuItem";
             this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.ifElseToolStripMenuItem.Text = "If else";
+            this.ifElseToolStripMenuItem.Text = "if-else";
             // 
             // newLineToolStripMenuItem
             // 
@@ -641,65 +646,67 @@
             // 
             // explanationLabel
             // 
-            this.explanationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.explanationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.explanationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.explanationLabel.Location = new System.Drawing.Point(30, 282);
+            this.explanationLabel.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.explanationLabel.Location = new System.Drawing.Point(17, 301);
             this.explanationLabel.Name = "explanationLabel";
-            this.explanationLabel.Size = new System.Drawing.Size(544, 30);
-            this.explanationLabel.TabIndex = 17;
+            this.explanationLabel.Size = new System.Drawing.Size(589, 30);
+            this.explanationLabel.TabIndex = 20;
             this.explanationLabel.Text = "When Winamp plays a track, this plug-in will save the track information and album" +
-    " art to files. The format of the text can be customized with the template.";
+    " art to files. The format of the text can be customized with templates.";
             // 
             // horizontalRule1
             // 
-            this.horizontalRule1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.horizontalRule1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.horizontalRule1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.horizontalRule1.Location = new System.Drawing.Point(25, 270);
+            this.horizontalRule1.Location = new System.Drawing.Point(17, 285);
             this.horizontalRule1.Name = "horizontalRule1";
-            this.horizontalRule1.Size = new System.Drawing.Size(555, 2);
-            this.horizontalRule1.TabIndex = 16;
+            this.horizontalRule1.Size = new System.Drawing.Size(587, 2);
+            this.horizontalRule1.TabIndex = 19;
             // 
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyButton.Location = new System.Drawing.Point(499, 325);
+            this.applyButton.Location = new System.Drawing.Point(533, 353);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
-            this.applyButton.TabIndex = 20;
+            this.applyButton.TabIndex = 23;
             this.applyButton.Text = "&Apply";
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.onClickApply);
             // 
             // albumArtLabel
             // 
+            this.albumArtLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.albumArtLabel.AutoSize = true;
-            this.albumArtLabel.Location = new System.Drawing.Point(21, 215);
+            this.albumArtLabel.Location = new System.Drawing.Point(14, 230);
             this.albumArtLabel.Name = "albumArtLabel";
             this.albumArtLabel.Size = new System.Drawing.Size(92, 13);
-            this.albumArtLabel.TabIndex = 12;
+            this.albumArtLabel.TabIndex = 14;
             this.albumArtLabel.Text = "Save a&lbum art as";
             // 
             // albumArtBrowseButton
             // 
-            this.albumArtBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.albumArtBrowseButton.Location = new System.Drawing.Point(507, 210);
+            this.albumArtBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.albumArtBrowseButton.Location = new System.Drawing.Point(533, 226);
             this.albumArtBrowseButton.Name = "albumArtBrowseButton";
-            this.albumArtBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.albumArtBrowseButton.TabIndex = 14;
+            this.albumArtBrowseButton.Size = new System.Drawing.Size(75, 22);
+            this.albumArtBrowseButton.TabIndex = 16;
             this.albumArtBrowseButton.Text = "B&rowse…";
             this.albumArtBrowseButton.UseVisualStyleBackColor = true;
             this.albumArtBrowseButton.Click += new System.EventHandler(this.onAlbumArtBrowseButtonClick);
             // 
             // albumArtFilename
             // 
-            this.albumArtFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.albumArtFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.albumArtFilename.Location = new System.Drawing.Point(135, 212);
+            this.albumArtFilename.Location = new System.Drawing.Point(128, 227);
             this.albumArtFilename.Name = "albumArtFilename";
-            this.albumArtFilename.Size = new System.Drawing.Size(366, 20);
-            this.albumArtFilename.TabIndex = 13;
+            this.albumArtFilename.Size = new System.Drawing.Size(398, 20);
+            this.albumArtFilename.TabIndex = 15;
             this.albumArtFilename.TextChanged += new System.EventHandler(this.onFilenameChange);
             // 
             // albumArtFilenameEditor
@@ -711,30 +718,31 @@
             // 
             // preserveAlbumArtWhenNotPlaying
             // 
+            this.preserveAlbumArtWhenNotPlaying.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.preserveAlbumArtWhenNotPlaying.AutoSize = true;
-            this.preserveAlbumArtWhenNotPlaying.Location = new System.Drawing.Point(135, 240);
+            this.preserveAlbumArtWhenNotPlaying.Location = new System.Drawing.Point(128, 254);
             this.preserveAlbumArtWhenNotPlaying.Name = "preserveAlbumArtWhenNotPlaying";
-            this.preserveAlbumArtWhenNotPlaying.Size = new System.Drawing.Size(231, 17);
-            this.preserveAlbumArtWhenNotPlaying.TabIndex = 15;
-            this.preserveAlbumArtWhenNotPlaying.Text = "Preserve the album art file when not playing";
+            this.preserveAlbumArtWhenNotPlaying.Size = new System.Drawing.Size(134, 17);
+            this.preserveAlbumArtWhenNotPlaying.TabIndex = 17;
+            this.preserveAlbumArtWhenNotPlaying.Text = "Keep when not playing";
             this.preserveAlbumArtWhenNotPlaying.UseVisualStyleBackColor = true;
             // 
             // textFileMenu
             // 
+            this.textFileMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textFileMenu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.textFileMenu.FormattingEnabled = true;
-            this.textFileMenu.Items.AddRange(new object[] {
-            "Text 1",
-            "Text 2"});
-            this.textFileMenu.Location = new System.Drawing.Point(24, 23);
+            this.textFileMenu.Location = new System.Drawing.Point(17, 17);
             this.textFileMenu.Name = "textFileMenu";
-            this.textFileMenu.Size = new System.Drawing.Size(324, 21);
+            this.textFileMenu.Size = new System.Drawing.Size(356, 21);
             this.textFileMenu.TabIndex = 0;
             this.textFileMenu.SelectedIndexChanged += new System.EventHandler(this.onTextFileMenuSelectionChanged);
             // 
             // newTextFileButton
             // 
-            this.newTextFileButton.Location = new System.Drawing.Point(354, 22);
+            this.newTextFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.newTextFileButton.Location = new System.Drawing.Point(380, 16);
             this.newTextFileButton.Name = "newTextFileButton";
             this.newTextFileButton.Size = new System.Drawing.Size(111, 23);
             this.newTextFileButton.TabIndex = 1;
@@ -744,7 +752,8 @@
             // 
             // removeTextFileButton
             // 
-            this.removeTextFileButton.Location = new System.Drawing.Point(471, 22);
+            this.removeTextFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.removeTextFileButton.Location = new System.Drawing.Point(497, 16);
             this.removeTextFileButton.Name = "removeTextFileButton";
             this.removeTextFileButton.Size = new System.Drawing.Size(111, 23);
             this.removeTextFileButton.TabIndex = 2;
@@ -754,13 +763,49 @@
             // 
             // preserveTextFileWhenNotPlaying
             // 
+            this.preserveTextFileWhenNotPlaying.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.preserveTextFileWhenNotPlaying.AutoSize = true;
-            this.preserveTextFileWhenNotPlaying.Location = new System.Drawing.Point(135, 188);
+            this.preserveTextFileWhenNotPlaying.Location = new System.Drawing.Point(128, 178);
             this.preserveTextFileWhenNotPlaying.Name = "preserveTextFileWhenNotPlaying";
-            this.preserveTextFileWhenNotPlaying.Size = new System.Drawing.Size(249, 17);
+            this.preserveTextFileWhenNotPlaying.Size = new System.Drawing.Size(134, 17);
             this.preserveTextFileWhenNotPlaying.TabIndex = 11;
-            this.preserveTextFileWhenNotPlaying.Text = "Preserve the text file contents when not playing";
+            this.preserveTextFileWhenNotPlaying.Text = "Keep when not playing";
             this.preserveTextFileWhenNotPlaying.UseVisualStyleBackColor = true;
+            this.preserveTextFileWhenNotPlaying.CheckedChanged += new System.EventHandler(this.onCheckboxChange);
+            // 
+            // horizontalRule2
+            // 
+            this.horizontalRule2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.horizontalRule2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.horizontalRule2.Location = new System.Drawing.Point(17, 209);
+            this.horizontalRule2.Name = "horizontalRule2";
+            this.horizontalRule2.Size = new System.Drawing.Size(587, 2);
+            this.horizontalRule2.TabIndex = 13;
+            // 
+            // preserveTextFileDetailsLink
+            // 
+            this.preserveTextFileDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.preserveTextFileDetailsLink.AutoSize = true;
+            this.preserveTextFileDetailsLink.Location = new System.Drawing.Point(268, 179);
+            this.preserveTextFileDetailsLink.Name = "preserveTextFileDetailsLink";
+            this.preserveTextFileDetailsLink.Size = new System.Drawing.Size(37, 13);
+            this.preserveTextFileDetailsLink.TabIndex = 12;
+            this.preserveTextFileDetailsLink.TabStop = true;
+            this.preserveTextFileDetailsLink.Text = "details";
+            this.preserveTextFileDetailsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.onClickPreserveTextFileDetailsLink);
+            // 
+            // preserveAlbumArtDetailsLink
+            // 
+            this.preserveAlbumArtDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.preserveAlbumArtDetailsLink.AutoSize = true;
+            this.preserveAlbumArtDetailsLink.Location = new System.Drawing.Point(268, 255);
+            this.preserveAlbumArtDetailsLink.Name = "preserveAlbumArtDetailsLink";
+            this.preserveAlbumArtDetailsLink.Size = new System.Drawing.Size(37, 13);
+            this.preserveAlbumArtDetailsLink.TabIndex = 18;
+            this.preserveAlbumArtDetailsLink.TabStop = true;
+            this.preserveAlbumArtDetailsLink.Text = "details";
+            this.preserveAlbumArtDetailsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.onClickPreserveAlbumArtDetailsLink);
             // 
             // SettingsDialog
             // 
@@ -768,7 +813,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(586, 361);
+            this.ClientSize = new System.Drawing.Size(624, 392);
+            this.Controls.Add(this.preserveAlbumArtDetailsLink);
+            this.Controls.Add(this.preserveTextFileDetailsLink);
+            this.Controls.Add(this.horizontalRule2);
             this.Controls.Add(this.removeTextFileButton);
             this.Controls.Add(this.newTextFileButton);
             this.Controls.Add(this.textFileMenu);
@@ -837,5 +885,8 @@
         private System.Windows.Forms.Button newTextFileButton;
         private System.Windows.Forms.Button removeTextFileButton;
         private System.Windows.Forms.CheckBox preserveTextFileWhenNotPlaying;
+        private System.Windows.Forms.Label horizontalRule2;
+        private System.Windows.Forms.LinkLabel preserveTextFileDetailsLink;
+        private System.Windows.Forms.LinkLabel preserveAlbumArtDetailsLink;
     }
 }

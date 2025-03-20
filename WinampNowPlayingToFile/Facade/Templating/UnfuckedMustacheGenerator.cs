@@ -69,7 +69,8 @@ public class JsonObjectGenerator(IEnumerable<string> propertyNames): UnfuckedGen
 
             sb.Append('"');
             sb.Append(fieldName);
-            sb.Append("\":");
+            sb.Append('"');
+            sb.Append(':');
 
             object? fieldValue = values switch {
                 IDictionary<string, object?> dict => dict.TryGetValue(fieldName, out object? value) ? value : onKeyNotFound(fieldName),

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WinampNowPlayingToFile.Settings;
 
@@ -19,19 +20,22 @@ public abstract class BaseSettings: ISettings {
     public virtual void save() { }
 
     public ISettings loadDefaults() {
-        textFilenames.Clear();
-        textFilenames.Add(Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.txt"));
-        textTemplates.Clear();
-        textTemplates.Add("{{#if Artist}}{{Artist}} \u2013 {{/if}}{{Title}}{{#if Album}} \u2013 {{Album}}{{/if}}");
-        albumArtFilename                   = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.png");
-        preserveAlbumArtFileWhenNotPlaying = false;
-        preserveTextFileWhenNotPlaying     = false;
+        if (!textFilenames.Any()) {
+            textFilenames.Add(Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.txt"));
+        }
+
+        if (!textTemplates.Any()) {
+            textTemplates.Add("{{#if Artist}}{{Artist}} \u2013 {{/if}}{{Title}}{{#if Album}} \u2013 {{Album}}{{/if}}");
+        }
+
+        if (string.IsNullOrEmpty(albumArtFilename)) {
+            albumArtFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing.png");
+        }
+
         return this;
     }
 
-    protected void onSettingsUpdated() {
-        settingsUpdated?.Invoke(this, EventArgs.Empty);
-    }
+    protected void onSettingsUpdated() => settingsUpdated?.Invoke(this, EventArgs.Empty);
 
     public void load(ISettings source) {
         preserveAlbumArtFileWhenNotPlaying = source.preserveAlbumArtFileWhenNotPlaying;

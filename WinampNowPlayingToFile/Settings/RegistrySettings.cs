@@ -10,8 +10,6 @@ public class RegistrySettings: BaseSettings {
     internal string keyPath = @"Software\WinampNowPlayingToFile";
 
     public override void load() {
-        loadDefaults();
-
         using RegistryKey? key = Registry.CurrentUser.OpenSubKey(keyPath);
         if (key != null) {
             albumArtFilename                   = key.GetValue(nameof(albumArtFilename)) as string ?? albumArtFilename;
@@ -24,16 +22,18 @@ public class RegistrySettings: BaseSettings {
                 string templateRegistryValueName = $"textTemplate{registryNameSuffix}";
 
                 if (key.GetValue(filenameRegistryValueName) is string textFilename) {
-                    string textTemplate = key.GetValue(templateRegistryValueName) as string ?? (textIndex > 0 ? string.Empty : textTemplates[textIndex]);
-
                     textFilenames.Insert(textIndex, textFilename);
-                    textTemplates.Insert(textIndex, textTemplate);
+
+                    if (key.GetValue(templateRegistryValueName) is string textTemplate) {
+                        textTemplates.Insert(textIndex, textTemplate);
+                    }
                 } else {
                     break;
                 }
             }
         }
 
+        loadDefaults();
     }
 
     private static string getTextRegistryNameSuffix(int textIndex) {
@@ -47,12 +47,33 @@ public class RegistrySettings: BaseSettings {
             key.SetValue(nameof(albumArtFilename), albumArtFilename);
             key.SetValue(nameof(preserveAlbumArtFileWhenNotPlaying), Convert.ToInt32(preserveAlbumArtFileWhenNotPlaying), RegistryValueKind.DWord);
             key.SetValue(nameof(preserveTextFileWhenNotPlaying), Convert.ToInt32(preserveTextFileWhenNotPlaying), RegistryValueKind.DWord);
-            for (int textFilenameIndex = 0; textFilenameIndex < textFilenames.Count; textFilenameIndex++) {
+
+            int textFilenameIndex;
+            for (textFilenameIndex = 0; textFilenameIndex < textFilenames.Count; textFilenameIndex++) {
                 key.SetValue($"textFilename{getTextRegistryNameSuffix(textFilenameIndex)}", textFilenames[textFilenameIndex]);
             }
-            for (int textTemplateIndex = 0; textTemplateIndex < textTemplates.Count; textTemplateIndex++) {
+
+            while (true) {
+                try {
+                    key.DeleteValue($"textFilename{getTextRegistryNameSuffix(textFilenameIndex++)}", true);
+                } catch (ArgumentException) {
+                    break;
+                }
+            }
+
+            int textTemplateIndex;
+            for (textTemplateIndex = 0; textTemplateIndex < textTemplates.Count; textTemplateIndex++) {
                 key.SetValue($"textTemplate{getTextRegistryNameSuffix(textTemplateIndex)}", textTemplates[textTemplateIndex]);
             }
+
+            while (true) {
+                try {
+                    key.DeleteValue($"textTemplate{getTextRegistryNameSuffix(textTemplateIndex++)}", true);
+                } catch (ArgumentException) {
+                    break;
+                }
+            }
+
             onSettingsUpdated();
         }
 
