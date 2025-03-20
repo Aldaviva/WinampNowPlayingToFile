@@ -59,18 +59,15 @@ public class JsonObjectGenerator(IEnumerable<string> propertyNames): UnfuckedGen
         StringBuilder sb = new();
 
         bool isFirstField = true;
-        sb.Append('{');
+        sb.Append('{').Append(' ');
         foreach (string fieldName in propertyNames) {
             if (isFirstField) {
                 isFirstField = false;
             } else {
-                sb.Append(',');
+                sb.Append(',').Append(' ');
             }
 
-            sb.Append('"');
-            sb.Append(fieldName);
-            sb.Append('"');
-            sb.Append(':');
+            sb.Append('"').Append(fieldName).Append('"').Append(':').Append(' ');
 
             object? fieldValue = values switch {
                 IDictionary<string, object?> dict => dict.TryGetValue(fieldName, out object? value) ? value : onKeyNotFound(fieldName),
@@ -80,7 +77,7 @@ public class JsonObjectGenerator(IEnumerable<string> propertyNames): UnfuckedGen
             };
             sb.Append(stringify(fieldValue));
         }
-        sb.Append('}');
+        sb.Append(' ').Append('}');
 
         return sb.ToString();
     }

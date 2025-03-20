@@ -38,15 +38,15 @@ I wrote my own Winamp plugin to save information about the currently playing son
 1. Ensure you have [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework) Runtime or later installed. This is included in Windows 10 version 1803, Windows Server 2019, and later versions.
 1. Exit Winamp if it's already running.
 1. Download [**`WinampNowPlayingToFile.zip`**](https://github.com/Aldaviva/WinampNowPlayingToFile/releases/latest/download/WinampNowPlayingToFile.zip) from the [latest release](https://github.com/Aldaviva/WinampNowPlayingToFile/releases) (not the source code ZIP file).
-1. Extract the archive to your Winamp installation directory.
+1. Extract the archive to your Winamp installation directory, preserving the relative directory structure. Note that not all of the files go in the same directory.
     ```
     📁 C:\Program Files (x86)\Winamp
     ├── 📁 plugins
     │   └── 📄 gen_WinampNowPlayingToFile.dll
-    ├── 📄 WinampNowPlayingToFile.dll
     ├── 📄 Daniel15.Sharpamp.dll
     ├── 📄 mustache-sharp.dll
-    └── 📄 taglib-sharp.dll
+    ├── 📄 taglib-sharp.dll
+    └── 📄 WinampNowPlayingToFile.dll
     ```
 
 ## Configuration
@@ -95,6 +95,7 @@ Placeholder values that are missing or empty will be rendered as the empty strin
 |`Composer`|string|`U2`||
 |`Conductor`|string|||
 |`Director`|string||Most commonly used for video files|
+|`Directory`|string|`C:\Users\Ben\Music`|Folder name|
 |`Disc`|int|`1`|Fractions like `1/2` will be converted to just the numerator (`1`)|
 |`Elapsed`|TimeSpan|`00:00:28.5080000`|Updated 1hz, millisecond resolution. See [formatting](#formatting) for `m:ss` and other formats.|
 |`Family`|string|`MPEG Layer 3 Audio File`|Codec or container format|
@@ -142,12 +143,12 @@ You can also render strings depending on a boolean value.
 {{#if Lossless}}lossless{{#else}}lossy{{/if}}
 ```
 
-There is also a custom helper for JSON value serialization, in case you're trying to generate a JSON file. Pass the field names to include in the object.
+There is also a custom helper for JSON value serialization, in case you're trying to generate a JSON file. Pass a space-delimited list of the field names to include in the object. When used, this helper must be the only text in the template, or it won't render.
 ```handlebars
-{{#jsonObject Artist Title Album}}
+{{#json artist title album}}
 ```
 ```json
-{"Artist":"U2","Title":"Exit","Album":"The Joshua Tree"}
+{ "artist": "U2", "title": "Exit", "album": "The Joshua Tree" }
 ```
 #### Formatting
 
@@ -205,10 +206,10 @@ When Winamp is paused, stopped, or closed, the image file will be deleted. To ov
     📁 C:\Program Files (x86)\Winamp
     ├── 📁 plugins
     │   └── 📄 gen_WinampNowPlayingToFile.dll
-    ├── 📄 WinampNowPlayingToFile.dll
     ├── 📄 Daniel15.Sharpamp.dll
     ├── 📄 mustache-sharp.dll
-    └── 📄 taglib-sharp.dll
+    ├── 📄 taglib-sharp.dll
+    └── 📄 WinampNowPlayingToFile.dll
     ```
 1. Delete the song information files (by default, `winamp_now_playing.txt` and `winamp_now_playing.png` in `%TEMP%`).
 1. Delete the plugin settings registry key `HKCU\Software\WinampNowPlayingToFile`.

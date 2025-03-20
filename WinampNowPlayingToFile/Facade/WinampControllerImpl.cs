@@ -88,10 +88,28 @@ public class WinampControllerImpl: WinampController {
                     return Path.GetFileName(winamp.CurrentSong.Filename);
                 case "filebasenamewithoutextension":
                     return Path.GetFileNameWithoutExtension(winamp.CurrentSong.Filename);
+                case "directory":
+                    try {
+                        return Path.GetDirectoryName(winamp.CurrentSong.Filename);
+                    } catch (ArgumentException) {
+                        return null;
+                    }
                 case "elapsed":
                     return TimeSpan.FromMilliseconds(sendIPCCommandInt(105));
                 case "playbackstate":
                     return winamp.Status.ToString().ToLowerInvariant();
+
+                // redundant to prevent unnecessary IPC when metadata name case does not match
+                case "artist":
+                    return winamp.CurrentSong.Artist;
+                case "album":
+                    return winamp.CurrentSong.Album;
+                case "title":
+                    return winamp.CurrentSong.Title;
+                case "year":
+                    return winamp.CurrentSong.Year;
+                case "filename":
+                    return winamp.CurrentSong.Filename;
             }
         } catch (ArgumentException) {
             return string.Empty;

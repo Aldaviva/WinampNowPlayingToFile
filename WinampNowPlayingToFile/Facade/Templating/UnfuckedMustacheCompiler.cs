@@ -22,7 +22,7 @@ public interface UnfuckedTemplateCompiler {
 
 public class UnfuckedMustacheCompiler: UnfuckedTemplateCompiler {
 
-    private static readonly Regex JSON_TEMPLATE_PATTERN = new("""^{{#jsonObject(?:\s+(?<keys>\w+))*\s*}}$""");
+    private static readonly Regex JSON_TEMPLATE_PATTERN = new("""^{{#json(?:\s+(?<keys>\w+))*\s*}}$""");
 
     public event EventHandler<UnfuckedPlaceholderFoundEventArgs>? placeholderFound;
     public event EventHandler<VariableFoundEventArgs>? variableFound;
@@ -50,6 +50,9 @@ public class UnfuckedMustacheCompiler: UnfuckedTemplateCompiler {
             List<string> propertyNames = jsonMatch.Groups["keys"].Captures.Cast<Capture>().Select(key => key.Value).ToList();
             foreach (string propertyName in propertyNames) {
                 placeholderFound?.Invoke(this, new UnfuckedPlaceholderFoundEventArgs(propertyName, null, null, []));
+            }
+            if (!propertyNames.Any()) {
+                propertyNames.AddRange(["artist", "album", "title", "year", "filename", "playbackState"]);
             }
             return new JsonObjectGenerator(propertyNames);
         } else {

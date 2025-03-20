@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ToolStripMenuItem albumToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem artistToolStripMenuItem;
-            System.Windows.Forms.ToolStripMenuItem filenameToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem yearToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem albumArtistToolStripMenuItem;
@@ -66,11 +65,14 @@
             System.Windows.Forms.ToolStripMenuItem typeToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem vbrToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem elapsedToolStripMenuItem;
-            System.Windows.Forms.ToolStripMenuItem playbackStateToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem fileNameToolStripMenuItem1;
+            System.Windows.Forms.ToolStripMenuItem absolutePathToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem fileNameWithExtensionToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem filenameWithoutExtensionToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem directoryToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem playbackStateToolStripMenuItem1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
-            this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileBasenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileBasenameWithoutExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.writeToFileLabel = new System.Windows.Forms.Label();
             this.textFilenameEditor = new System.Windows.Forms.SaveFileDialog();
             this.textBrowseButton = new System.Windows.Forms.Button();
@@ -104,9 +106,9 @@
             this.horizontalRule2 = new System.Windows.Forms.Label();
             this.preserveTextFileDetailsLink = new System.Windows.Forms.LinkLabel();
             this.preserveAlbumArtDetailsLink = new System.Windows.Forms.LinkLabel();
+            this.jsonObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             artistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            filenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             titleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             yearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             albumArtistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,7 +143,13 @@
             typeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             vbrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             elapsedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            playbackStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            fileNameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            absolutePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            fileNameWithExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            filenameWithoutExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            directoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            playbackStateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.insertTemplatePlaceholderMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -149,36 +157,28 @@
             // 
             albumToolStripMenuItem.Name = "albumToolStripMenuItem";
             albumToolStripMenuItem.ShowShortcutKeys = false;
-            albumToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            albumToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             albumToolStripMenuItem.Text = "Album";
             // 
             // artistToolStripMenuItem
             // 
             artistToolStripMenuItem.Name = "artistToolStripMenuItem";
             artistToolStripMenuItem.ShowShortcutKeys = false;
-            artistToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            artistToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             artistToolStripMenuItem.Text = "Artist";
-            // 
-            // filenameToolStripMenuItem
-            // 
-            filenameToolStripMenuItem.Name = "filenameToolStripMenuItem";
-            filenameToolStripMenuItem.ShowShortcutKeys = false;
-            filenameToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            filenameToolStripMenuItem.Text = "Filename";
-            filenameToolStripMenuItem.ToolTipText = "The absolute path to the file, e.g. \"C:\\Users\\Ben\\Music\\Song.mp3\"";
             // 
             // titleToolStripMenuItem
             // 
             titleToolStripMenuItem.Name = "titleToolStripMenuItem";
             titleToolStripMenuItem.ShowShortcutKeys = false;
-            titleToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            titleToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             titleToolStripMenuItem.Text = "Title";
             // 
             // yearToolStripMenuItem
             // 
             yearToolStripMenuItem.Name = "yearToolStripMenuItem";
             yearToolStripMenuItem.ShowShortcutKeys = false;
-            yearToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            yearToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             yearToolStripMenuItem.Text = "Year";
             // 
             // albumArtistToolStripMenuItem
@@ -408,17 +408,9 @@
             elapsedToolStripMenuItem.ToolTipText = "Playback time position of the current media with millisecond resolution, updated " +
     "every second. To be formatted as a .NET TimeSpan.";
             // 
-            // playbackStateToolStripMenuItem
-            // 
-            playbackStateToolStripMenuItem.Name = "playbackStateToolStripMenuItem";
-            playbackStateToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            playbackStateToolStripMenuItem.Tag = "PlaybackState";
-            playbackStateToolStripMenuItem.Text = "Playback state";
-            playbackStateToolStripMenuItem.ToolTipText = "\"playing\", \"paused\", or \"stopped\"";
-            // 
             // otherToolStripMenuItem
             // 
-            this.otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             albumArtistToolStripMenuItem,
             bitrateToolStripMenuItem,
             bpmToolStripMenuItem,
@@ -430,8 +422,6 @@
             discToolStripMenuItem,
             elapsedToolStripMenuItem,
             familyToolStripMenuItem,
-            this.fileBasenameToolStripMenuItem,
-            this.fileBasenameWithoutExtensionToolStripMenuItem,
             gainToolStripMenuItem,
             genreToolStripMenuItem,
             isrcToolStripMenuItem,
@@ -440,7 +430,6 @@
             losslessToolStripMenuItem,
             lyricistToolStripMenuItem,
             mediaToolStripMenuItem,
-            playbackStateToolStripMenuItem,
             producerToolStripMenuItem,
             publisherToolStripMenuItem,
             ratingToolStripMenuItem,
@@ -454,26 +443,10 @@
             trackToolStripMenuItem,
             typeToolStripMenuItem,
             vbrToolStripMenuItem});
-            this.otherToolStripMenuItem.Name = "otherToolStripMenuItem";
-            this.otherToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
-            this.otherToolStripMenuItem.Text = "More";
-            this.otherToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
-            // 
-            // fileBasenameToolStripMenuItem
-            // 
-            this.fileBasenameToolStripMenuItem.Name = "fileBasenameToolStripMenuItem";
-            this.fileBasenameToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.fileBasenameToolStripMenuItem.Tag = "FileBasename";
-            this.fileBasenameToolStripMenuItem.Text = "File basename";
-            this.fileBasenameToolStripMenuItem.ToolTipText = "Name of file without path, e.g. \"Song.mp3\"";
-            // 
-            // fileBasenameWithoutExtensionToolStripMenuItem
-            // 
-            this.fileBasenameWithoutExtensionToolStripMenuItem.Name = "fileBasenameWithoutExtensionToolStripMenuItem";
-            this.fileBasenameWithoutExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.fileBasenameWithoutExtensionToolStripMenuItem.Tag = "FileBasenameWithoutExtension";
-            this.fileBasenameWithoutExtensionToolStripMenuItem.Text = "File basename without extension";
-            this.fileBasenameWithoutExtensionToolStripMenuItem.ToolTipText = "Name of file without path or extension, e.g. \"Song\"";
+            otherToolStripMenuItem.Name = "otherToolStripMenuItem";
+            otherToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            otherToolStripMenuItem.Text = "More";
+            otherToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
             // 
             // writeToFileLabel
             // 
@@ -594,54 +567,56 @@
             this.insertTemplatePlaceholderMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             albumToolStripMenuItem,
             artistToolStripMenuItem,
-            filenameToolStripMenuItem,
             titleToolStripMenuItem,
             yearToolStripMenuItem,
-            this.otherToolStripMenuItem,
+            fileNameToolStripMenuItem1,
+            playbackStateToolStripMenuItem1,
+            otherToolStripMenuItem,
             this.toolStripSeparator1,
             this.ifToolStripMenuItem,
             this.ifElseToolStripMenuItem,
             this.newLineToolStripMenuItem,
+            this.jsonObjectToolStripMenuItem,
             this.toolStripSeparator2,
             this.helpToolStripMenuItem});
             this.insertTemplatePlaceholderMenu.Name = "insertTemplatePlaceholderMenu";
             this.insertTemplatePlaceholderMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.insertTemplatePlaceholderMenu.ShowImageMargin = false;
-            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(96, 236);
+            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(251, 280);
             this.insertTemplatePlaceholderMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(92, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
             // 
             // ifToolStripMenuItem
             // 
             this.ifToolStripMenuItem.Name = "ifToolStripMenuItem";
-            this.ifToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.ifToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.ifToolStripMenuItem.Text = "if";
             // 
             // ifElseToolStripMenuItem
             // 
             this.ifElseToolStripMenuItem.Name = "ifElseToolStripMenuItem";
-            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.ifElseToolStripMenuItem.Text = "if-else";
             // 
             // newLineToolStripMenuItem
             // 
             this.newLineToolStripMenuItem.Name = "newLineToolStripMenuItem";
-            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.newLineToolStripMenuItem.Text = "New line";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(92, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // explanationLabel
@@ -807,6 +782,65 @@
             this.preserveAlbumArtDetailsLink.Text = "details";
             this.preserveAlbumArtDetailsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.onClickPreserveAlbumArtDetailsLink);
             // 
+            // jsonObjectToolStripMenuItem
+            // 
+            this.jsonObjectToolStripMenuItem.Name = "jsonObjectToolStripMenuItem";
+            this.jsonObjectToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.jsonObjectToolStripMenuItem.Text = "JSON object (replaces entire template)";
+            this.jsonObjectToolStripMenuItem.ToolTipText = "Replace the entire template with a JSON object containing a customizable projecti" +
+    "on of metadata fields";
+            // 
+            // fileNameToolStripMenuItem1
+            // 
+            fileNameToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            absolutePathToolStripMenuItem,
+            directoryToolStripMenuItem,
+            fileNameWithExtensionToolStripMenuItem,
+            filenameWithoutExtensionToolStripMenuItem});
+            fileNameToolStripMenuItem1.Name = "fileNameToolStripMenuItem1";
+            fileNameToolStripMenuItem1.Size = new System.Drawing.Size(250, 22);
+            fileNameToolStripMenuItem1.Text = "Filename";
+            fileNameToolStripMenuItem1.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
+            // 
+            // absolutePathToolStripMenuItem
+            // 
+            absolutePathToolStripMenuItem.Name = "absolutePathToolStripMenuItem";
+            absolutePathToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            absolutePathToolStripMenuItem.Tag = "Filename";
+            absolutePathToolStripMenuItem.Text = "Absolute path";
+            absolutePathToolStripMenuItem.ToolTipText = "Directory and filename, e.g. \"C:\\Users\\Ben\\Music\\\r\nSong.mp3\"";
+            // 
+            // fileNameWithExtensionToolStripMenuItem
+            // 
+            fileNameWithExtensionToolStripMenuItem.Name = "fileNameWithExtensionToolStripMenuItem";
+            fileNameWithExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            fileNameWithExtensionToolStripMenuItem.Tag = "FileBasename";
+            fileNameWithExtensionToolStripMenuItem.Text = "File basename with extension";
+            fileNameWithExtensionToolStripMenuItem.ToolTipText = "Name of file without directory, e.g. \"Song.mp3\"";
+            // 
+            // filenameWithoutExtensionToolStripMenuItem
+            // 
+            filenameWithoutExtensionToolStripMenuItem.Name = "filenameWithoutExtensionToolStripMenuItem";
+            filenameWithoutExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            filenameWithoutExtensionToolStripMenuItem.Tag = "FileBasenameWithoutExtension";
+            filenameWithoutExtensionToolStripMenuItem.Text = "File basename without extension";
+            filenameWithoutExtensionToolStripMenuItem.ToolTipText = "Name of file without directory or extension, e.g. \"Song\"";
+            // 
+            // directoryToolStripMenuItem
+            // 
+            directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
+            directoryToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            directoryToolStripMenuItem.Text = "Directory";
+            directoryToolStripMenuItem.ToolTipText = "Full path to folder containing file, e.g. \"C:\\Users\\Ben\\Music\"";
+            // 
+            // playbackStateToolStripMenuItem1
+            // 
+            playbackStateToolStripMenuItem1.Name = "playbackStateToolStripMenuItem1";
+            playbackStateToolStripMenuItem1.Size = new System.Drawing.Size(250, 22);
+            playbackStateToolStripMenuItem1.Tag = "PlaybackState";
+            playbackStateToolStripMenuItem1.Text = "Playback state";
+            playbackStateToolStripMenuItem1.ToolTipText = "\"playing\", \"paused\", or \"stopped\"";
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.okButton;
@@ -877,9 +911,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem ifToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ifElseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fileBasenameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fileBasenameWithoutExtensionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
         private System.Windows.Forms.CheckBox preserveAlbumArtWhenNotPlaying;
         private System.Windows.Forms.ComboBox textFileMenu;
         private System.Windows.Forms.Button newTextFileButton;
@@ -888,5 +919,6 @@
         private System.Windows.Forms.Label horizontalRule2;
         private System.Windows.Forms.LinkLabel preserveTextFileDetailsLink;
         private System.Windows.Forms.LinkLabel preserveAlbumArtDetailsLink;
+        private System.Windows.Forms.ToolStripMenuItem jsonObjectToolStripMenuItem;
     }
 }
