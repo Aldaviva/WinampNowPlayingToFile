@@ -41,6 +41,7 @@ public partial class SettingsDialog: Form {
         { "bpm", 123.0 },
         { "category", "Rock" },
         { "composer", "U2" },
+        { "directory", "C:" },
         { "disc", 1 },
         { "elapsed", TimeSpan.FromMilliseconds(251422 / 2.0) },
         { "family", "MPEG Layer 3 Audio File" },
@@ -258,9 +259,9 @@ public partial class SettingsDialog: Form {
         """
         This checkbox lets you control the text file contents when Winamp is paused, stopped, or exited.
 
-        When unchecked, the text file will be truncated to 0 characters when Winamp isn't playing.
+        When unchecked, the text file will be truncated to 0 bytes when Winamp isn't playing.
 
-        When checked, the text file will contain the rendered template from the track that was most recently played.
+        When checked, the text file will preserve the rendered template text from the track that was most recently played.
         """, "Now Playing to File", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
     private void onClickPreserveAlbumArtDetailsLink(object sender, LinkLabelLinkClickedEventArgs e) => MessageBox.Show(this,
@@ -269,7 +270,7 @@ public partial class SettingsDialog: Form {
 
          When unchecked, the image file will be replaced with a copy of "{Path.GetFullPath("stoppedAlbumArt.png")}" when Winamp isn't playing, or a black 1×1px PNG if that optional custom file doesn't exist.
 
-         When checked, the image file will contain the album art from the track that was most recently played.
+         When checked, the image file will preserve the album art from the track that was most recently played.
 
          Separately, you may also supply a fallback image to use when the current track doesn't have album art by saving an image to "{Path.GetFullPath("emptyAlbumArt.png")}".
          """, "Now Playing to File", MessageBoxButtons.OK, MessageBoxIcon.Information);

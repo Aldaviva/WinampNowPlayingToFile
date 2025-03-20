@@ -68,9 +68,9 @@
             System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem fileNameToolStripMenuItem1;
             System.Windows.Forms.ToolStripMenuItem absolutePathToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem directoryToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem fileNameWithExtensionToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem filenameWithoutExtensionToolStripMenuItem;
-            System.Windows.Forms.ToolStripMenuItem directoryToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem playbackStateToolStripMenuItem1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
             this.writeToFileLabel = new System.Windows.Forms.Label();
@@ -89,6 +89,7 @@
             this.ifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ifElseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jsonObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.explanationLabel = new System.Windows.Forms.Label();
@@ -106,7 +107,6 @@
             this.horizontalRule2 = new System.Windows.Forms.Label();
             this.preserveTextFileDetailsLink = new System.Windows.Forms.LinkLabel();
             this.preserveAlbumArtDetailsLink = new System.Windows.Forms.LinkLabel();
-            this.jsonObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             artistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             titleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -146,9 +146,9 @@
             otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             fileNameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             absolutePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            directoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             fileNameWithExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             filenameWithoutExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            directoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             playbackStateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.insertTemplatePlaceholderMenu.SuspendLayout();
             this.SuspendLayout();
@@ -157,48 +157,48 @@
             // 
             albumToolStripMenuItem.Name = "albumToolStripMenuItem";
             albumToolStripMenuItem.ShowShortcutKeys = false;
-            albumToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            albumToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             albumToolStripMenuItem.Text = "Album";
             // 
             // artistToolStripMenuItem
             // 
             artistToolStripMenuItem.Name = "artistToolStripMenuItem";
             artistToolStripMenuItem.ShowShortcutKeys = false;
-            artistToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            artistToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             artistToolStripMenuItem.Text = "Artist";
             // 
             // titleToolStripMenuItem
             // 
             titleToolStripMenuItem.Name = "titleToolStripMenuItem";
             titleToolStripMenuItem.ShowShortcutKeys = false;
-            titleToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            titleToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             titleToolStripMenuItem.Text = "Title";
             // 
             // yearToolStripMenuItem
             // 
             yearToolStripMenuItem.Name = "yearToolStripMenuItem";
             yearToolStripMenuItem.ShowShortcutKeys = false;
-            yearToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            yearToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             yearToolStripMenuItem.Text = "Year";
             // 
             // albumArtistToolStripMenuItem
             // 
             albumArtistToolStripMenuItem.Name = "albumArtistToolStripMenuItem";
-            albumArtistToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            albumArtistToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             albumArtistToolStripMenuItem.Tag = "AlbumArtist";
             albumArtistToolStripMenuItem.Text = "Album artist";
             // 
             // bitrateToolStripMenuItem
             // 
             bitrateToolStripMenuItem.Name = "bitrateToolStripMenuItem";
-            bitrateToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            bitrateToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             bitrateToolStripMenuItem.Text = "Bitrate";
             bitrateToolStripMenuItem.ToolTipText = "Number of kilobits per second, e.g. \"320\"";
             // 
             // bpmToolStripMenuItem
             // 
             bpmToolStripMenuItem.Name = "bpmToolStripMenuItem";
-            bpmToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            bpmToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             bpmToolStripMenuItem.Tag = "BPM";
             bpmToolStripMenuItem.Text = "BPM";
             bpmToolStripMenuItem.ToolTipText = "Number of beats per minute, e.g. \"86\"";
@@ -206,66 +206,66 @@
             // categoryToolStripMenuItem
             // 
             categoryToolStripMenuItem.Name = "categoryToolStripMenuItem";
-            categoryToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            categoryToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             categoryToolStripMenuItem.Text = "Category";
             categoryToolStripMenuItem.ToolTipText = "e.g. \"Rock\"";
             // 
             // commentToolStripMenuItem
             // 
             commentToolStripMenuItem.Name = "commentToolStripMenuItem";
-            commentToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            commentToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             commentToolStripMenuItem.Text = "Comment";
             // 
             // composerToolStripMenuItem
             // 
             composerToolStripMenuItem.Name = "composerToolStripMenuItem";
-            composerToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            composerToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             composerToolStripMenuItem.Text = "Composer";
             // 
             // conductorToolStripMenuItem
             // 
             conductorToolStripMenuItem.Name = "conductorToolStripMenuItem";
-            conductorToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            conductorToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             conductorToolStripMenuItem.Text = "Conductor";
             // 
             // directorToolStripMenuItem
             // 
             directorToolStripMenuItem.Name = "directorToolStripMenuItem";
-            directorToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            directorToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             directorToolStripMenuItem.Text = "Director";
             directorToolStripMenuItem.ToolTipText = "For video files";
             // 
             // discToolStripMenuItem
             // 
             discToolStripMenuItem.Name = "discToolStripMenuItem";
-            discToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            discToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             discToolStripMenuItem.Text = "Disc";
             discToolStripMenuItem.ToolTipText = "e.g. \"1\" or \"1/2\"";
             // 
             // familyToolStripMenuItem
             // 
             familyToolStripMenuItem.Name = "familyToolStripMenuItem";
-            familyToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            familyToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             familyToolStripMenuItem.Text = "Family";
             familyToolStripMenuItem.ToolTipText = "e.g. \"MPEG Layer 3 Audio File\"";
             // 
             // gainToolStripMenuItem
             // 
             gainToolStripMenuItem.Name = "gainToolStripMenuItem";
-            gainToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            gainToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             gainToolStripMenuItem.Text = "Gain";
             gainToolStripMenuItem.ToolTipText = "e.g. \"+0.40 dB\"";
             // 
             // genreToolStripMenuItem
             // 
             genreToolStripMenuItem.Name = "genreToolStripMenuItem";
-            genreToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            genreToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             genreToolStripMenuItem.Text = "Genre";
             // 
             // isrcToolStripMenuItem
             // 
             isrcToolStripMenuItem.Name = "isrcToolStripMenuItem";
-            isrcToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            isrcToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             isrcToolStripMenuItem.Tag = "ISRC";
             isrcToolStripMenuItem.Text = "ISRC";
             isrcToolStripMenuItem.ToolTipText = "e.g. \"USLZJ2006066\"";
@@ -273,14 +273,14 @@
             // keyToolStripMenuItem
             // 
             keyToolStripMenuItem.Name = "keyToolStripMenuItem";
-            keyToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            keyToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             keyToolStripMenuItem.Text = "Key";
             keyToolStripMenuItem.ToolTipText = "e.g. \"A\"";
             // 
             // lengthToolStripMenuItem
             // 
             lengthToolStripMenuItem.Name = "lengthToolStripMenuItem";
-            lengthToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            lengthToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             lengthToolStripMenuItem.Tag = "Length:m\\:ss";
             lengthToolStripMenuItem.Text = "Length";
             lengthToolStripMenuItem.ToolTipText = "Duration of media with millisecond resolution, to be formatted as a .NET TimeSpan" +
@@ -289,46 +289,46 @@
             // losslessToolStripMenuItem
             // 
             losslessToolStripMenuItem.Name = "losslessToolStripMenuItem";
-            losslessToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            losslessToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             losslessToolStripMenuItem.Text = "Lossless";
             losslessToolStripMenuItem.ToolTipText = "\"0\" (lossy) or \"1\" (lossless)";
             // 
             // lyricistToolStripMenuItem
             // 
             lyricistToolStripMenuItem.Name = "lyricistToolStripMenuItem";
-            lyricistToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            lyricistToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             lyricistToolStripMenuItem.Text = "Lyricist";
             // 
             // mediaToolStripMenuItem
             // 
             mediaToolStripMenuItem.Name = "mediaToolStripMenuItem";
-            mediaToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            mediaToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             mediaToolStripMenuItem.Text = "Media";
             mediaToolStripMenuItem.ToolTipText = "The MEDIATYPE ID3v2 tag";
             // 
             // producerToolStripMenuItem
             // 
             producerToolStripMenuItem.Name = "producerToolStripMenuItem";
-            producerToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            producerToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             producerToolStripMenuItem.Text = "Producer";
             // 
             // publisherToolStripMenuItem
             // 
             publisherToolStripMenuItem.Name = "publisherToolStripMenuItem";
-            publisherToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            publisherToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             publisherToolStripMenuItem.Text = "Publisher";
             // 
             // ratingToolStripMenuItem
             // 
             ratingToolStripMenuItem.Name = "ratingToolStripMenuItem";
-            ratingToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            ratingToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             ratingToolStripMenuItem.Text = "Rating";
             ratingToolStripMenuItem.ToolTipText = "\"1\", \"2\", \"3\", \"4\", \"5\", or empty";
             // 
             // replayGainAlbumGainToolStripMenuItem
             // 
             replayGainAlbumGainToolStripMenuItem.Name = "replayGainAlbumGainToolStripMenuItem";
-            replayGainAlbumGainToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            replayGainAlbumGainToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             replayGainAlbumGainToolStripMenuItem.Tag = "ReplayGain_Album_Gain";
             replayGainAlbumGainToolStripMenuItem.Text = "ReplayGain album gain";
             replayGainAlbumGainToolStripMenuItem.ToolTipText = "e.g. \"-7.29 dB\"";
@@ -336,7 +336,7 @@
             // replayGainAlbumPeakToolStripMenuItem
             // 
             replayGainAlbumPeakToolStripMenuItem.Name = "replayGainAlbumPeakToolStripMenuItem";
-            replayGainAlbumPeakToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            replayGainAlbumPeakToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             replayGainAlbumPeakToolStripMenuItem.Tag = "ReplayGain_Album_Peak";
             replayGainAlbumPeakToolStripMenuItem.Text = "ReplayGain album peak";
             replayGainAlbumPeakToolStripMenuItem.ToolTipText = "e.g. \"0.965118408\"";
@@ -344,7 +344,7 @@
             // replayGainTrackGainToolStripMenuItem
             // 
             replayGainTrackGainToolStripMenuItem.Name = "replayGainTrackGainToolStripMenuItem";
-            replayGainTrackGainToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            replayGainTrackGainToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             replayGainTrackGainToolStripMenuItem.Tag = "ReplayGain_Track_Gain";
             replayGainTrackGainToolStripMenuItem.Text = "ReplayGain track gain";
             replayGainTrackGainToolStripMenuItem.ToolTipText = "e.g. \"-7.29 dB\"";
@@ -352,7 +352,7 @@
             // replayGainTrackPeakToolStripMenuItem
             // 
             replayGainTrackPeakToolStripMenuItem.Name = "replayGainTrackPeakToolStripMenuItem";
-            replayGainTrackPeakToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            replayGainTrackPeakToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             replayGainTrackPeakToolStripMenuItem.Tag = "ReplayGain_Track_Peak";
             replayGainTrackPeakToolStripMenuItem.Text = "ReplayGain track peak";
             replayGainTrackPeakToolStripMenuItem.ToolTipText = "e.g. \"0.965118408\"";
@@ -360,41 +360,41 @@
             // stereoToolStripMenuItem
             // 
             stereoToolStripMenuItem.Name = "stereoToolStripMenuItem";
-            stereoToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            stereoToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             stereoToolStripMenuItem.Text = "Stereo";
             stereoToolStripMenuItem.ToolTipText = "\"0\" (mono) or \"1\" (stereo)";
             // 
             // subtitleToolStripMenuItem
             // 
             subtitleToolStripMenuItem.Name = "subtitleToolStripMenuItem";
-            subtitleToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            subtitleToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             subtitleToolStripMenuItem.Text = "Subtitle";
             // 
             // toolToolStripMenuItem
             // 
             toolToolStripMenuItem.Name = "toolToolStripMenuItem";
-            toolToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            toolToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             toolToolStripMenuItem.Text = "Tool";
             toolToolStripMenuItem.ToolTipText = "The ENCODEDBY ID3v2 tag, e.g. \"iTunes 10.5.1\"";
             // 
             // trackToolStripMenuItem
             // 
             trackToolStripMenuItem.Name = "trackToolStripMenuItem";
-            trackToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            trackToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             trackToolStripMenuItem.Text = "Track";
             trackToolStripMenuItem.ToolTipText = "e.g. \"1\" or \"1/5\"";
             // 
             // typeToolStripMenuItem
             // 
             typeToolStripMenuItem.Name = "typeToolStripMenuItem";
-            typeToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            typeToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             typeToolStripMenuItem.Text = "Type";
             typeToolStripMenuItem.ToolTipText = "\"0\" (audio) or \"1\" (video)";
             // 
             // vbrToolStripMenuItem
             // 
             vbrToolStripMenuItem.Name = "vbrToolStripMenuItem";
-            vbrToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            vbrToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             vbrToolStripMenuItem.Tag = "VBR";
             vbrToolStripMenuItem.Text = "VBR";
             vbrToolStripMenuItem.ToolTipText = "\"0\" (constant bitrate) or \"1\" (variable bitrate)";
@@ -402,7 +402,7 @@
             // elapsedToolStripMenuItem
             // 
             elapsedToolStripMenuItem.Name = "elapsedToolStripMenuItem";
-            elapsedToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            elapsedToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             elapsedToolStripMenuItem.Tag = "Elapsed:m\\:ss";
             elapsedToolStripMenuItem.Text = "Elapsed";
             elapsedToolStripMenuItem.ToolTipText = "Playback time position of the current media with millisecond resolution, updated " +
@@ -447,6 +447,57 @@
             otherToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             otherToolStripMenuItem.Text = "More";
             otherToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
+            // 
+            // fileNameToolStripMenuItem1
+            // 
+            fileNameToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            absolutePathToolStripMenuItem,
+            directoryToolStripMenuItem,
+            fileNameWithExtensionToolStripMenuItem,
+            filenameWithoutExtensionToolStripMenuItem});
+            fileNameToolStripMenuItem1.Name = "fileNameToolStripMenuItem1";
+            fileNameToolStripMenuItem1.Size = new System.Drawing.Size(250, 22);
+            fileNameToolStripMenuItem1.Text = "Filename";
+            fileNameToolStripMenuItem1.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
+            // 
+            // absolutePathToolStripMenuItem
+            // 
+            absolutePathToolStripMenuItem.Name = "absolutePathToolStripMenuItem";
+            absolutePathToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            absolutePathToolStripMenuItem.Tag = "Filename";
+            absolutePathToolStripMenuItem.Text = "Absolute path";
+            absolutePathToolStripMenuItem.ToolTipText = "Directory and filename, e.g. \"C:\\Users\\Ben\\Music\\\r\nSong.mp3\"";
+            // 
+            // directoryToolStripMenuItem
+            // 
+            directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
+            directoryToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            directoryToolStripMenuItem.Text = "Directory";
+            directoryToolStripMenuItem.ToolTipText = "Full path to folder containing file, e.g. \"C:\\Users\\Ben\\Music\"";
+            // 
+            // fileNameWithExtensionToolStripMenuItem
+            // 
+            fileNameWithExtensionToolStripMenuItem.Name = "fileNameWithExtensionToolStripMenuItem";
+            fileNameWithExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            fileNameWithExtensionToolStripMenuItem.Tag = "FileBasename";
+            fileNameWithExtensionToolStripMenuItem.Text = "File basename with extension";
+            fileNameWithExtensionToolStripMenuItem.ToolTipText = "Name of file without directory, e.g. \"Song.mp3\"";
+            // 
+            // filenameWithoutExtensionToolStripMenuItem
+            // 
+            filenameWithoutExtensionToolStripMenuItem.Name = "filenameWithoutExtensionToolStripMenuItem";
+            filenameWithoutExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            filenameWithoutExtensionToolStripMenuItem.Tag = "FileBasenameWithoutExtension";
+            filenameWithoutExtensionToolStripMenuItem.Text = "File basename without extension";
+            filenameWithoutExtensionToolStripMenuItem.ToolTipText = "Name of file without directory or extension, e.g. \"Song\"";
+            // 
+            // playbackStateToolStripMenuItem1
+            // 
+            playbackStateToolStripMenuItem1.Name = "playbackStateToolStripMenuItem1";
+            playbackStateToolStripMenuItem1.Size = new System.Drawing.Size(250, 22);
+            playbackStateToolStripMenuItem1.Tag = "PlaybackState";
+            playbackStateToolStripMenuItem1.Text = "Playback state";
+            playbackStateToolStripMenuItem1.ToolTipText = "\"playing\", \"paused\", or \"stopped\"";
             // 
             // writeToFileLabel
             // 
@@ -567,16 +618,16 @@
             this.insertTemplatePlaceholderMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             albumToolStripMenuItem,
             artistToolStripMenuItem,
-            titleToolStripMenuItem,
-            yearToolStripMenuItem,
             fileNameToolStripMenuItem1,
             playbackStateToolStripMenuItem1,
+            titleToolStripMenuItem,
+            yearToolStripMenuItem,
             otherToolStripMenuItem,
             this.toolStripSeparator1,
             this.ifToolStripMenuItem,
             this.ifElseToolStripMenuItem,
-            this.newLineToolStripMenuItem,
             this.jsonObjectToolStripMenuItem,
+            this.newLineToolStripMenuItem,
             this.toolStripSeparator2,
             this.helpToolStripMenuItem});
             this.insertTemplatePlaceholderMenu.Name = "insertTemplatePlaceholderMenu";
@@ -588,35 +639,43 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(247, 6);
             // 
             // ifToolStripMenuItem
             // 
             this.ifToolStripMenuItem.Name = "ifToolStripMenuItem";
-            this.ifToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.ifToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.ifToolStripMenuItem.Text = "if";
             // 
             // ifElseToolStripMenuItem
             // 
             this.ifElseToolStripMenuItem.Name = "ifElseToolStripMenuItem";
-            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.ifElseToolStripMenuItem.Text = "if-else";
             // 
             // newLineToolStripMenuItem
             // 
             this.newLineToolStripMenuItem.Name = "newLineToolStripMenuItem";
-            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.newLineToolStripMenuItem.Text = "New line";
+            // 
+            // jsonObjectToolStripMenuItem
+            // 
+            this.jsonObjectToolStripMenuItem.Name = "jsonObjectToolStripMenuItem";
+            this.jsonObjectToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.jsonObjectToolStripMenuItem.Text = "JSON object (replaces entire template)";
+            this.jsonObjectToolStripMenuItem.ToolTipText = "Replace the entire template with a JSON object containing a customizable projecti" +
+    "on of metadata fields";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(247, 6);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // explanationLabel
@@ -625,9 +684,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.explanationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.explanationLabel.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.explanationLabel.Location = new System.Drawing.Point(17, 301);
+            this.explanationLabel.Location = new System.Drawing.Point(14, 301);
             this.explanationLabel.Name = "explanationLabel";
-            this.explanationLabel.Size = new System.Drawing.Size(589, 30);
+            this.explanationLabel.Size = new System.Drawing.Size(594, 30);
             this.explanationLabel.TabIndex = 20;
             this.explanationLabel.Text = "When Winamp plays a track, this plug-in will save the track information and album" +
     " art to files. The format of the text can be customized with templates.";
@@ -639,7 +698,7 @@
             this.horizontalRule1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.horizontalRule1.Location = new System.Drawing.Point(17, 285);
             this.horizontalRule1.Name = "horizontalRule1";
-            this.horizontalRule1.Size = new System.Drawing.Size(587, 2);
+            this.horizontalRule1.Size = new System.Drawing.Size(591, 2);
             this.horizontalRule1.TabIndex = 19;
             // 
             // applyButton
@@ -755,12 +814,12 @@
             this.horizontalRule2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.horizontalRule2.Location = new System.Drawing.Point(17, 209);
             this.horizontalRule2.Name = "horizontalRule2";
-            this.horizontalRule2.Size = new System.Drawing.Size(587, 2);
+            this.horizontalRule2.Size = new System.Drawing.Size(591, 2);
             this.horizontalRule2.TabIndex = 13;
             // 
             // preserveTextFileDetailsLink
             // 
-            this.preserveTextFileDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.preserveTextFileDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.preserveTextFileDetailsLink.AutoSize = true;
             this.preserveTextFileDetailsLink.Location = new System.Drawing.Point(268, 179);
             this.preserveTextFileDetailsLink.Name = "preserveTextFileDetailsLink";
@@ -772,7 +831,7 @@
             // 
             // preserveAlbumArtDetailsLink
             // 
-            this.preserveAlbumArtDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.preserveAlbumArtDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.preserveAlbumArtDetailsLink.AutoSize = true;
             this.preserveAlbumArtDetailsLink.Location = new System.Drawing.Point(268, 255);
             this.preserveAlbumArtDetailsLink.Name = "preserveAlbumArtDetailsLink";
@@ -781,65 +840,6 @@
             this.preserveAlbumArtDetailsLink.TabStop = true;
             this.preserveAlbumArtDetailsLink.Text = "details";
             this.preserveAlbumArtDetailsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.onClickPreserveAlbumArtDetailsLink);
-            // 
-            // jsonObjectToolStripMenuItem
-            // 
-            this.jsonObjectToolStripMenuItem.Name = "jsonObjectToolStripMenuItem";
-            this.jsonObjectToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.jsonObjectToolStripMenuItem.Text = "JSON object (replaces entire template)";
-            this.jsonObjectToolStripMenuItem.ToolTipText = "Replace the entire template with a JSON object containing a customizable projecti" +
-    "on of metadata fields";
-            // 
-            // fileNameToolStripMenuItem1
-            // 
-            fileNameToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            absolutePathToolStripMenuItem,
-            directoryToolStripMenuItem,
-            fileNameWithExtensionToolStripMenuItem,
-            filenameWithoutExtensionToolStripMenuItem});
-            fileNameToolStripMenuItem1.Name = "fileNameToolStripMenuItem1";
-            fileNameToolStripMenuItem1.Size = new System.Drawing.Size(250, 22);
-            fileNameToolStripMenuItem1.Text = "Filename";
-            fileNameToolStripMenuItem1.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
-            // 
-            // absolutePathToolStripMenuItem
-            // 
-            absolutePathToolStripMenuItem.Name = "absolutePathToolStripMenuItem";
-            absolutePathToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            absolutePathToolStripMenuItem.Tag = "Filename";
-            absolutePathToolStripMenuItem.Text = "Absolute path";
-            absolutePathToolStripMenuItem.ToolTipText = "Directory and filename, e.g. \"C:\\Users\\Ben\\Music\\\r\nSong.mp3\"";
-            // 
-            // fileNameWithExtensionToolStripMenuItem
-            // 
-            fileNameWithExtensionToolStripMenuItem.Name = "fileNameWithExtensionToolStripMenuItem";
-            fileNameWithExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            fileNameWithExtensionToolStripMenuItem.Tag = "FileBasename";
-            fileNameWithExtensionToolStripMenuItem.Text = "File basename with extension";
-            fileNameWithExtensionToolStripMenuItem.ToolTipText = "Name of file without directory, e.g. \"Song.mp3\"";
-            // 
-            // filenameWithoutExtensionToolStripMenuItem
-            // 
-            filenameWithoutExtensionToolStripMenuItem.Name = "filenameWithoutExtensionToolStripMenuItem";
-            filenameWithoutExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            filenameWithoutExtensionToolStripMenuItem.Tag = "FileBasenameWithoutExtension";
-            filenameWithoutExtensionToolStripMenuItem.Text = "File basename without extension";
-            filenameWithoutExtensionToolStripMenuItem.ToolTipText = "Name of file without directory or extension, e.g. \"Song\"";
-            // 
-            // directoryToolStripMenuItem
-            // 
-            directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
-            directoryToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            directoryToolStripMenuItem.Text = "Directory";
-            directoryToolStripMenuItem.ToolTipText = "Full path to folder containing file, e.g. \"C:\\Users\\Ben\\Music\"";
-            // 
-            // playbackStateToolStripMenuItem1
-            // 
-            playbackStateToolStripMenuItem1.Name = "playbackStateToolStripMenuItem1";
-            playbackStateToolStripMenuItem1.Size = new System.Drawing.Size(250, 22);
-            playbackStateToolStripMenuItem1.Tag = "PlaybackState";
-            playbackStateToolStripMenuItem1.Text = "Playback state";
-            playbackStateToolStripMenuItem1.ToolTipText = "\"playing\", \"paused\", or \"stopped\"";
             // 
             // SettingsDialog
             // 
@@ -877,6 +877,7 @@
             this.MinimizeBox = false;
             this.Name = "SettingsDialog";
             this.Text = "Now Playing to File plug-in configuration";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.onSettingsDialogLoad);
             this.insertTemplatePlaceholderMenu.ResumeLayout(false);
             this.ResumeLayout(false);
