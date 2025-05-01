@@ -35,8 +35,9 @@ public class NowPlayingToFilePlugin: GeneralPlugin {
     }
 
     internal void initManager() {
-        manager!.error += (_, e) => MessageBox.Show($"{e.Message}\nSong filename: {e.song?.Filename}\nStacktrace: {e.InnerException!.StackTrace}", "Now Playing To File error",
-            MessageBoxButtons.OK, MessageBoxIcon.Error);
+        manager!.error += (_, e) => MessageBox.Show(
+            $"{e.Message}\nSong filename: {e.song?.Filename}\nCause: {e.InnerException!.GetType().Name}: {e.InnerException.Message}\nStacktrace: {e.InnerException.StackTrace}",
+            "Now Playing To File error", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     public override void Config() {
