@@ -155,7 +155,7 @@ Metadata values may optionally be formatted using the [.NET string formatting sy
 |Digit grouping|<pre lang="handlebars">{{Bitrate:N0}}kbps</pre>|`1,226kbps`|See [standard numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#numeric-format-specifier-n)|
 |Floating point precision|<pre lang="handlebars">{{ReplayGain_Album_Peak:F6}}</pre>|`0.986115`|See [standard numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#fixed-point-format-specifier-f)|
 |Zero padding|<pre lang="handlebars">#{{Track:00}}</pre>|`#06`|See [custom numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-numeric-format-strings#the-0-custom-specifier)|
-|Space padding|<pre lang="handlebars">{{Track,3}}.</pre>|`  1.`|See [spacing](https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=netframework-4.7.2&redirectedfrom=MSDN#control-spacing)|
+|Space padding|<pre lang="handlebars">{{Track,3}}.</pre>|`  1.`|See [spacing](https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-string-format#control-spacing)|
 
 ### Album art
 
