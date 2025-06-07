@@ -78,6 +78,7 @@
     <Compile Include="Business\NowPlayingToFileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\SimpleSettings.cs" />
+    <Compile Include="Facade\textTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.lock.json" />

@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace WinampNowPlayingToFile.Settings; 
+using WinampNowPlayingToFile.Facade;
 
-public interface ISettings {
+namespace WinampNowPlayingToFile.Settings;
 
-    string textFilename { get; set; }
+public partial interface ISettings {
+
     string albumArtFilename { get; set; }
-    string textTemplate { get; set; }
+
+    abstract List<textTemplate> textTemplates { get; set; }
 
     event EventHandler settingsUpdated;
 
     void load();
     ISettings loadDefaults();
+    textTemplate getDefault();
     void save();
 
 }
