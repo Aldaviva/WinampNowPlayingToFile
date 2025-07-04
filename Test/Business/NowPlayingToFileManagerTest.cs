@@ -38,8 +38,8 @@ public class NowPlayingToFileManagerTest: IDisposable {
 
         A.CallTo(() => winampController.status).Returns(Status.Playing);
         A.CallTo(() => winampController.currentSong).Returns(song);
-        A.CallTo(() => settings.textFilename).Returns(textFilename);
-        A.CallTo(() => settings.textTemplate).Returns(new RegistrySettings().loadDefaults().textTemplate);
+        // A.CallTo(() => settings.textFilename).Returns(textFilename); //TODO
+        // A.CallTo(() => settings.textTemplate).Returns(new RegistrySettings().loadDefaults().textTemplate); //TODO
         A.CallTo(() => settings.albumArtFilename).Returns(albumArtFilename);
 
         manager       =  new NowPlayingToFileManager(settings, winampController);
@@ -65,7 +65,7 @@ public class NowPlayingToFileManagerTest: IDisposable {
 
     [Fact]
     public void renderTemplateWithAlbum() {
-        string actual = manager.renderText(song);
+        string actual = manager.renderText(song, 0);
 
         actual.Should().Be("artist \u2013 title \u2013 album");
     }
@@ -80,7 +80,7 @@ public class NowPlayingToFileManagerTest: IDisposable {
             Filename = "empty.ogg"
         };
 
-        string actual = manager.renderText(song);
+        string actual = manager.renderText(song, 0);
 
         actual.Should().Be("artist \u2013 title");
     }
@@ -89,14 +89,14 @@ public class NowPlayingToFileManagerTest: IDisposable {
     public void renderTemplateWhenPaused() {
         A.CallTo(() => winampController.status).Returns(Status.Paused);
 
-        manager.renderText(song).Should().BeEmpty();
+        manager.renderText(song, 0).Should().BeEmpty();
     }
 
     [Fact]
     public void renderTemplateWhenStopped() {
         A.CallTo(() => winampController.status).Returns(Status.Stopped);
 
-        manager.renderText(song).Should().BeEmpty();
+        manager.renderText(song, 0).Should().BeEmpty();
     }
 
     [Fact]
@@ -180,7 +180,7 @@ public class NowPlayingToFileManagerTest: IDisposable {
     public void recompileTemplateWhenSettingsChange() {
         manager.update();
 
-        A.CallTo(() => settings.textTemplate).Returns("{{Artist}}");
+        // A.CallTo(() => settings.textTemplate).Returns("{{Artist}}"); //TODO
         settings.settingsUpdated += Raise.WithEmpty();
 
         File.ReadAllText(textFilename).Should().Be("artist");
@@ -320,7 +320,7 @@ public class NowPlayingToFileManagerTest: IDisposable {
         NowPlayingException? actual = null;
         manager.error += (_, exception) => actual = exception;
 
-        A.CallTo(() => settings.textTemplate).Returns("this is an illegal mustache template {{#}}");
+        // A.CallTo(() => settings.textTemplate).Returns("this is an illegal mustache template {{#}}"); //TODO
         settings.settingsUpdated += Raise.WithEmpty(); // clear mustache template cache
 
         manager.update();
@@ -333,7 +333,7 @@ public class NowPlayingToFileManagerTest: IDisposable {
     public void queryCustomMetadataFieldFromWinamp() {
         A.CallTo(() => winampController.fetchMetadataFieldValue("CustomField")).Returns("CustomValue");
 
-        A.CallTo(() => settings.textTemplate).Returns("{{CustomField}}");
+        // A.CallTo(() => settings.textTemplate).Returns("{{CustomField}}"); //TODO
         settings.settingsUpdated += Raise.WithEmpty();
 
         File.ReadAllText(textFilename).Should().Be("CustomValue");
@@ -350,7 +350,7 @@ public class NowPlayingToFileManagerTest: IDisposable {
             return TimeSpan.FromSeconds(1);
         });
 
-        A.CallTo(() => settings.textTemplate).Returns("{{Elapsed:m\\:ss}}");
+        // A.CallTo(() => settings.textTemplate).Returns("{{Elapsed:m\\:ss}}"); //TODO
         settings.settingsUpdated += Raise.WithEmpty();
 
         latch.Wait(10_000);

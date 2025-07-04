@@ -1,12 +1,12 @@
-﻿using System;
+﻿using FakeItEasy;
+using FluentAssertions;
+using ManagedWinapi.Windows;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FakeItEasy;
-using FluentAssertions;
-using ManagedWinapi.Windows;
 using WinampNowPlayingToFile;
 using WinampNowPlayingToFile.Business;
 using WinampNowPlayingToFile.Facade;
@@ -20,10 +20,10 @@ public class NowPlayingToFilePluginTest: IDisposable {
     private readonly NowPlayingToFilePlugin   plugin;
     private readonly INowPlayingToFileManager manager;
 
-    private readonly SimpleSettings settings = new() {
-        textFilename     = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.txt"),
+    private readonly InMemorySettings settings = new() {
+        // textFilename     = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.txt"), //TODO
         albumArtFilename = Environment.ExpandEnvironmentVariables(@"%TEMP%\winamp_now_playing_test.png"),
-        textTemplate     = "{{Title}}"
+        // textTemplate     = "{{Title}}" //TODO
     };
 
     public NowPlayingToFilePluginTest() {
@@ -33,7 +33,7 @@ public class NowPlayingToFilePluginTest: IDisposable {
 
     public void Dispose() {
         File.Delete(settings.albumArtFilename);
-        File.Delete(settings.textFilename);
+        // File.Delete(settings.textFilename); //TODO
     }
 
     [Fact]

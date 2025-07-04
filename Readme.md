@@ -1,4 +1,4 @@
-Winamp Now Playing to File
+﻿Winamp Now Playing to File
 ===
 
 [![Build status](https://img.shields.io/github/actions/workflow/status/Aldaviva/WinampNowPlayingToFile/msbuild.yml?branch=master&logo=github)](https://github.com/Aldaviva/WinampNowPlayingToFile/actions/workflows/msbuild.yml) [![Test status](https://img.shields.io/testspace/tests/Aldaviva/Aldaviva:WinampNowPlayingToFile/master?passed_label=passing&failed_label=failing&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NTkgODYxIj48cGF0aCBkPSJtNTk4IDUxMy05NCA5NCAyOCAyNyA5NC05NC0yOC0yN3pNMzA2IDIyNmwtOTQgOTQgMjggMjggOTQtOTQtMjgtMjh6bS00NiAyODctMjcgMjcgOTQgOTQgMjctMjctOTQtOTR6bTI5My0yODctMjcgMjggOTQgOTQgMjctMjgtOTQtOTR6TTQzMiA4NjFjNDEuMzMgMCA3Ni44My0xNC42NyAxMDYuNS00NFM1ODMgNzUyIDU4MyA3MTBjMC00MS4zMy0xNC44My03Ni44My00NC41LTEwNi41UzQ3My4zMyA1NTkgNDMyIDU1OWMtNDIgMC03Ny42NyAxNC44My0xMDcgNDQuNXMtNDQgNjUuMTctNDQgMTA2LjVjMCA0MiAxNC42NyA3Ny42NyA0NCAxMDdzNjUgNDQgMTA3IDQ0em0wLTU1OWM0MS4zMyAwIDc2LjgzLTE0LjgzIDEwNi41LTQ0LjVTNTgzIDE5Mi4zMyA1ODMgMTUxYzAtNDItMTQuODMtNzcuNjctNDQuNS0xMDdTNDczLjMzIDAgNDMyIDBjLTQyIDAtNzcuNjcgMTQuNjctMTA3IDQ0cy00NCA2NS00NCAxMDdjMCA0MS4zMyAxNC42NyA3Ni44MyA0NCAxMDYuNVMzOTAgMzAyIDQzMiAzMDJ6bTI3NiAyODJjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjY3IDE0LjY3LTEwNiA0NHMtNDQgNjUtNDQgMTA3YzAgNDEuMzMgMTQuNjcgNzYuODMgNDQgMTA2LjVTNjY2LjY3IDU4NCA3MDggNTg0em0tNTU3IDBjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjgzIDE0LjY3LTEwNi41IDQ0UzAgMzkxIDAgNDMzYzAgNDEuMzMgMTQuODMgNzYuODMgNDQuNSAxMDYuNVMxMDkuNjcgNTg0IDE1MSA1ODR6IiBmaWxsPSIjZmZmIi8%2BPC9zdmc%2B)](https://aldaviva.testspace.com/spaces/206386) [![Coverage status](https://img.shields.io/coveralls/github/Aldaviva/WinampNowPlayingToFile?logo=coveralls)](https://coveralls.io/github/Aldaviva/WinampNowPlayingToFile?branch=master)
@@ -158,7 +158,7 @@ There is also a custom helper for JSON object serialization, in case you're tryi
 
 Metadata values may optionally be formatted using the [.NET string formatting syntax](https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=netframework-4.7.2&redirectedfrom=MSDN#remarks).
 
-|Topic|Example Input|Output|Notes|
+|Topic|Example input|Output|Notes|
 |-|-|-|-|
 |Timespan|<pre lang="handlebars">{{Length:m\\:ss}}</pre>|`4:33`|See [standard](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-timespan-format-strings) and [custom TimeSpan format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-timespan-format-strings)|
 |Timespan|<pre lang="handlebars">{{Length:hh\\:mm\\:ss}}</pre>|`00:04:33`|See [standard](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-timespan-format-strings) and [custom TimeSpan format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-timespan-format-strings)|
@@ -179,7 +179,7 @@ Note that the file extension is always the one you specify in the preferences, e
 
 When there is no album art, the copied files will be deleted. However, this may be undesirable because it can leave dependent interfaces in a weird-looking state (like an OBS layout with a big transparent gap where the album art would normally be), and it will also trigger the Missing Files warning dialog box each time you launch OBS.
 
-To resolve this, you can specify custom image files that will be copied instead when there is no album art. See the following subsections for instructions on how to supply these files. Here are some sample [black](https://placehold.co/128x128/000f/0000.png) and [transparent](https://placehold.co/128x128/0000/0000.png) images to get started, or you can use your own. There are no requirements for the format or dimensions of these images besides what your downstream consumer like OBS accepts.
+To resolve this, you can specify custom image files that will be copied instead when there is no album art. Here are some sample [black](https://placehold.co/128x128/000f/0000.png) and [transparent](https://placehold.co/128x128/0000/0000.png) images to get started, or you can use your own. See the following sections for the file paths you should save the fallback images as. There are no requirements for the format or dimensions of these images besides what your downstream consumer like OBS accepts.
 
 ##### Missing artwork
 
