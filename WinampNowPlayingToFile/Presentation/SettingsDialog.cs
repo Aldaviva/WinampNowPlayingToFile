@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using System;
 using System.Collections.Generic;
@@ -76,6 +76,8 @@ public partial class SettingsDialog: Form {
         workingSettings.load(upstreamSettings);
         InitializeComponent();
 
+        // ReSharper disable once VirtualMemberCallInConstructor - works great
+        Text = $"{NowPlayingToFilePlugin.NAME_WITHOUT_VERSION} plug-in configuration";
         // Make buttons have animated state transitions, like every other program in the OS
         // https://stackoverflow.com/q/53456865/979493
         foreach (ButtonBase flatStylableControl in Controls.OfType<ButtonBase>()) {
@@ -262,18 +264,18 @@ public partial class SettingsDialog: Form {
         When unchecked, the text file will be truncated to 0 bytes when Winamp isn't playing.
 
         When checked, the text file will preserve the rendered template text from the track that was most recently played.
-        """, "Now Playing to File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        """, $"{preserveTextFileWhenNotPlaying.Text} - {NowPlayingToFilePlugin.NAME_WITHOUT_VERSION}", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
     private void onClickPreserveAlbumArtDetailsLink(object sender, LinkLabelLinkClickedEventArgs e) => MessageBox.Show(this,
         $"""
          This checkbox lets you control the album art file when Winamp is paused, stopped, or exited.
 
-         When unchecked, the image file will be replaced with a copy of "{Path.GetFullPath("stoppedAlbumArt.png")}" when Winamp isn't playing, or a black 1×1px PNG if that optional custom file doesn't exist.
+         When unchecked, the image file will be replaced with a copy of "{Path.GetFullPath("stoppedAlbumArt.png")}" when Winamp isn't playing, or it will be deleted if that optional custom file doesn't exist.
 
          When checked, the image file will preserve the album art from the track that was most recently played.
 
          Separately, you may also supply a fallback image to use when the current track doesn't have album art by saving an image to "{Path.GetFullPath("emptyAlbumArt.png")}".
-         """, "Now Playing to File", MessageBoxButtons.OK, MessageBoxIcon.Information);
+         """, $"{preserveAlbumArtWhenNotPlaying.Text} - {NowPlayingToFilePlugin.NAME_WITHOUT_VERSION}", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
     private void onClickOk(object sender, EventArgs args) {
         try {

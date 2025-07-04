@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using Daniel15.Sharpamp;
 using System;
@@ -13,7 +13,9 @@ namespace WinampNowPlayingToFile;
 
 public class NowPlayingToFilePlugin: GeneralPlugin {
 
-    public override string Name => $"Now Playing to File v{Assembly.GetAssembly(typeof(NowPlayingToFilePlugin)).GetName().Version.ToString(3)}";
+    public const string NAME_WITHOUT_VERSION = "Now Playing to File";
+
+    public override string Name => $"{NAME_WITHOUT_VERSION} v{Assembly.GetAssembly(typeof(NowPlayingToFilePlugin)).GetName().Version.ToString(3)}";
 
     internal ISettings settings = new RegistrySettings();
 
@@ -35,7 +37,7 @@ public class NowPlayingToFilePlugin: GeneralPlugin {
     }
 
     internal void initManager() {
-        manager!.error += (_, e) => MessageBox.Show($"{e.Message}\nSong filename: {e.song?.Filename}\nStacktrace: {e.InnerException!.StackTrace}", "Now Playing To File error",
+        manager!.error += (_, e) => MessageBox.Show($"{e.Message}\nSong filename: {e.song?.Filename}\nStacktrace: {e.InnerException!.StackTrace}", $"{NAME_WITHOUT_VERSION} error",
             MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 

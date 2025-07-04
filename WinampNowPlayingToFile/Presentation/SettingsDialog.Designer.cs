@@ -1,4 +1,4 @@
-﻿namespace WinampNowPlayingToFile.Presentation
+namespace WinampNowPlayingToFile.Presentation
 {
     partial class SettingsDialog
     {
@@ -88,8 +88,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ifElseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jsonObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.explanationLabel = new System.Windows.Forms.Label();
@@ -159,6 +159,7 @@
             albumToolStripMenuItem.ShowShortcutKeys = false;
             albumToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             albumToolStripMenuItem.Text = "Album";
+            albumToolStripMenuItem.ToolTipText = "Album name";
             // 
             // artistToolStripMenuItem
             // 
@@ -166,6 +167,7 @@
             artistToolStripMenuItem.ShowShortcutKeys = false;
             artistToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             artistToolStripMenuItem.Text = "Artist";
+            artistToolStripMenuItem.ToolTipText = "Artist name";
             // 
             // titleToolStripMenuItem
             // 
@@ -173,6 +175,7 @@
             titleToolStripMenuItem.ShowShortcutKeys = false;
             titleToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             titleToolStripMenuItem.Text = "Title";
+            titleToolStripMenuItem.ToolTipText = "Song name";
             // 
             // yearToolStripMenuItem
             // 
@@ -180,6 +183,7 @@
             yearToolStripMenuItem.ShowShortcutKeys = false;
             yearToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             yearToolStripMenuItem.Text = "Year";
+            yearToolStripMenuItem.ToolTipText = "Album release date, in whatever format it\'s stored in the song metadata";
             // 
             // albumArtistToolStripMenuItem
             // 
@@ -466,7 +470,7 @@
             absolutePathToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             absolutePathToolStripMenuItem.Tag = "Filename";
             absolutePathToolStripMenuItem.Text = "Absolute path";
-            absolutePathToolStripMenuItem.ToolTipText = "Directory and filename, e.g. \"C:\\Users\\Ben\\Music\\\r\nSong.mp3\"";
+            absolutePathToolStripMenuItem.ToolTipText = "Directory and filename, e.g. \"C:\\Users\\Ben\\Music\\Song.mp3\"";
             // 
             // directoryToolStripMenuItem
             // 
@@ -633,7 +637,7 @@
             this.insertTemplatePlaceholderMenu.Name = "insertTemplatePlaceholderMenu";
             this.insertTemplatePlaceholderMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.insertTemplatePlaceholderMenu.ShowImageMargin = false;
-            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(251, 280);
+            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(251, 302);
             this.insertTemplatePlaceholderMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
             // 
             // toolStripSeparator1
@@ -653,19 +657,19 @@
             this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.ifElseToolStripMenuItem.Text = "if-else";
             // 
-            // newLineToolStripMenuItem
-            // 
-            this.newLineToolStripMenuItem.Name = "newLineToolStripMenuItem";
-            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
-            this.newLineToolStripMenuItem.Text = "New line";
-            // 
             // jsonObjectToolStripMenuItem
             // 
             this.jsonObjectToolStripMenuItem.Name = "jsonObjectToolStripMenuItem";
             this.jsonObjectToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.jsonObjectToolStripMenuItem.Text = "JSON object (replaces entire template)";
-            this.jsonObjectToolStripMenuItem.ToolTipText = "Replace the entire template with a JSON object containing a customizable projecti" +
-    "on of metadata fields";
+            this.jsonObjectToolStripMenuItem.ToolTipText = resources.GetString("jsonObjectToolStripMenuItem.ToolTipText");
+            // 
+            // newLineToolStripMenuItem
+            // 
+            this.newLineToolStripMenuItem.Name = "newLineToolStripMenuItem";
+            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.newLineToolStripMenuItem.Text = "New line";
+            this.newLineToolStripMenuItem.ToolTipText = "A line break (CRLF)";
             // 
             // toolStripSeparator2
             // 
@@ -677,6 +681,7 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.ToolTipText = "Open documentation webpage for mustache-sharp";
             // 
             // explanationLabel
             // 
@@ -729,7 +734,7 @@
             this.albumArtBrowseButton.Name = "albumArtBrowseButton";
             this.albumArtBrowseButton.Size = new System.Drawing.Size(75, 22);
             this.albumArtBrowseButton.TabIndex = 16;
-            this.albumArtBrowseButton.Text = "B&rowse…";
+            this.albumArtBrowseButton.Text = "Br&owse…";
             this.albumArtBrowseButton.UseVisualStyleBackColor = true;
             this.albumArtBrowseButton.Click += new System.EventHandler(this.onAlbumArtBrowseButtonClick);
             // 
@@ -756,9 +761,9 @@
             this.preserveAlbumArtWhenNotPlaying.AutoSize = true;
             this.preserveAlbumArtWhenNotPlaying.Location = new System.Drawing.Point(128, 254);
             this.preserveAlbumArtWhenNotPlaying.Name = "preserveAlbumArtWhenNotPlaying";
-            this.preserveAlbumArtWhenNotPlaying.Size = new System.Drawing.Size(134, 17);
+            this.preserveAlbumArtWhenNotPlaying.Size = new System.Drawing.Size(180, 17);
             this.preserveAlbumArtWhenNotPlaying.TabIndex = 17;
-            this.preserveAlbumArtWhenNotPlaying.Text = "Keep when not playing";
+            this.preserveAlbumArtWhenNotPlaying.Text = "Keep album art when not playing";
             this.preserveAlbumArtWhenNotPlaying.UseVisualStyleBackColor = true;
             // 
             // textFileMenu
@@ -801,9 +806,9 @@
             this.preserveTextFileWhenNotPlaying.AutoSize = true;
             this.preserveTextFileWhenNotPlaying.Location = new System.Drawing.Point(128, 178);
             this.preserveTextFileWhenNotPlaying.Name = "preserveTextFileWhenNotPlaying";
-            this.preserveTextFileWhenNotPlaying.Size = new System.Drawing.Size(134, 17);
+            this.preserveTextFileWhenNotPlaying.Size = new System.Drawing.Size(154, 17);
             this.preserveTextFileWhenNotPlaying.TabIndex = 11;
-            this.preserveTextFileWhenNotPlaying.Text = "Keep when not playing";
+            this.preserveTextFileWhenNotPlaying.Text = "Keep text when not playing";
             this.preserveTextFileWhenNotPlaying.UseVisualStyleBackColor = true;
             this.preserveTextFileWhenNotPlaying.CheckedChanged += new System.EventHandler(this.onCheckboxChange);
             // 
@@ -821,7 +826,7 @@
             // 
             this.preserveTextFileDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.preserveTextFileDetailsLink.AutoSize = true;
-            this.preserveTextFileDetailsLink.Location = new System.Drawing.Point(268, 179);
+            this.preserveTextFileDetailsLink.Location = new System.Drawing.Point(315, 179);
             this.preserveTextFileDetailsLink.Name = "preserveTextFileDetailsLink";
             this.preserveTextFileDetailsLink.Size = new System.Drawing.Size(37, 13);
             this.preserveTextFileDetailsLink.TabIndex = 12;
@@ -833,7 +838,7 @@
             // 
             this.preserveAlbumArtDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.preserveAlbumArtDetailsLink.AutoSize = true;
-            this.preserveAlbumArtDetailsLink.Location = new System.Drawing.Point(268, 255);
+            this.preserveAlbumArtDetailsLink.Location = new System.Drawing.Point(315, 255);
             this.preserveAlbumArtDetailsLink.Name = "preserveAlbumArtDetailsLink";
             this.preserveAlbumArtDetailsLink.Size = new System.Drawing.Size(37, 13);
             this.preserveAlbumArtDetailsLink.TabIndex = 18;
@@ -876,7 +881,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsDialog";
-            this.Text = "Now Playing to File plug-in configuration";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.onSettingsDialogLoad);
             this.insertTemplatePlaceholderMenu.ResumeLayout(false);

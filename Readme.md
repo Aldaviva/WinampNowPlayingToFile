@@ -80,7 +80,7 @@ To customize the text file location and contents, go to the plugin preferences i
 1. As you fill in the template, the **Text preview** will be updated to show how the currently playing song would be rendered, or an example song if no song is available.
 1. You can change where the file is written in your filesystem by selecting a different path for **Save text as**.
 
-When Winamp is not playing a song, this text file will be truncated to 0 bytes.
+When Winamp is not playing a song &mdash; for example, when it is paused, stopped, or you exit Winamp &mdash; this text file will be truncated to 0 bytes. To override this behavior and preserve the text from the most recently played track, check the "Keep text when not playing" checkbox in the configuration dialog box. This will make the text file remain unchanged when, for example, you press the Stop button.
 
 #### Placeholder fields
 
@@ -146,13 +146,14 @@ You can also render strings depending on a boolean value.
 {{#if Lossless}}lossless{{#else}}lossy{{/if}}
 ```
 
-There is also a custom helper for JSON value serialization, in case you're trying to generate a JSON file. Pass a space-delimited list of the field names to include in the object. When used, this helper must be the only text in the template, or it won't render.
+There is also a custom helper for JSON object serialization, in case you're trying to generate structured text that can be easily parsed by another program. Pass a space-delimited list of the field names to include in the object. When used, this helper must be the only text in the template, or it won't render.
 ```handlebars
 {{#json artist title album}}
 ```
 ```json
 { "artist": "U2", "title": "Exit", "album": "The Joshua Tree" }
 ```
+
 #### Formatting
 
 Metadata values may optionally be formatted using the [.NET string formatting syntax](https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=netframework-4.7.2&redirectedfrom=MSDN#remarks).
@@ -170,23 +171,26 @@ Metadata values may optionally be formatted using the [.NET string formatting sy
 
 This plugin also copies the currently playing song's album art from the song metadata or from an image in the song's folder. By default, it is copied to `%TEMP%\winamp_now_playing.png`.
 
-Note that the file extension is always the one you specify in the preferences, even if the album art has a different file type, to make it easier to refer to this file from other programs like OBS without having to deal with multiple possible file extensions. This means that this file may be created as a JPEG with the `.png` file extension, for example. Most programs, including OBS, can handle this case just fine, but the mismatch is a little silly. Feel free to change the file extension using the preferences.
-
 You can customize the album art filename and path using **Save album art as** in the same plugin configuration dialog as the text file above.
+
+Note that the file extension is always the one you specify in the preferences, even if the album art has a different file type, to make it easier to refer to this file from other programs like OBS without having to deal with multiple possible file extensions. This means that this file may be created as a JPEG with the `.png` file extension, for example. Most programs, including OBS, can handle this case just fine, but the mismatch is a little silly. Feel free to change the file extension using the preferences.
 
 #### Fallback artwork
 
 When there is no album art, the copied files will be deleted. However, this may be undesirable because it can leave dependent interfaces in a weird-looking state (like an OBS layout with a big transparent gap where the album art would normally be), and it will also trigger the Missing Files warning dialog box each time you launch OBS.
 
-To resolve this, you can specify custom image files that will be copied instead when there is no album art. Here are some sample [black](https://placehold.co/128x128/000f/0000.png) and [transparent](https://placehold.co/128x128/0000/0000.png) images to get started, or you can use your own. There are no requirements for the format or dimensions of these images besides what your downstream consumer like OBS accepts.
+To resolve this, you can specify custom image files that will be copied instead when there is no album art. See the following subsections for instructions on how to supply these files. Here are some sample [black](https://placehold.co/128x128/000f/0000.png) and [transparent](https://placehold.co/128x128/0000/0000.png) images to get started, or you can use your own. There are no requirements for the format or dimensions of these images besides what your downstream consumer like OBS accepts.
 
 ##### Missing artwork
 
-When Winamp is playing a song with no album art, the image file will be deleted. To override this, save your desired image file as `emptyAlbumArt.png` in the Winamp installation directory.
+When Winamp plays a song with no album art, the image file will be deleted. To override this, save your desired image file as `emptyAlbumArt.png` in the Winamp installation directory.
 
 ##### Playback stopped
 
-When Winamp is paused, stopped, or closed, the image file will be deleted. To override this, save your desired image file as `stoppedAlbumArt.png` in the Winamp installation directory.
+When Winamp is paused, stopped, or closed, the image file will be deleted. You have two ways to override this.
+
+- To show a custom image, save your desired image file as `stoppedAlbumArt.png` in the Winamp installation directory.
+- To preserve the album art from the most recently played song, check the "Keep album art when not playing" checkbox in the configuration dialog box.
 
 ## Integration
 
