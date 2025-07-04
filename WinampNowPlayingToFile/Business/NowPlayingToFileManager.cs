@@ -212,7 +212,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
                     }
                 })
                 .FirstOrDefault(bytes => bytes != null);
-        } catch (DirectoryNotFoundException) {
+        } catch (Exception e) when (e is not OutOfMemoryException) { // #23: besides a DirectoryNotFoundException, e can also be an IOException and maybe other classes too
             return null;
         }
     }

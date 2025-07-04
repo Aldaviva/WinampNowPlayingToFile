@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 
 using Daniel15.Sharpamp;
 using System;
@@ -37,8 +37,9 @@ public class NowPlayingToFilePlugin: GeneralPlugin {
     }
 
     internal void initManager() {
-        manager!.error += (_, e) => MessageBox.Show($"{e.Message}\nSong filename: {e.song?.Filename}\nStacktrace: {e.InnerException!.StackTrace}", $"{NAME_WITHOUT_VERSION} error",
-            MessageBoxButtons.OK, MessageBoxIcon.Error);
+        manager!.error += (_, e) => MessageBox.Show(
+            $"{e.Message}\nSong filename: {e.song?.Filename}\nCause: {e.InnerException!.GetType().Name}: {e.InnerException.Message}\nStacktrace: {e.InnerException.StackTrace}",
+            $"{NAME_WITHOUT_VERSION} error", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 
     public override void Config() {
