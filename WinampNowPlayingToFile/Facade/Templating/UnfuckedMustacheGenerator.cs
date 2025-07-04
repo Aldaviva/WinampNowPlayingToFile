@@ -92,7 +92,7 @@ public class JsonObjectGenerator(IEnumerable<string> propertyNames): UnfuckedGen
         Type                                objectType = values.GetType();
         (Type objectType, string fieldName) cacheKey   = (objectType, fieldName);
         if (!PROPERTY_ACCESSOR_CACHE.TryGetValue(cacheKey, out PropertyInfo? propertyAccessor)) {
-            propertyAccessor                  = objectType.GetProperty(fieldName);
+            propertyAccessor                  = objectType.GetProperty(fieldName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
             PROPERTY_ACCESSOR_CACHE[cacheKey] = propertyAccessor;
         }
         value = propertyAccessor?.GetValue(values);

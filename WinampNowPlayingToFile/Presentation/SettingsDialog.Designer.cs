@@ -183,7 +183,7 @@ namespace WinampNowPlayingToFile.Presentation
             yearToolStripMenuItem.ShowShortcutKeys = false;
             yearToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             yearToolStripMenuItem.Text = "Year";
-            yearToolStripMenuItem.ToolTipText = "Album release date, in whatever format it\'s stored in the song metadata";
+            yearToolStripMenuItem.ToolTipText = "Album release year, even if the song metadata contained an ISO-8601 date";
             // 
             // albumArtistToolStripMenuItem
             // 

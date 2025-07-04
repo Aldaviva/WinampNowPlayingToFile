@@ -28,8 +28,6 @@ public class Song {
             return year;
         } else if (Regex.Match(song.Year, @"(?<year>\d{4})-\d\d-\d\d") is { Success: true } isoDateMatch) {
             return int.Parse(isoDateMatch.Groups["year"].Value);
-        } else if (Regex.Match(song.Year, @"\d{4}") is { Success: true } yearMatch) {
-            return int.Parse(yearMatch.Value);
         } else {
             return null;
         }
