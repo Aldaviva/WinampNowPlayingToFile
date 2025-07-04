@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using Daniel15.Sharpamp;
 using System;

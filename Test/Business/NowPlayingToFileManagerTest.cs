@@ -1,4 +1,4 @@
-﻿using Daniel15.Sharpamp;
+using Daniel15.Sharpamp;
 using FakeItEasy;
 using FluentAssertions;
 using System;

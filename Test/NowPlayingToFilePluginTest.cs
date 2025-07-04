@@ -1,4 +1,4 @@
-﻿using FakeItEasy;
+using FakeItEasy;
 using FluentAssertions;
 using ManagedWinapi.Windows;
 using System;

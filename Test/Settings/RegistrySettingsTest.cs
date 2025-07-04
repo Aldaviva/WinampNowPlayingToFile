@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using Microsoft.Win32;
 using System;
 using WinampNowPlayingToFile.Settings;

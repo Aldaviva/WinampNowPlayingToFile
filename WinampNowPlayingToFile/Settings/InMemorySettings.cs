@@ -1,4 +1,4 @@
-﻿namespace WinampNowPlayingToFile.Settings;
+namespace WinampNowPlayingToFile.Settings;
 
 #nullable enable
 
