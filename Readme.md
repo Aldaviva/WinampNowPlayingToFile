@@ -84,7 +84,7 @@ When Winamp is not playing a song &mdash; for example, when it is paused, stoppe
 
 #### Placeholder fields
 
-Placeholder values that are missing or empty will be rendered as the empty string.
+Placeholder values that are missing, null, or empty will be rendered as the empty string. Field names are case-insensitive.
 
 |Field name|Type|Examples|Notes|
 |-|-|-|-|
@@ -116,7 +116,8 @@ Placeholder values that are missing or empty will be rendered as the empty strin
 |`PlaybackState`|string|`playing`|`playing`, `paused`, or `stopped`|
 |`Producer`|string|`Brian Eno, Daniel Lanois`||
 |`Publisher`|string|`Island Records`||
-|`Rating`|int|`2`|In the range [1, 5]|
+|`Rating`|int|`2`|In the range [1, 5]. From file metadata. To show Media Library ratings, enable Preferences › Media Library › Options › Save ratings to file for compatible formats.|
+|`Rating_Stars`|string|`★★`|1 to 5 repeated star characters, or `null` for unrated. See `Rating` note and [helpers](#helpers).|
 |`ReplayGain_Album_Gain`|double|`-3.03`|Decibels (dB)|
 |`ReplayGain_Album_Peak`|double|`1.022630334`||
 |`ReplayGain_Track_Gain`|double|`-0.77`|Decibels (dB)|
@@ -146,6 +147,18 @@ You can also render strings depending on a boolean value.
 {{#if Lossless}}lossless{{#else}}lossy{{/if}}
 ```
 
+To replace the ★ character in `Rating_Stars` with a custom or multiple characters, use the built-in [`{{#each}}`](https://github.com/jehugaleahsa/mustache-sharp/blob/v1.0/README.md#the-each-tag) helper. For example, you can use the ⭐ emoji, or a 10-star scale.
+```handlebars
+Default:          {{Rating_Stars}}{{#newline}}
+Custom width:     {{#each Rating_Stars}}★★{{/each}}{{#newline}}
+Custom character: {{#each Rating_Stars}}⭐{{/each}}
+```
+```text
+Default:          ★★★★★
+Custom width:     ★★★★★★★★★★
+Custom character: ⭐⭐⭐⭐⭐
+```
+
 There is also a custom helper for JSON object serialization, in case you're trying to generate structured text that can be easily parsed by another program. Pass a space-delimited list of the field names to include in the object. When used, this helper must be the only text in the template, or it won't render.
 ```handlebars
 {{#json artist title album}}
@@ -165,7 +178,7 @@ Metadata values may optionally be formatted using the [.NET string formatting sy
 |Digit grouping|<pre lang="handlebars">{{Bitrate:N0}}kbps</pre>|`1,226kbps`|See [standard numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#numeric-format-specifier-n)|
 |Floating point precision|<pre lang="handlebars">{{ReplayGain_Album_Peak:F6}}</pre>|`0.986115`|See [standard numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#fixed-point-format-specifier-f)|
 |Zero padding|<pre lang="handlebars">#{{Track:00}}</pre>|`#06`|See [custom numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-numeric-format-strings#the-0-custom-specifier)|
-|Space padding|<pre lang="handlebars">{{Track,3}}.</pre>|`  1.`|See [spacing](https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-string-format#control-spacing)|
+|Space padding|<pre lang="handlebars">{{Track,3}}.</pre>|`  1.`|The width argument is a positive number for left padding and negative for right. See [spacing](https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-string-format#control-spacing).|
 
 ### Album art
 

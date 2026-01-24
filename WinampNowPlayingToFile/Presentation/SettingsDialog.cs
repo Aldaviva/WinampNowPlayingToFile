@@ -57,6 +57,7 @@ public partial class SettingsDialog: Form {
         { "producer", "Brian Eno, Daniel Lanois" },
         { "publisher", "Island Records" },
         { "rating", 2 },
+        { "rating_stars", "★★" },
         { "replaygain_album_gain", "-3.03 dB" },
         { "replaygain_album_peak", 1.022630334 },
         { "replaygain_track_gain", "-0.77 dB" },
@@ -268,14 +269,14 @@ public partial class SettingsDialog: Form {
 
     private void onClickPreserveAlbumArtDetailsLink(object sender, LinkLabelLinkClickedEventArgs e) => MessageBox.Show(this,
         $"""
-         This checkbox lets you control the album art file when Winamp is paused, stopped, or exited.
+        This checkbox lets you control the album art file when Winamp is paused, stopped, or exited.
 
-         When unchecked, the image file will be replaced with a copy of "{Path.GetFullPath("stoppedAlbumArt.png")}" when Winamp isn't playing, or it will be deleted if that optional custom file doesn't exist.
+        When unchecked, the image file will be replaced with a copy of "{Path.GetFullPath("stoppedAlbumArt.png")}" when Winamp isn't playing, or it will be deleted if that optional custom file doesn't exist.
 
-         When checked, the image file will preserve the album art from the track that was most recently played.
+        When checked, the image file will preserve the album art from the track that was most recently played.
 
-         Separately, you may also supply a fallback image to use when the current track doesn't have album art by saving an image to "{Path.GetFullPath("emptyAlbumArt.png")}".
-         """, $"{preserveAlbumArtWhenNotPlaying.Text} - {NowPlayingToFilePlugin.NAME_WITHOUT_VERSION}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        Separately, you may also supply a fallback image to use when the current track doesn't have album art by saving an image to "{Path.GetFullPath("emptyAlbumArt.png")}".
+        """, $"{preserveAlbumArtWhenNotPlaying.Text} - {NowPlayingToFilePlugin.NAME_WITHOUT_VERSION}", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
     private void onClickOk(object sender, EventArgs args) {
         try {

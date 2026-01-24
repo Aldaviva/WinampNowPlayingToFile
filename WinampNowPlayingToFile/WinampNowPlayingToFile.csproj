@@ -34,7 +34,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -42,6 +42,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <Nullable>enable</Nullable>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -77,7 +78,7 @@
     </Compile>
     <Compile Include="Settings\BaseSettings.cs" />
     <Compile Include="Facade\Song.cs" />
-    <Compile Include="Facade\WinampControllerImpl.cs" />
+    <Compile Include="Facade\WinampController.cs" />
     <Compile Include="Settings\RegistrySettings.cs" />
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="Business\NowPlayingToFileManager.cs" />
@@ -98,7 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations">
-      <Version>2024.3.0</Version>
+      <Version>2025.2.4</Version>
     </PackageReference>
     <PackageReference Include="mustache-sharp">
       <Version>1.0.0</Version>

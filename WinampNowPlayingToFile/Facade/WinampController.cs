@@ -32,7 +32,7 @@ public class WinampControllerImpl: WinampController {
 
     // ReSharper disable once InconsistentNaming - this is how the method is named in Sharpamp
     private readonly Func<int, int>               sendIPCCommandInt;
-    private readonly Func<string, string, string> getMetadata;
+    private readonly Func<string, string, string> getMetadataDelegate;
 
     public event SongChangedEventHandler? songChanged;
     public event StatusChangedEventHandler? statusChanged;
@@ -44,7 +44,7 @@ public class WinampControllerImpl: WinampController {
         winamp.SongChanged   += (sender, args) => songChanged?.Invoke(sender, new SongChangedEventArgs(args));
         winamp.StatusChanged += (sender, args) => statusChanged?.Invoke(sender, args);
 
-        getMetadata = (Func<string, string, string>) winamp.GetType()
+        getMetadataDelegate = (Func<string, string, string>) winamp.GetType()
             .GetMethod("GetMetadata", BindingFlags.NonPublic | BindingFlags.Instance, null, [typeof(string), typeof(string)], null)!
             .CreateDelegate(typeof(Func<string, string, string>), winamp);
 
@@ -54,6 +54,8 @@ public class WinampControllerImpl: WinampController {
             .GetMethod("SendIPCCommandInt", BindingFlags.NonPublic | BindingFlags.Instance, null, [ipcCommand], null)!
             .CreateDelegate(typeof(Func<int, int>), winamp);
     }
+
+    private string getMetadata(string filename, string metadataFieldName) => getMetadataDelegate(filename, metadataFieldName);
 
     public Status status => disposed ? Status.Stopped : winamp.Status;
 
@@ -115,6 +117,18 @@ public class WinampControllerImpl: WinampController {
             return string.Empty;
         }
 
+        if (metadataFieldName == "rating_stars") {
+            int.TryParse(getMetadata(winamp.CurrentSong.Filename, "rating"), out int starCount);
+            return starCount switch {
+                1 => "★",
+                2 => "★★",
+                3 => "★★★",
+                4 => "★★★★",
+                5 => "★★★★★",
+                _ => null
+            };
+        }
+
         string value = getMetadata(winamp.CurrentSong.Filename, metadataFieldName);
 
         return metadataFieldName switch {
@@ -143,6 +157,6 @@ public class SongChangedEventArgs(Song song): EventArgs {
 
     public Song song { get; } = song;
 
-    public SongChangedEventArgs(Daniel15.Sharpamp.SongChangedEventArgs args): this(new Song(args.Song)) { }
+    public SongChangedEventArgs(Daniel15.Sharpamp.SongChangedEventArgs args): this(new Song(args.Song)) {}
 
 }
