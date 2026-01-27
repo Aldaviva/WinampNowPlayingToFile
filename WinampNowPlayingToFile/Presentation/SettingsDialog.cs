@@ -165,7 +165,7 @@ public partial class SettingsDialog: Form {
         try {
             filenameEditor.FileName = Path.GetFileName(filenameTextBox.Text) ?? string.Empty;
         } catch (ArgumentException) {
-            filenameEditor.FileName = "";
+            filenameEditor.FileName = string.Empty;
         }
 
         try {
@@ -230,6 +230,8 @@ public partial class SettingsDialog: Form {
                 textToInsert = "#if Album}} - {{Album}}{{/if";
             } else if (e.ClickedItem == ifElseToolStripMenuItem) {
                 textToInsert = "#if Album}} - {{Album}}{{#else}} - (no album){{/if";
+            } else if (e.ClickedItem == ratingStarsCustomToolStripMenuItem) {
+                textToInsert = "#each Rating_Stars}}⭐{{/each";
             } else if (e.ClickedItem == jsonObjectToolStripMenuItem) {
                 textToInsert        = "#json artist album title year filename playbackState";
                 templateEditor.Text = string.Empty;

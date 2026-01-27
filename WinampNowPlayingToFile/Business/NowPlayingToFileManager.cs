@@ -24,9 +24,10 @@ public interface INowPlayingToFileManager {
 
 public class NowPlayingToFileManager: INowPlayingToFileManager {
 
-    private static readonly UTF8Encoding        UTF8               = new(false, true);
-    private static readonly ISet<string>        ARTWORK_EXTENSIONS = new HashSet<string> { ".bmp", ".gif", ".jpeg", ".jpg", ".png" };
-    private static readonly IEnumerable<string> ARTWORK_BASE_NAMES = ["cover", "folder", "front", "albumart"];
+    private static readonly UTF8Encoding        UTF8                = new(false, true);
+    private static readonly ISet<string>        ARTWORK_EXTENSIONS  = new HashSet<string> { ".bmp", ".gif", ".jpeg", ".jpg", ".png" };
+    private static readonly IEnumerable<string> ARTWORK_BASE_NAMES  = ["cover", "folder", "front", "albumart"];
+    private static readonly ISet<string>        DYNAMIC_FIELD_NAMES = new HashSet<string> { "elapsed", "rating", "rating_stars" };
 
     private static byte[]? albumArtWhenMissingFromSong => getInstallationDirectoryImageOrFallback("emptyAlbumArt.png");
     private static byte[]? albumArtWhenStopped => getInstallationDirectoryImageOrFallback("stoppedAlbumArt.png");
@@ -37,14 +38,13 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     internal readonly Timer                    renderTextTimer  = new(1000);
     private readonly  List<UnfuckedGenerator?> cachedTemplates;
 
-    private bool  _textTemplateDependsOnTime;
     private Song? previousSong;
 
-    private bool textTemplateDependsOnTime {
-        get => _textTemplateDependsOnTime;
+    private bool textTemplateDependsOnDynamicFields {
+        get;
         set {
-            if (_textTemplateDependsOnTime != value) {
-                _textTemplateDependsOnTime = value;
+            if (field != value) {
+                field = value;
                 startOrStopTextRenderingTimer();
             }
         }
@@ -60,8 +60,8 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         cachedTemplates.AddRange(Enumerable.Repeat<UnfuckedGenerator?>(null, cachedTemplates.Capacity));
 
         templateCompiler.placeholderFound += (_, args) => {
-            if (args.key.Equals("Elapsed", StringComparison.OrdinalIgnoreCase)) {
-                textTemplateDependsOnTime = true;
+            if (!textTemplateDependsOnDynamicFields && DYNAMIC_FIELD_NAMES.Contains(args.key.ToLowerInvariant())) {
+                textTemplateDependsOnDynamicFields = true;
             }
         };
 
@@ -86,11 +86,11 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
                 cachedTemplates[templateIndex] = null;
             }
 
-            textTemplateDependsOnTime = false;
+            textTemplateDependsOnDynamicFields = false;
             update();
         };
 
-        renderTextTimer.Elapsed += (_, _) => { update(false); };
+        renderTextTimer.Elapsed += (_, _) => update(false);
 
         update();
     }
@@ -121,7 +121,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     private void saveText(string nowPlayingText, int templateIndex) => File.WriteAllText(settings.textFilenames[templateIndex], nowPlayingText, UTF8);
 
     private UnfuckedGenerator getTemplate(int templateIndex) {
-        if (cachedTemplates.ElementAtOrDefault(templateIndex) is not { } cachedTemplate) {
+        if (cachedTemplates.ElementAtOrDefault(templateIndex) is not {} cachedTemplate) {
             cachedTemplate                 =  templateCompiler.compile(settings.textTemplates[templateIndex]);
             cachedTemplate.keyNotFound     += fetchExtraMetadata;
             cachedTemplates[templateIndex] =  cachedTemplate;
@@ -145,12 +145,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
 
     private static byte[]? extractAlbumArt(Song currentSong) {
         try {
-            return TagLib.File.Create(currentSong.Filename)
-                .Tag
-                .Pictures
-                .ElementAtOrDefault(0)?
-                .Data
-                .Data;
+            return TagLib.File.Create(currentSong.Filename).Tag.Pictures.ElementAtOrDefault(0)?.Data.Data;
         } catch (Exception e) when (e is FileNotFoundException or DirectoryNotFoundException) {
             /*
              * Probably just a race:
@@ -176,7 +171,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         DirectoryInfo songDirectory;
 
         try {
-            if (Path.GetDirectoryName(currentSong.Filename) is { } dir) {
+            if (Path.GetDirectoryName(currentSong.Filename) is {} dir) {
                 songDirectory = new DirectoryInfo(dir);
             } else {
                 return null;
@@ -230,7 +225,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
 
     private void startOrStopTextRenderingTimer(Status? playbackStatus = null) {
         playbackStatus          ??= winampController.status;
-        renderTextTimer.Enabled =   playbackStatus == Status.Playing && textTemplateDependsOnTime;
+        renderTextTimer.Enabled =   playbackStatus == Status.Playing && textTemplateDependsOnDynamicFields;
     }
 
     public virtual void onQuit() {

@@ -73,6 +73,7 @@ namespace WinampNowPlayingToFile.Presentation
             System.Windows.Forms.ToolStripMenuItem filenameWithoutExtensionToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem playbackStateToolStripMenuItem1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
+            System.Windows.Forms.ToolStripMenuItem ratingStarsStripMenuItem;
             this.writeToFileLabel = new System.Windows.Forms.Label();
             this.textFilenameEditor = new System.Windows.Forms.SaveFileDialog();
             this.textBrowseButton = new System.Windows.Forms.Button();
@@ -107,6 +108,7 @@ namespace WinampNowPlayingToFile.Presentation
             this.horizontalRule2 = new System.Windows.Forms.Label();
             this.preserveTextFileDetailsLink = new System.Windows.Forms.LinkLabel();
             this.preserveAlbumArtDetailsLink = new System.Windows.Forms.LinkLabel();
+            this.ratingStarsCustomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             artistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             titleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,6 +152,7 @@ namespace WinampNowPlayingToFile.Presentation
             fileNameWithExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             filenameWithoutExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             playbackStateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            ratingStarsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertTemplatePlaceholderMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -326,7 +329,8 @@ namespace WinampNowPlayingToFile.Presentation
             // 
             ratingToolStripMenuItem.Name = "ratingToolStripMenuItem";
             ratingToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            ratingToolStripMenuItem.Text = "Rating";
+            ratingToolStripMenuItem.Tag = "Rating";
+            ratingToolStripMenuItem.Text = "Rating (1–5)";
             ratingToolStripMenuItem.ToolTipText = "\"1\", \"2\", \"3\", \"4\", \"5\", or empty";
             // 
             // replayGainAlbumGainToolStripMenuItem
@@ -437,6 +441,8 @@ namespace WinampNowPlayingToFile.Presentation
             producerToolStripMenuItem,
             publisherToolStripMenuItem,
             ratingToolStripMenuItem,
+            ratingStarsStripMenuItem,
+            this.ratingStarsCustomToolStripMenuItem,
             replayGainAlbumGainToolStripMenuItem,
             replayGainAlbumPeakToolStripMenuItem,
             replayGainTrackGainToolStripMenuItem,
@@ -846,6 +852,22 @@ namespace WinampNowPlayingToFile.Presentation
             this.preserveAlbumArtDetailsLink.Text = "details";
             this.preserveAlbumArtDetailsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.onClickPreserveAlbumArtDetailsLink);
             // 
+            // ratingStarsStripMenuItem
+            // 
+            ratingStarsStripMenuItem.Name = "ratingStarsStripMenuItem";
+            ratingStarsStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            ratingStarsStripMenuItem.Tag = "Rating_Stars";
+            ratingStarsStripMenuItem.Text = "Rating (★–★★★★★)";
+            ratingStarsStripMenuItem.ToolTipText = "Repeated \"★\" of length 1–5, or empty";
+            // 
+            // ratingStarsCustomToolStripMenuItem
+            // 
+            this.ratingStarsCustomToolStripMenuItem.Name = "ratingStarsCustomToolStripMenuItem";
+            this.ratingStarsCustomToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.ratingStarsCustomToolStripMenuItem.Tag = "";
+            this.ratingStarsCustomToolStripMenuItem.Text = "Rating (custom)";
+            this.ratingStarsCustomToolStripMenuItem.ToolTipText = "Custom text repeated for the number of stars (1–5 times), or empty";
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.okButton;
@@ -925,5 +947,6 @@ namespace WinampNowPlayingToFile.Presentation
         private System.Windows.Forms.LinkLabel preserveTextFileDetailsLink;
         private System.Windows.Forms.LinkLabel preserveAlbumArtDetailsLink;
         private System.Windows.Forms.ToolStripMenuItem jsonObjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ratingStarsCustomToolStripMenuItem;
     }
 }
