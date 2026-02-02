@@ -13,4 +13,10 @@ public class NowPlayingException: ApplicationException {
         this.song = song;
     }
 
+    public class FileAccessException: NowPlayingException {
+
+        public FileAccessException(string message, Exception innerException): base(message, innerException, null) {}
+
+    }
+
 }

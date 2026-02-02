@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WinampNowPlayingToFile.Business;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Facade.Templating;
 using WinampNowPlayingToFile.Settings;
@@ -127,13 +128,17 @@ public partial class SettingsDialog: Form {
             saveWorking();
             textFileIndex = textFileMenu.SelectedIndex;
             loadTextFileSettings();
-        } catch (Exception ex) when (ex is FormatException or KeyNotFoundException) {
+        } catch (Exception ex) when (ex is FormatException or KeyNotFoundException or NowPlayingException.FileAccessException) {
             textFileMenu.SelectedIndex = textFileIndex;
         }
     }
 
     private void addTextFile(object sender, EventArgs e) {
-        saveWorking();
+        try {
+            saveWorking();
+        } catch (Exception ex) when (ex is FormatException or KeyNotFoundException or NowPlayingException.FileAccessException) {
+            return;
+        }
         textFileIndex++;
         workingSettings.textFilenames.Insert(textFileIndex, string.Empty);
         workingSettings.textTemplates.Insert(textFileIndex, string.Empty);
@@ -301,6 +306,20 @@ public partial class SettingsDialog: Form {
         try {
             compileTemplate().render(EXAMPLE_SONG);
 
+            try {
+                validateWritableFile(textFilename.Text);
+            } catch (NowPlayingException.FileAccessException e) {
+                MessageBox.Show($"Invalid text filename:\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            }
+
+            try {
+                validateWritableFile(albumArtFilename.Text);
+            } catch (NowPlayingException.FileAccessException e) {
+                MessageBox.Show($"Invalid album art filename:\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            }
+
             workingSettings.textFilenames[textFileIndex]       = textFilename.Text;
             workingSettings.albumArtFilename                   = albumArtFilename.Text;
             workingSettings.textTemplates[textFileIndex]       = templateEditor.Text;
@@ -328,6 +347,32 @@ public partial class SettingsDialog: Form {
             } catch (Exception e) when (e is not OutOfMemoryException) {
                 // continue
             }
+        }
+    }
+
+    ///<exception cref="NowPlayingException.FileAccessException" />
+    private static void validateWritableFile(string filePath) {
+        Stream? fileStream   = null;
+        bool    existingFile = File.Exists(filePath);
+        try {
+            fileStream = File.Open(filePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite);
+            fileStream.Dispose();
+            fileStream = null;
+            if (!existingFile) {
+                File.Delete(filePath);
+            }
+        } catch (UnauthorizedAccessException e) {
+            throw new NowPlayingException.FileAccessException("Permission to write to file denied", e);
+        } catch (ArgumentException e) {
+            throw new NowPlayingException.FileAccessException("Filename is empty or contains illegal characters", e);
+        } catch (DirectoryNotFoundException e) {
+            throw new NowPlayingException.FileAccessException("Nonexistent directory", e);
+        } catch (IOException e) {
+            throw new NowPlayingException.FileAccessException("File IO error", e);
+        } catch (Exception e) when (e is not OutOfMemoryException) {
+            throw new NowPlayingException.FileAccessException("Unhandled exception", e);
+        } finally {
+            fileStream?.Dispose();
         }
     }
 

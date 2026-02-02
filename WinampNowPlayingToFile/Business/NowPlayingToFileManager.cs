@@ -118,7 +118,11 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         return songToRender != null ? getTemplate(templateIndex).render(songToRender) : string.Empty;
     }
 
-    private void saveText(string nowPlayingText, int templateIndex) => File.WriteAllText(settings.textFilenames[templateIndex], nowPlayingText, UTF8);
+    private void saveText(string nowPlayingText, int templateIndex) {
+        using Stream     stream = File.Open(settings.textFilenames[templateIndex], FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+        using TextWriter writer = new StreamWriter(stream, UTF8);
+        writer.Write(nowPlayingText);
+    }
 
     private UnfuckedGenerator getTemplate(int templateIndex) {
         if (cachedTemplates.ElementAtOrDefault(templateIndex) is not {} cachedTemplate) {
