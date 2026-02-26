@@ -19,6 +19,7 @@ This is a plugin for [Winamp](https://winamp.com/player) that saves text informa
         - [Fallback artwork](#fallback-artwork)
 - [Integration](#integration)
     - [OBS](#obs)
+    - [Screensaver](#screensaver)
 - [Uninstallation](#uninstallation)
 
 <!-- /MarkdownTOC -->
@@ -215,6 +216,17 @@ When Winamp is paused, stopped, or closed, the image file will be deleted. You h
 1. Select the text file created by this plugin (by default, `%TEMP%\winamp_now_playing.txt`).
 1. Create a new Image source in your scene.
 1. In the Properties for your image source, select the image file created by this plugin (by default, `%TEMP%\winamp_now_playing.png`).
+
+### Screensaver
+
+1. Search the Windows Settings app or Start Menu for "screen saver" to open the Screen Saver Settings control panel.
+1. Change the Screen Saver to **Photos**.
+    - If you want the photo to move around the screen periodically, for example to prevent OLED burn-in, you can use the [**My Pictures Slideshow** (`ssmypics.scr`) from Windows XP](https://archive.org/details/windows_xp_screen_savers) instead.
+1. Click Settings, then choose the directory where this plugin creates the image file. By default, this is `%TEMP%`, but you may want to change it to a different folder in order to
+    - make the folder easier to browse to in the screensaver settings without having to show hidden files in Folder Options
+    - ensure no other images created in the same directory by other programs appear in the screensaver
+1. Make the slideshow advance frequently ("fast," or closer to the 6 second end of the range) to reduce the latency between a new song playing and the screensaver rendering the new album art.
+1. Choose a duration for the screensaver to appear that is shorter than the durations for the screen to turn off and for the computer to enter standby or hibernation.
 
 ## Uninstallation
 
