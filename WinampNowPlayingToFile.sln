@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11520.95 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinampNowPlayingToFile", "WinampNowPlayingToFile\WinampNowPlayingToFile.csproj", "{705442B8-D5EA-4449-B24F-323B319C821F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gen_WinampNowPlayingToFile", "gen_WinampNowPlayingToFile\gen_WinampNowPlayingToFile.vcxproj", "{F1C69AEC-4089-4404-B485-86C9B72C138A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{B948111C-9EF9-4A58-9A0A-6601F6450346}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstractions", "Abstractions\Abstractions.csproj", "{DD438EDA-35AF-439A-86CB-C88E3E9B5311}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreensaverChanger", "ScreensaverPlugin\ScreensaverChanger.csproj", "{84ED47EB-CAE8-444C-B789-4713F864D77C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,30 @@ Global
 		{B948111C-9EF9-4A58-9A0A-6601F6450346}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B948111C-9EF9-4A58-9A0A-6601F6450346}.Release|Win32.ActiveCfg = Release|Any CPU
 		{B948111C-9EF9-4A58-9A0A-6601F6450346}.Release|Win32.Build.0 = Release|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Debug|Win32.Build.0 = Debug|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Release|Win32.ActiveCfg = Release|Any CPU
+		{DD438EDA-35AF-439A-86CB-C88E3E9B5311}.Release|Win32.Build.0 = Release|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Debug|Win32.Build.0 = Debug|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Release|Win32.ActiveCfg = Release|Any CPU
+		{84ED47EB-CAE8-444C-B789-4713F864D77C}.Release|Win32.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
