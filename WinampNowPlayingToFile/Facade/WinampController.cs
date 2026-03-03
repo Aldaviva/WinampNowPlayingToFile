@@ -4,13 +4,15 @@ using Daniel15.Sharpamp;
 using System;
 using System.IO;
 using System.Reflection;
+using Song = WinampNowPlayingToFile.Data.Song;
+using Status = WinampNowPlayingToFile.Data.Status;
 
 namespace WinampNowPlayingToFile.Facade;
 
 public interface WinampController: IDisposable {
 
     Status status { get; }
-    Song currentSong { get; }
+    Song? currentSong { get; }
 
     void play();
     void playPause();
@@ -19,8 +21,8 @@ public interface WinampController: IDisposable {
     void previousTrack();
     object? fetchMetadataFieldValue(string metadataFieldName);
 
-    event EventHandler<SongChangedEventArgs> songChanged;
-    event EventHandler<StatusChangedEventArgs> statusChanged;
+    event EventHandler<Song?> songChanged;
+    event EventHandler<Status> statusChanged;
 
 }
 
@@ -34,15 +36,15 @@ public class WinampControllerImpl: WinampController {
     private readonly Func<int, int>               sendIPCCommandIntDelegate;
     private readonly Func<string, string, string> getMetadataDelegate;
 
-    public event EventHandler<SongChangedEventArgs>? songChanged;
-    public event EventHandler<StatusChangedEventArgs>? statusChanged;
+    public event EventHandler<Song?>? songChanged;
+    public event EventHandler<Status>? statusChanged;
 
     private volatile bool disposed;
 
     public WinampControllerImpl(Winamp winamp) {
         this.winamp          =  winamp;
-        winamp.SongChanged   += (sender, args) => songChanged?.Invoke(sender, new SongChangedEventArgs(args));
-        winamp.StatusChanged += (sender, args) => statusChanged?.Invoke(sender, args);
+        winamp.SongChanged   += (sender, args) => songChanged?.Invoke(sender, args.Song?.Abstract());
+        winamp.StatusChanged += (sender, args) => statusChanged?.Invoke(sender, args.Status.Abstract());
 
         Type winampClass = winamp.GetType();
         getMetadataDelegate = (Func<string, string, string>) winampClass.GetMethod("GetMetadata", BindingFlags.NonPublic | BindingFlags.Instance, null, [typeof(string), typeof(string)], null)!
@@ -56,9 +58,9 @@ public class WinampControllerImpl: WinampController {
     private string getMetadata(string filename, string metadataFieldName) => getMetadataDelegate(filename, metadataFieldName);
     private int sendIPCCommand(int arg) => sendIPCCommandIntDelegate(arg);
 
-    public Status status => disposed ? Status.Stopped : winamp.Status;
+    public Status status => disposed ? Status.Stopped : winamp.Status.Abstract();
 
-    public Song currentSong => new(winamp.CurrentSong);
+    public Song? currentSong => winamp.CurrentSong?.Abstract();
 
     public void nextTrack() => winamp.NextTrack();
 
@@ -137,13 +139,5 @@ public class WinampControllerImpl: WinampController {
         disposed = true;
         GC.SuppressFinalize(this);
     }
-
-}
-
-public class SongChangedEventArgs(Song song): EventArgs {
-
-    public Song song { get; } = song;
-
-    public SongChangedEventArgs(Daniel15.Sharpamp.SongChangedEventArgs args): this(new Song(args.Song)) {}
 
 }

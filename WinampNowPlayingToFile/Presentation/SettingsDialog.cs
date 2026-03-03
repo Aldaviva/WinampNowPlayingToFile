@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WinampNowPlayingToFile.Business;
+using WinampNowPlayingToFile.Data;
 using WinampNowPlayingToFile.Facade;
 using WinampNowPlayingToFile.Facade.Templating;
 using WinampNowPlayingToFile.Settings;

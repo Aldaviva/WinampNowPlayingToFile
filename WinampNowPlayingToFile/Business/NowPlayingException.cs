@@ -1,7 +1,7 @@
 #nullable enable
 
 using System;
-using WinampNowPlayingToFile.Facade;
+using WinampNowPlayingToFile.Data;
 
 namespace WinampNowPlayingToFile.Business;
 

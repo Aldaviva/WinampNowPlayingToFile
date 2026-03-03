@@ -14,11 +14,23 @@
         "resolved": "1.0.0",
         "contentHash": "+RTxWGLH5p0ibl7XDbb8pOznAdqwxH3zic40eL1gq5xl8jZt3CFc04KSLLFWM3PgvlTzfbzDJfjzF7rCglqGAA=="
       },
+      "Plugins": {
+        "type": "Direct",
+        "requested": "[0.0.0-beta.3, )",
+        "resolved": "0.0.0-beta.3",
+        "contentHash": "Nt4dKwvs1oz1CU3DtfEMdoORhPxvVsm4iYRchKYfWqdpXRgb6kx2D/sk/IDBko+UhnFwTcdtGk30oLQpA2EZyA=="
+      },
       "taglib": {
         "type": "Direct",
         "requested": "[2.1.0, )",
         "resolved": "2.1.0",
         "contentHash": "PuBT0KO/RJqxVKcM4tE0GDQIOA3584d2pHaLLh+X7tBz9MzFn9/mrVYaA63M+n7ED2dBXVtJBoogGnSxaqE7vg=="
+      },
+      "WinampNowPlayingToFile.Abstractions": {
+        "type": "Direct",
+        "requested": "[0.0.0, )",
+        "resolved": "0.0.0",
+        "contentHash": "yxkiYKPQSGbxfXz1l6evge3GGoG8WPt8qEhDEu2/cnGh6YWFe6p+RX0ufvH0yBTmIaTx7eT93D5H14om5s2/uQ=="
       }
     },
     ".NETFramework,Version=v4.7.2/win": {},

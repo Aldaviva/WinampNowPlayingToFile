@@ -49,8 +49,10 @@ I wrote my own Winamp plugin to save information about the currently playing son
     │   └── 📄 gen_WinampNowPlayingToFile.dll
     ├── 📄 Daniel15.Sharpamp.dll
     ├── 📄 mustache-sharp.dll
+    ├── 📄 Plugins.dll
     ├── 📄 taglib-sharp.dll
-    └── 📄 WinampNowPlayingToFile.dll
+    ├── 📄 WinampNowPlayingToFile.dll
+    └── 📄 WinampNowPlayingToFile.Abstractions.dll
     ```
 
 ## Configuration
@@ -240,8 +242,10 @@ When Winamp is paused, stopped, or closed, the image file will be deleted. You h
     │   └── 📄 gen_WinampNowPlayingToFile.dll
     ├── 📄 Daniel15.Sharpamp.dll
     ├── 📄 mustache-sharp.dll
+    ├── 📄 Plugins.dll
     ├── 📄 taglib-sharp.dll
-    └── 📄 WinampNowPlayingToFile.dll
+    ├── 📄 WinampNowPlayingToFile.dll
+    └── 📄 WinampNowPlayingToFile.Abstractions.dll
     ```
 1. Delete the song information files (by default, `winamp_now_playing.txt` and `winamp_now_playing.png` in `%TEMP%`).
 1. Delete the plugin settings registry key `HKCU\Software\WinampNowPlayingToFile`.
