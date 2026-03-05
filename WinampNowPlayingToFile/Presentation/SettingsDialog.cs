@@ -89,9 +89,9 @@ public partial class SettingsDialog: Form {
     }
 
     private void onSettingsDialogLoad(object sender, EventArgs e) {
-        albumArtFilenameEditor.InitialDirectory = Path.GetDirectoryName(workingSettings.albumArtFilename);
-        albumArtFilenameEditor.FileName         = workingSettings.albumArtFilename;
-        albumArtFilename.Text                   = workingSettings.albumArtFilename;
+        albumArtFilenameEditor.InitialDirectory = workingSettings.albumArtFilename is { Length: not 0 } file ? Path.GetDirectoryName(file) ?? string.Empty : string.Empty;
+        albumArtFilenameEditor.FileName         = workingSettings.albumArtFilename ?? string.Empty;
+        albumArtFilename.Text                   = workingSettings.albumArtFilename ?? string.Empty;
 
         preserveTextFileWhenNotPlaying.Checked = workingSettings.preserveTextFileWhenNotPlaying;
         preserveAlbumArtWhenNotPlaying.Checked = workingSettings.preserveAlbumArtFileWhenNotPlaying;
@@ -129,7 +129,7 @@ public partial class SettingsDialog: Form {
             saveWorking();
             textFileIndex = textFileMenu.SelectedIndex;
             loadTextFileSettings();
-        } catch (Exception ex) when (ex is FormatException or KeyNotFoundException or NowPlayingException.FileAccessException) {
+        } catch (Exception ex) when (ex is not OutOfMemoryException) {
             textFileMenu.SelectedIndex = textFileIndex;
         }
     }
@@ -137,7 +137,7 @@ public partial class SettingsDialog: Form {
     private void addTextFile(object sender, EventArgs e) {
         try {
             saveWorking();
-        } catch (Exception ex) when (ex is FormatException or KeyNotFoundException or NowPlayingException.FileAccessException) {
+        } catch (Exception ex) when (ex is not OutOfMemoryException) {
             return;
         }
         textFileIndex++;
@@ -194,7 +194,7 @@ public partial class SettingsDialog: Form {
     }
 
     private void renderPreview() {
-        Song previewSong = isSongPlaying() ? winampController.currentSong : EXAMPLE_SONG;
+        Song previewSong = isSongPlaying() ? winampController.currentSong! : EXAMPLE_SONG;
 
         try {
             templatePreview.Text = compileTemplate().render(previewSong);
@@ -205,7 +205,7 @@ public partial class SettingsDialog: Form {
         }
     }
 
-    private bool isSongPlaying() => !string.IsNullOrEmpty(winampController.currentSong.Title);
+    private bool isSongPlaying() => !string.IsNullOrEmpty(winampController.currentSong?.Title);
 
     private UnfuckedGenerator compileTemplate() {
         UnfuckedGenerator generator = TEMPLATE_COMPILER.compile(templateEditor.Text);
@@ -290,7 +290,7 @@ public partial class SettingsDialog: Form {
         try {
             saveUpstream();
             Close();
-        } catch (Exception e) when (e is FormatException or KeyNotFoundException) {
+        } catch (Exception e) when (e is not OutOfMemoryException) {
             //leave form open, with invalid inputs unsaved
         }
     }
@@ -314,11 +314,13 @@ public partial class SettingsDialog: Form {
                 throw;
             }
 
-            try {
-                validateWritableFile(albumArtFilename.Text);
-            } catch (NowPlayingException.FileAccessException e) {
-                MessageBox.Show($"Invalid album art filename:\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                throw;
+            if (!string.IsNullOrEmpty(albumArtFilename.Text)) {
+                try {
+                    validateWritableFile(albumArtFilename.Text);
+                } catch (NowPlayingException.FileAccessException e) {
+                    MessageBox.Show($"Invalid album art filename:\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw;
+                }
             }
 
             workingSettings.textFilenames[textFileIndex]       = textFilename.Text;

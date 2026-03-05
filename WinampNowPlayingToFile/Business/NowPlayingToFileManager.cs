@@ -34,12 +34,12 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     private static byte[]? albumArtWhenMissingFromSong => getInstallationDirectoryImageOrFallback("emptyAlbumArt.png");
     private static byte[]? albumArtWhenStopped => getInstallationDirectoryImageOrFallback("stoppedAlbumArt.png");
 
-    private readonly  WinampController                             winampController;
-    private readonly  ISettings                                    settings;
-    private readonly  UnfuckedTemplateCompiler                     templateCompiler = new UnfuckedMustacheCompiler();
-    internal readonly Timer                                        renderTextTimer  = new(1000);
-    private readonly  List<UnfuckedGenerator?>                     cachedTemplates;
-    private readonly  IPluginManager<WinampNowPlayingToFilePlugin> pluginManager = new PluginManager<WinampNowPlayingToFilePlugin>("Plugins\\WinampNowPlayingToFile");
+    private readonly  WinampController                              winampController;
+    private readonly  ISettings                                     settings;
+    private readonly  UnfuckedTemplateCompiler                      templateCompiler = new UnfuckedMustacheCompiler();
+    internal readonly Timer                                         renderTextTimer  = new(1000);
+    private readonly  List<UnfuckedGenerator?>                      cachedTemplates;
+    private readonly  IPluginManager<IWinampNowPlayingToFilePlugin> pluginManager = new PluginManager<IWinampNowPlayingToFilePlugin>("Plugins\\WinampNowPlayingToFile");
 
     private Song? previousSong;
 
@@ -112,7 +112,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
                 if (!causedByTimer) {
                     saveImage(findAlbumArt(currentSong));
 
-                    foreach (WinampNowPlayingToFilePlugin plugin in pluginManager.Plugins) {
+                    foreach (IWinampNowPlayingToFilePlugin plugin in pluginManager.Plugins) {
                         try {
                             plugin.OnSongUpdated(currentSong, winampController.status);
                         } catch (Exception e) when (e is not OutOfMemoryException) {
@@ -152,13 +152,14 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         args.handled    = true;
     }
 
-    internal byte[]? findAlbumArt(Song currentSong) {
-        return winampController.status == Status.Playing
-            ? extractAlbumArt(currentSong) ?? findAlbumArtSidecarFile(currentSong) ?? albumArtWhenMissingFromSong
-            : settings.preserveAlbumArtFileWhenNotPlaying
-                ? null
-                : albumArtWhenStopped;
-    }
+    internal byte[]? findAlbumArt(Song currentSong) =>
+        string.IsNullOrEmpty(settings.albumArtFilename)
+            ? null
+            : winampController.status == Status.Playing
+                ? extractAlbumArt(currentSong) ?? findAlbumArtSidecarFile(currentSong) ?? albumArtWhenMissingFromSong
+                : settings.preserveAlbumArtFileWhenNotPlaying
+                    ? null
+                    : albumArtWhenStopped;
 
     private static byte[]? extractAlbumArt(Song currentSong) {
         try {
@@ -230,7 +231,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     }
 
     private void saveImage(byte[]? imageData) {
-        string filename = settings.albumArtFilename;
+        string? filename = settings.albumArtFilename;
         if ((settings.preserveAlbumArtFileWhenNotPlaying && winampController.status != Status.Playing) || string.IsNullOrWhiteSpace(filename)) {
             // #19: user wants to keep old album art while not playing
         } else if (imageData != null) {

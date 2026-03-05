@@ -7,10 +7,10 @@ namespace WinampNowPlayingToFile.Settings;
 
 public class RegistrySettings: BaseSettings {
 
-    internal string keyPath = @"Software\WinampNowPlayingToFile";
+    internal const string KEY_PATH = @"Software\WinampNowPlayingToFile";
 
     public override void load() {
-        using RegistryKey? key = Registry.CurrentUser.OpenSubKey(keyPath);
+        using RegistryKey? key = Registry.CurrentUser.OpenSubKey(KEY_PATH);
         if (key != null) {
             albumArtFilename                   = key.GetValue(nameof(albumArtFilename)) as string ?? albumArtFilename;
             preserveAlbumArtFileWhenNotPlaying = Convert.ToBoolean(key.GetValue(nameof(preserveAlbumArtFileWhenNotPlaying)) as int? ?? 0);
@@ -42,9 +42,9 @@ public class RegistrySettings: BaseSettings {
 
     public override void save() {
         base.save();
-        using RegistryKey? key = Registry.CurrentUser.CreateSubKey(keyPath);
+        using RegistryKey? key = Registry.CurrentUser.CreateSubKey(KEY_PATH);
         if (key != null) {
-            key.SetValue(nameof(albumArtFilename), albumArtFilename);
+            key.SetValue(nameof(albumArtFilename), albumArtFilename ?? string.Empty);
             key.SetValue(nameof(preserveAlbumArtFileWhenNotPlaying), Convert.ToInt32(preserveAlbumArtFileWhenNotPlaying), RegistryValueKind.DWord);
             key.SetValue(nameof(preserveTextFileWhenNotPlaying), Convert.ToInt32(preserveTextFileWhenNotPlaying), RegistryValueKind.DWord);
 

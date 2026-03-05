@@ -16,9 +16,9 @@
       },
       "Plugins": {
         "type": "Direct",
-        "requested": "[0.0.0-beta.3, )",
-        "resolved": "0.0.0-beta.3",
-        "contentHash": "Nt4dKwvs1oz1CU3DtfEMdoORhPxvVsm4iYRchKYfWqdpXRgb6kx2D/sk/IDBko+UhnFwTcdtGk30oLQpA2EZyA=="
+        "requested": "[0.0.0-beta.4, )",
+        "resolved": "0.0.0-beta.4",
+        "contentHash": "XnRjoxTHqi0Q7KYU42FZDB+i5XYLURfkYZZK6cgKR7MLzp75usXV9aqLVO2jBvir68DOg2GV2iuLscHmbwreKA=="
       },
       "taglib": {
         "type": "Direct",
