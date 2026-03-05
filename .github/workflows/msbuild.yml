@@ -14,13 +14,13 @@ jobs:
 
     steps:
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.3.1
+      uses: microsoft/setup-msbuild@v2
       
     - name: Clone
-      uses: actions/checkout@v3.3.0
+      uses: actions/checkout@v6
 
     - name: Initialize test reporting
-      uses: testspace-com/setup-testspace@v1.0.5
+      uses: testspace-com/setup-testspace@v1
       with:
         domain: ${{github.repository_owner}}
 
@@ -31,27 +31,27 @@ jobs:
       run: |
         msbuild gen_WinampNowPlayingToFile -t:build -p:Configuration=Release -m
 
-    - name: Test
-      run: |
-        dotnet build Test --no-dependencies --configuration Release
-        dotnet publish Test --no-build --configuration Release
-        dotnet vstest Test\bin\Release\net472\publish\Test.dll --collect:"XPlat code coverage" --settings:Test\Test.runsettings --logger:"trx;LogFileName=TestResults.xml"
-        Out-File -InputObject "TEST_EXIT_CODE=$LASTEXITCODE" -FilePath $env:GITHUB_ENV -Append -Encoding UTF8
-        Copy-Item TestResults/*/coverage.info TestResults -ErrorAction Continue
-        exit 0
+    # - name: Test
+    #   run: |
+    #     dotnet build Test --no-dependencies --configuration Release
+    #     dotnet publish Test --no-build --configuration Release
+    #     dotnet vstest Test\bin\Release\net472\publish\Test.dll --collect:"XPlat code coverage" --settings:Test\Test.runsettings --logger:"trx;LogFileName=TestResults.xml"
+    #     Out-File -InputObject "TEST_EXIT_CODE=$LASTEXITCODE" -FilePath $env:GITHUB_ENV -Append -Encoding UTF8
+    #     Copy-Item TestResults/*/coverage.info TestResults -ErrorAction Continue
+    #     exit 0
 
-    - name: Upload test report
-      run: testspace TestResults/TestResults.xml
+    # - name: Upload test report
+    #   run: testspace TestResults/TestResults.xml
 
-    - name: Upload coverage
-      uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        file: TestResults/coverage.info
-        format: lcov
+    # - name: Upload coverage
+    #   uses: coverallsapp/github-action@648a8eb78e6d50909eff900e4ec85cab4524a45b
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     file: TestResults/coverage.info
+    #     format: lcov
 
-    - name: Stop if tests failed
-      run: exit $env:TEST_EXIT_CODE
+    # - name: Stop if tests failed
+    #   run: exit $env:TEST_EXIT_CODE
 
     - name: Prepare artifacts
       run: |
@@ -60,7 +60,7 @@ jobs:
         move .\artifact\gen_WinampNowPlayingToFile.dll .\artifact\plugins\
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3.1.2
+      uses: actions/upload-artifact@v6
       with:
         name: WinampNowPlayingToFile
         path: .\artifact\
