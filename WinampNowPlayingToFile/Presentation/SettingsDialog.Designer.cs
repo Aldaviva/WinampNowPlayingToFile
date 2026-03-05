@@ -1,4 +1,4 @@
-﻿namespace WinampNowPlayingToFile.Presentation
+namespace WinampNowPlayingToFile.Presentation
 {
     partial class SettingsDialog
     {
@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ToolStripMenuItem albumToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem artistToolStripMenuItem;
-            System.Windows.Forms.ToolStripMenuItem filenameToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem yearToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem albumArtistToolStripMenuItem;
@@ -66,10 +65,15 @@
             System.Windows.Forms.ToolStripMenuItem typeToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem vbrToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem elapsedToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem fileNameToolStripMenuItem1;
+            System.Windows.Forms.ToolStripMenuItem absolutePathToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem directoryToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem fileNameWithExtensionToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem filenameWithoutExtensionToolStripMenuItem;
+            System.Windows.Forms.ToolStripMenuItem playbackStateToolStripMenuItem1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsDialog));
-            this.otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileBasenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileBasenameWithoutExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            System.Windows.Forms.ToolStripMenuItem ratingStarsStripMenuItem;
             this.writeToFileLabel = new System.Windows.Forms.Label();
             this.textFilenameEditor = new System.Windows.Forms.SaveFileDialog();
             this.textBrowseButton = new System.Windows.Forms.Button();
@@ -85,6 +89,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ifToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ifElseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jsonObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,9 +100,17 @@
             this.albumArtBrowseButton = new System.Windows.Forms.Button();
             this.albumArtFilename = new System.Windows.Forms.TextBox();
             this.albumArtFilenameEditor = new System.Windows.Forms.SaveFileDialog();
+            this.preserveAlbumArtWhenNotPlaying = new System.Windows.Forms.CheckBox();
+            this.textFileMenu = new System.Windows.Forms.ComboBox();
+            this.newTextFileButton = new System.Windows.Forms.Button();
+            this.removeTextFileButton = new System.Windows.Forms.Button();
+            this.preserveTextFileWhenNotPlaying = new System.Windows.Forms.CheckBox();
+            this.horizontalRule2 = new System.Windows.Forms.Label();
+            this.preserveTextFileDetailsLink = new System.Windows.Forms.LinkLabel();
+            this.preserveAlbumArtDetailsLink = new System.Windows.Forms.LinkLabel();
+            this.ratingStarsCustomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             albumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             artistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            filenameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             titleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             yearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             albumArtistToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,6 +145,14 @@
             typeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             vbrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             elapsedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            otherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            fileNameToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            absolutePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            directoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            fileNameWithExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            filenameWithoutExtensionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            playbackStateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            ratingStarsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertTemplatePlaceholderMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,56 +160,52 @@
             // 
             albumToolStripMenuItem.Name = "albumToolStripMenuItem";
             albumToolStripMenuItem.ShowShortcutKeys = false;
-            albumToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            albumToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             albumToolStripMenuItem.Text = "Album";
+            albumToolStripMenuItem.ToolTipText = "Album name";
             // 
             // artistToolStripMenuItem
             // 
             artistToolStripMenuItem.Name = "artistToolStripMenuItem";
             artistToolStripMenuItem.ShowShortcutKeys = false;
-            artistToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            artistToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             artistToolStripMenuItem.Text = "Artist";
-            // 
-            // filenameToolStripMenuItem
-            // 
-            filenameToolStripMenuItem.Name = "filenameToolStripMenuItem";
-            filenameToolStripMenuItem.ShowShortcutKeys = false;
-            filenameToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            filenameToolStripMenuItem.Text = "Filename";
-            filenameToolStripMenuItem.ToolTipText = "The absolute path to the file, e.g. \"C:\\Users\\Ben\\Music\\Song.mp3\"";
+            artistToolStripMenuItem.ToolTipText = "Artist name";
             // 
             // titleToolStripMenuItem
             // 
             titleToolStripMenuItem.Name = "titleToolStripMenuItem";
             titleToolStripMenuItem.ShowShortcutKeys = false;
-            titleToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            titleToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             titleToolStripMenuItem.Text = "Title";
+            titleToolStripMenuItem.ToolTipText = "Song name";
             // 
             // yearToolStripMenuItem
             // 
             yearToolStripMenuItem.Name = "yearToolStripMenuItem";
             yearToolStripMenuItem.ShowShortcutKeys = false;
-            yearToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            yearToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             yearToolStripMenuItem.Text = "Year";
+            yearToolStripMenuItem.ToolTipText = "Album release year, even if the song metadata contained an ISO-8601 date";
             // 
             // albumArtistToolStripMenuItem
             // 
             albumArtistToolStripMenuItem.Name = "albumArtistToolStripMenuItem";
-            albumArtistToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            albumArtistToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             albumArtistToolStripMenuItem.Tag = "AlbumArtist";
             albumArtistToolStripMenuItem.Text = "Album artist";
             // 
             // bitrateToolStripMenuItem
             // 
             bitrateToolStripMenuItem.Name = "bitrateToolStripMenuItem";
-            bitrateToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            bitrateToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             bitrateToolStripMenuItem.Text = "Bitrate";
             bitrateToolStripMenuItem.ToolTipText = "Number of kilobits per second, e.g. \"320\"";
             // 
             // bpmToolStripMenuItem
             // 
             bpmToolStripMenuItem.Name = "bpmToolStripMenuItem";
-            bpmToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            bpmToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             bpmToolStripMenuItem.Tag = "BPM";
             bpmToolStripMenuItem.Text = "BPM";
             bpmToolStripMenuItem.ToolTipText = "Number of beats per minute, e.g. \"86\"";
@@ -196,66 +213,66 @@
             // categoryToolStripMenuItem
             // 
             categoryToolStripMenuItem.Name = "categoryToolStripMenuItem";
-            categoryToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            categoryToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             categoryToolStripMenuItem.Text = "Category";
             categoryToolStripMenuItem.ToolTipText = "e.g. \"Rock\"";
             // 
             // commentToolStripMenuItem
             // 
             commentToolStripMenuItem.Name = "commentToolStripMenuItem";
-            commentToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            commentToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             commentToolStripMenuItem.Text = "Comment";
             // 
             // composerToolStripMenuItem
             // 
             composerToolStripMenuItem.Name = "composerToolStripMenuItem";
-            composerToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            composerToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             composerToolStripMenuItem.Text = "Composer";
             // 
             // conductorToolStripMenuItem
             // 
             conductorToolStripMenuItem.Name = "conductorToolStripMenuItem";
-            conductorToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            conductorToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             conductorToolStripMenuItem.Text = "Conductor";
             // 
             // directorToolStripMenuItem
             // 
             directorToolStripMenuItem.Name = "directorToolStripMenuItem";
-            directorToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            directorToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             directorToolStripMenuItem.Text = "Director";
             directorToolStripMenuItem.ToolTipText = "For video files";
             // 
             // discToolStripMenuItem
             // 
             discToolStripMenuItem.Name = "discToolStripMenuItem";
-            discToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            discToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             discToolStripMenuItem.Text = "Disc";
             discToolStripMenuItem.ToolTipText = "e.g. \"1\" or \"1/2\"";
             // 
             // familyToolStripMenuItem
             // 
             familyToolStripMenuItem.Name = "familyToolStripMenuItem";
-            familyToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            familyToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             familyToolStripMenuItem.Text = "Family";
             familyToolStripMenuItem.ToolTipText = "e.g. \"MPEG Layer 3 Audio File\"";
             // 
             // gainToolStripMenuItem
             // 
             gainToolStripMenuItem.Name = "gainToolStripMenuItem";
-            gainToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            gainToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             gainToolStripMenuItem.Text = "Gain";
             gainToolStripMenuItem.ToolTipText = "e.g. \"+0.40 dB\"";
             // 
             // genreToolStripMenuItem
             // 
             genreToolStripMenuItem.Name = "genreToolStripMenuItem";
-            genreToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            genreToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             genreToolStripMenuItem.Text = "Genre";
             // 
             // isrcToolStripMenuItem
             // 
             isrcToolStripMenuItem.Name = "isrcToolStripMenuItem";
-            isrcToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            isrcToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             isrcToolStripMenuItem.Tag = "ISRC";
             isrcToolStripMenuItem.Text = "ISRC";
             isrcToolStripMenuItem.ToolTipText = "e.g. \"USLZJ2006066\"";
@@ -263,14 +280,14 @@
             // keyToolStripMenuItem
             // 
             keyToolStripMenuItem.Name = "keyToolStripMenuItem";
-            keyToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            keyToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             keyToolStripMenuItem.Text = "Key";
             keyToolStripMenuItem.ToolTipText = "e.g. \"A\"";
             // 
             // lengthToolStripMenuItem
             // 
             lengthToolStripMenuItem.Name = "lengthToolStripMenuItem";
-            lengthToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            lengthToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             lengthToolStripMenuItem.Tag = "Length:m\\:ss";
             lengthToolStripMenuItem.Text = "Length";
             lengthToolStripMenuItem.ToolTipText = "Duration of media with millisecond resolution, to be formatted as a .NET TimeSpan" +
@@ -279,46 +296,47 @@
             // losslessToolStripMenuItem
             // 
             losslessToolStripMenuItem.Name = "losslessToolStripMenuItem";
-            losslessToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            losslessToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             losslessToolStripMenuItem.Text = "Lossless";
             losslessToolStripMenuItem.ToolTipText = "\"0\" (lossy) or \"1\" (lossless)";
             // 
             // lyricistToolStripMenuItem
             // 
             lyricistToolStripMenuItem.Name = "lyricistToolStripMenuItem";
-            lyricistToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            lyricistToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             lyricistToolStripMenuItem.Text = "Lyricist";
             // 
             // mediaToolStripMenuItem
             // 
             mediaToolStripMenuItem.Name = "mediaToolStripMenuItem";
-            mediaToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            mediaToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             mediaToolStripMenuItem.Text = "Media";
             mediaToolStripMenuItem.ToolTipText = "The MEDIATYPE ID3v2 tag";
             // 
             // producerToolStripMenuItem
             // 
             producerToolStripMenuItem.Name = "producerToolStripMenuItem";
-            producerToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            producerToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             producerToolStripMenuItem.Text = "Producer";
             // 
             // publisherToolStripMenuItem
             // 
             publisherToolStripMenuItem.Name = "publisherToolStripMenuItem";
-            publisherToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            publisherToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             publisherToolStripMenuItem.Text = "Publisher";
             // 
             // ratingToolStripMenuItem
             // 
             ratingToolStripMenuItem.Name = "ratingToolStripMenuItem";
-            ratingToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            ratingToolStripMenuItem.Text = "Rating";
+            ratingToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            ratingToolStripMenuItem.Tag = "Rating";
+            ratingToolStripMenuItem.Text = "Rating (1–5)";
             ratingToolStripMenuItem.ToolTipText = "\"1\", \"2\", \"3\", \"4\", \"5\", or empty";
             // 
             // replayGainAlbumGainToolStripMenuItem
             // 
             replayGainAlbumGainToolStripMenuItem.Name = "replayGainAlbumGainToolStripMenuItem";
-            replayGainAlbumGainToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            replayGainAlbumGainToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             replayGainAlbumGainToolStripMenuItem.Tag = "ReplayGain_Album_Gain";
             replayGainAlbumGainToolStripMenuItem.Text = "ReplayGain album gain";
             replayGainAlbumGainToolStripMenuItem.ToolTipText = "e.g. \"-7.29 dB\"";
@@ -326,7 +344,7 @@
             // replayGainAlbumPeakToolStripMenuItem
             // 
             replayGainAlbumPeakToolStripMenuItem.Name = "replayGainAlbumPeakToolStripMenuItem";
-            replayGainAlbumPeakToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            replayGainAlbumPeakToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             replayGainAlbumPeakToolStripMenuItem.Tag = "ReplayGain_Album_Peak";
             replayGainAlbumPeakToolStripMenuItem.Text = "ReplayGain album peak";
             replayGainAlbumPeakToolStripMenuItem.ToolTipText = "e.g. \"0.965118408\"";
@@ -334,7 +352,7 @@
             // replayGainTrackGainToolStripMenuItem
             // 
             replayGainTrackGainToolStripMenuItem.Name = "replayGainTrackGainToolStripMenuItem";
-            replayGainTrackGainToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            replayGainTrackGainToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             replayGainTrackGainToolStripMenuItem.Tag = "ReplayGain_Track_Gain";
             replayGainTrackGainToolStripMenuItem.Text = "ReplayGain track gain";
             replayGainTrackGainToolStripMenuItem.ToolTipText = "e.g. \"-7.29 dB\"";
@@ -342,7 +360,7 @@
             // replayGainTrackPeakToolStripMenuItem
             // 
             replayGainTrackPeakToolStripMenuItem.Name = "replayGainTrackPeakToolStripMenuItem";
-            replayGainTrackPeakToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            replayGainTrackPeakToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             replayGainTrackPeakToolStripMenuItem.Tag = "ReplayGain_Track_Peak";
             replayGainTrackPeakToolStripMenuItem.Text = "ReplayGain track peak";
             replayGainTrackPeakToolStripMenuItem.ToolTipText = "e.g. \"0.965118408\"";
@@ -350,41 +368,41 @@
             // stereoToolStripMenuItem
             // 
             stereoToolStripMenuItem.Name = "stereoToolStripMenuItem";
-            stereoToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            stereoToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             stereoToolStripMenuItem.Text = "Stereo";
             stereoToolStripMenuItem.ToolTipText = "\"0\" (mono) or \"1\" (stereo)";
             // 
             // subtitleToolStripMenuItem
             // 
             subtitleToolStripMenuItem.Name = "subtitleToolStripMenuItem";
-            subtitleToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            subtitleToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             subtitleToolStripMenuItem.Text = "Subtitle";
             // 
             // toolToolStripMenuItem
             // 
             toolToolStripMenuItem.Name = "toolToolStripMenuItem";
-            toolToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            toolToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             toolToolStripMenuItem.Text = "Tool";
             toolToolStripMenuItem.ToolTipText = "The ENCODEDBY ID3v2 tag, e.g. \"iTunes 10.5.1\"";
             // 
             // trackToolStripMenuItem
             // 
             trackToolStripMenuItem.Name = "trackToolStripMenuItem";
-            trackToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            trackToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             trackToolStripMenuItem.Text = "Track";
             trackToolStripMenuItem.ToolTipText = "e.g. \"1\" or \"1/5\"";
             // 
             // typeToolStripMenuItem
             // 
             typeToolStripMenuItem.Name = "typeToolStripMenuItem";
-            typeToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            typeToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             typeToolStripMenuItem.Text = "Type";
             typeToolStripMenuItem.ToolTipText = "\"0\" (audio) or \"1\" (video)";
             // 
             // vbrToolStripMenuItem
             // 
             vbrToolStripMenuItem.Name = "vbrToolStripMenuItem";
-            vbrToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            vbrToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             vbrToolStripMenuItem.Tag = "VBR";
             vbrToolStripMenuItem.Text = "VBR";
             vbrToolStripMenuItem.ToolTipText = "\"0\" (constant bitrate) or \"1\" (variable bitrate)";
@@ -392,7 +410,7 @@
             // elapsedToolStripMenuItem
             // 
             elapsedToolStripMenuItem.Name = "elapsedToolStripMenuItem";
-            elapsedToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            elapsedToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             elapsedToolStripMenuItem.Tag = "Elapsed:m\\:ss";
             elapsedToolStripMenuItem.Text = "Elapsed";
             elapsedToolStripMenuItem.ToolTipText = "Playback time position of the current media with millisecond resolution, updated " +
@@ -400,7 +418,7 @@
             // 
             // otherToolStripMenuItem
             // 
-            this.otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            otherToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             albumArtistToolStripMenuItem,
             bitrateToolStripMenuItem,
             bpmToolStripMenuItem,
@@ -412,8 +430,6 @@
             discToolStripMenuItem,
             elapsedToolStripMenuItem,
             familyToolStripMenuItem,
-            this.fileBasenameToolStripMenuItem,
-            this.fileBasenameWithoutExtensionToolStripMenuItem,
             gainToolStripMenuItem,
             genreToolStripMenuItem,
             isrcToolStripMenuItem,
@@ -425,6 +441,8 @@
             producerToolStripMenuItem,
             publisherToolStripMenuItem,
             ratingToolStripMenuItem,
+            ratingStarsStripMenuItem,
+            this.ratingStarsCustomToolStripMenuItem,
             replayGainAlbumGainToolStripMenuItem,
             replayGainAlbumPeakToolStripMenuItem,
             replayGainTrackGainToolStripMenuItem,
@@ -435,34 +453,70 @@
             trackToolStripMenuItem,
             typeToolStripMenuItem,
             vbrToolStripMenuItem});
-            this.otherToolStripMenuItem.Name = "otherToolStripMenuItem";
-            this.otherToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.otherToolStripMenuItem.Text = "More";
-            this.otherToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
+            otherToolStripMenuItem.Name = "otherToolStripMenuItem";
+            otherToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            otherToolStripMenuItem.Text = "More";
+            otherToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
             // 
-            // fileBasenameToolStripMenuItem
+            // fileNameToolStripMenuItem1
             // 
-            this.fileBasenameToolStripMenuItem.Name = "fileBasenameToolStripMenuItem";
-            this.fileBasenameToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.fileBasenameToolStripMenuItem.Tag = "FileBasename";
-            this.fileBasenameToolStripMenuItem.Text = "File basename";
-            this.fileBasenameToolStripMenuItem.ToolTipText = "Name of file without path, e.g. \"Song.mp3\"";
+            fileNameToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            absolutePathToolStripMenuItem,
+            directoryToolStripMenuItem,
+            fileNameWithExtensionToolStripMenuItem,
+            filenameWithoutExtensionToolStripMenuItem});
+            fileNameToolStripMenuItem1.Name = "fileNameToolStripMenuItem1";
+            fileNameToolStripMenuItem1.Size = new System.Drawing.Size(250, 22);
+            fileNameToolStripMenuItem1.Text = "Filename";
+            fileNameToolStripMenuItem1.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
             // 
-            // fileBasenameWithoutExtensionToolStripMenuItem
+            // absolutePathToolStripMenuItem
             // 
-            this.fileBasenameWithoutExtensionToolStripMenuItem.Name = "fileBasenameWithoutExtensionToolStripMenuItem";
-            this.fileBasenameWithoutExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.fileBasenameWithoutExtensionToolStripMenuItem.Tag = "FileBasenameWithoutExtension";
-            this.fileBasenameWithoutExtensionToolStripMenuItem.Text = "File basename without extension";
-            this.fileBasenameWithoutExtensionToolStripMenuItem.ToolTipText = "Name of file without path or extension, e.g. \"Song\"";
+            absolutePathToolStripMenuItem.Name = "absolutePathToolStripMenuItem";
+            absolutePathToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            absolutePathToolStripMenuItem.Tag = "Filename";
+            absolutePathToolStripMenuItem.Text = "Absolute path";
+            absolutePathToolStripMenuItem.ToolTipText = "Directory and filename, e.g. \"C:\\Users\\Ben\\Music\\Song.mp3\"";
+            // 
+            // directoryToolStripMenuItem
+            // 
+            directoryToolStripMenuItem.Name = "directoryToolStripMenuItem";
+            directoryToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            directoryToolStripMenuItem.Text = "Directory";
+            directoryToolStripMenuItem.ToolTipText = "Full path to folder containing file, e.g. \"C:\\Users\\Ben\\Music\"";
+            // 
+            // fileNameWithExtensionToolStripMenuItem
+            // 
+            fileNameWithExtensionToolStripMenuItem.Name = "fileNameWithExtensionToolStripMenuItem";
+            fileNameWithExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            fileNameWithExtensionToolStripMenuItem.Tag = "FileBasename";
+            fileNameWithExtensionToolStripMenuItem.Text = "File basename with extension";
+            fileNameWithExtensionToolStripMenuItem.ToolTipText = "Name of file without directory, e.g. \"Song.mp3\"";
+            // 
+            // filenameWithoutExtensionToolStripMenuItem
+            // 
+            filenameWithoutExtensionToolStripMenuItem.Name = "filenameWithoutExtensionToolStripMenuItem";
+            filenameWithoutExtensionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            filenameWithoutExtensionToolStripMenuItem.Tag = "FileBasenameWithoutExtension";
+            filenameWithoutExtensionToolStripMenuItem.Text = "File basename without extension";
+            filenameWithoutExtensionToolStripMenuItem.ToolTipText = "Name of file without directory or extension, e.g. \"Song\"";
+            // 
+            // playbackStateToolStripMenuItem1
+            // 
+            playbackStateToolStripMenuItem1.Name = "playbackStateToolStripMenuItem1";
+            playbackStateToolStripMenuItem1.Size = new System.Drawing.Size(250, 22);
+            playbackStateToolStripMenuItem1.Tag = "PlaybackState";
+            playbackStateToolStripMenuItem1.Text = "Playback state";
+            playbackStateToolStripMenuItem1.ToolTipText = "\"playing\", \"paused\", or \"stopped\"";
             // 
             // writeToFileLabel
             // 
+            this.writeToFileLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.writeToFileLabel.AutoSize = true;
-            this.writeToFileLabel.Location = new System.Drawing.Point(13, 76);
+            this.writeToFileLabel.Location = new System.Drawing.Point(14, 154);
             this.writeToFileLabel.Name = "writeToFileLabel";
             this.writeToFileLabel.Size = new System.Drawing.Size(66, 13);
-            this.writeToFileLabel.TabIndex = 5;
+            this.writeToFileLabel.TabIndex = 8;
             this.writeToFileLabel.Text = "&Save text as";
             // 
             // textFilenameEditor
@@ -474,62 +528,62 @@
             // 
             // textBrowseButton
             // 
-            this.textBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBrowseButton.Location = new System.Drawing.Point(499, 71);
+            this.textBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBrowseButton.Location = new System.Drawing.Point(533, 150);
             this.textBrowseButton.Name = "textBrowseButton";
-            this.textBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.textBrowseButton.TabIndex = 7;
+            this.textBrowseButton.Size = new System.Drawing.Size(75, 22);
+            this.textBrowseButton.TabIndex = 10;
             this.textBrowseButton.Text = "&Browse…";
             this.textBrowseButton.UseVisualStyleBackColor = true;
             this.textBrowseButton.Click += new System.EventHandler(this.onTextFileBrowseButtonClick);
             // 
             // textFilename
             // 
-            this.textFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textFilename.Location = new System.Drawing.Point(127, 73);
+            this.textFilename.Location = new System.Drawing.Point(128, 151);
             this.textFilename.Name = "textFilename";
-            this.textFilename.Size = new System.Drawing.Size(366, 20);
-            this.textFilename.TabIndex = 6;
+            this.textFilename.Size = new System.Drawing.Size(398, 20);
+            this.textFilename.TabIndex = 9;
             this.textFilename.TextChanged += new System.EventHandler(this.onFilenameChange);
             // 
             // templateLabel
             // 
             this.templateLabel.AutoSize = true;
-            this.templateLabel.Location = new System.Drawing.Point(13, 18);
+            this.templateLabel.Location = new System.Drawing.Point(14, 58);
             this.templateLabel.Name = "templateLabel";
             this.templateLabel.Size = new System.Drawing.Size(71, 13);
-            this.templateLabel.TabIndex = 0;
+            this.templateLabel.TabIndex = 3;
             this.templateLabel.Text = "&Text template";
             // 
             // templateEditor
             // 
             this.templateEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.templateEditor.Location = new System.Drawing.Point(127, 15);
+            this.templateEditor.Location = new System.Drawing.Point(128, 55);
             this.templateEditor.Name = "templateEditor";
-            this.templateEditor.Size = new System.Drawing.Size(366, 20);
-            this.templateEditor.TabIndex = 1;
+            this.templateEditor.Size = new System.Drawing.Size(362, 20);
+            this.templateEditor.TabIndex = 4;
             this.templateEditor.TextChanged += new System.EventHandler(this.onTemplateChange);
             // 
             // templateInsertButton
             // 
             this.templateInsertButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.templateInsertButton.Location = new System.Drawing.Point(499, 13);
+            this.templateInsertButton.Location = new System.Drawing.Point(497, 54);
             this.templateInsertButton.Name = "templateInsertButton";
-            this.templateInsertButton.Size = new System.Drawing.Size(75, 23);
-            this.templateInsertButton.TabIndex = 2;
-            this.templateInsertButton.Text = "&Insert";
+            this.templateInsertButton.Size = new System.Drawing.Size(111, 22);
+            this.templateInsertButton.TabIndex = 5;
+            this.templateInsertButton.Text = "&Insert placeholder";
             this.templateInsertButton.UseVisualStyleBackColor = true;
             this.templateInsertButton.Click += new System.EventHandler(this.showTemplateMenu);
             // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.okButton.Location = new System.Drawing.Point(337, 196);
+            this.okButton.Location = new System.Drawing.Point(371, 353);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 13;
+            this.okButton.TabIndex = 21;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.onClickOk);
@@ -538,32 +592,35 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(418, 196);
+            this.cancelButton.Location = new System.Drawing.Point(452, 353);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 14;
+            this.cancelButton.TabIndex = 22;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.onCancel);
             // 
             // templatePreview
             // 
-            this.templatePreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.templatePreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.templatePreview.Location = new System.Drawing.Point(127, 44);
+            this.templatePreview.Location = new System.Drawing.Point(128, 83);
+            this.templatePreview.Multiline = true;
             this.templatePreview.Name = "templatePreview";
             this.templatePreview.ReadOnly = true;
-            this.templatePreview.Size = new System.Drawing.Size(447, 20);
-            this.templatePreview.TabIndex = 4;
+            this.templatePreview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.templatePreview.Size = new System.Drawing.Size(479, 60);
+            this.templatePreview.TabIndex = 7;
             this.templatePreview.TabStop = false;
             // 
             // previewLabel
             // 
             this.previewLabel.AutoSize = true;
-            this.previewLabel.Location = new System.Drawing.Point(13, 47);
+            this.previewLabel.Location = new System.Drawing.Point(14, 86);
             this.previewLabel.Name = "previewLabel";
             this.previewLabel.Size = new System.Drawing.Size(68, 13);
-            this.previewLabel.TabIndex = 3;
+            this.previewLabel.TabIndex = 6;
             this.previewLabel.Text = "Text preview";
             // 
             // insertTemplatePlaceholderMenu
@@ -571,117 +628,130 @@
             this.insertTemplatePlaceholderMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             albumToolStripMenuItem,
             artistToolStripMenuItem,
-            filenameToolStripMenuItem,
+            fileNameToolStripMenuItem1,
+            playbackStateToolStripMenuItem1,
             titleToolStripMenuItem,
             yearToolStripMenuItem,
-            this.otherToolStripMenuItem,
+            otherToolStripMenuItem,
             this.toolStripSeparator1,
             this.ifToolStripMenuItem,
             this.ifElseToolStripMenuItem,
+            this.jsonObjectToolStripMenuItem,
             this.newLineToolStripMenuItem,
             this.toolStripSeparator2,
             this.helpToolStripMenuItem});
             this.insertTemplatePlaceholderMenu.Name = "insertTemplatePlaceholderMenu";
             this.insertTemplatePlaceholderMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.insertTemplatePlaceholderMenu.ShowImageMargin = false;
-            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(156, 258);
+            this.insertTemplatePlaceholderMenu.Size = new System.Drawing.Size(251, 302);
             this.insertTemplatePlaceholderMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.onTemplateMenuSelection);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(247, 6);
             // 
             // ifToolStripMenuItem
             // 
             this.ifToolStripMenuItem.Name = "ifToolStripMenuItem";
-            this.ifToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.ifToolStripMenuItem.Text = "If";
+            this.ifToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.ifToolStripMenuItem.Text = "if";
             // 
             // ifElseToolStripMenuItem
             // 
             this.ifElseToolStripMenuItem.Name = "ifElseToolStripMenuItem";
-            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.ifElseToolStripMenuItem.Text = "If else";
+            this.ifElseToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.ifElseToolStripMenuItem.Text = "if-else";
+            // 
+            // jsonObjectToolStripMenuItem
+            // 
+            this.jsonObjectToolStripMenuItem.Name = "jsonObjectToolStripMenuItem";
+            this.jsonObjectToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
+            this.jsonObjectToolStripMenuItem.Text = "JSON object (replaces entire template)";
+            this.jsonObjectToolStripMenuItem.ToolTipText = resources.GetString("jsonObjectToolStripMenuItem.ToolTipText");
             // 
             // newLineToolStripMenuItem
             // 
             this.newLineToolStripMenuItem.Name = "newLineToolStripMenuItem";
-            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.newLineToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.newLineToolStripMenuItem.Text = "New line";
+            this.newLineToolStripMenuItem.ToolTipText = "A line break (CRLF)";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(247, 6);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(250, 22);
             this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.ToolTipText = "Open documentation webpage for mustache-sharp";
             // 
             // explanationLabel
             // 
-            this.explanationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.explanationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.explanationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.explanationLabel.Location = new System.Drawing.Point(22, 148);
+            this.explanationLabel.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.explanationLabel.Location = new System.Drawing.Point(14, 301);
             this.explanationLabel.Name = "explanationLabel";
-            this.explanationLabel.Size = new System.Drawing.Size(544, 30);
-            this.explanationLabel.TabIndex = 12;
+            this.explanationLabel.Size = new System.Drawing.Size(594, 30);
+            this.explanationLabel.TabIndex = 20;
             this.explanationLabel.Text = "When Winamp plays a track, this plug-in will save the track information and album" +
-    " art to files. The format of the text can be customized with the template.";
+    " art to files. The format of the text can be customized with templates.";
             // 
             // horizontalRule1
             // 
-            this.horizontalRule1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.horizontalRule1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.horizontalRule1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.horizontalRule1.Location = new System.Drawing.Point(17, 136);
+            this.horizontalRule1.Location = new System.Drawing.Point(17, 285);
             this.horizontalRule1.Name = "horizontalRule1";
-            this.horizontalRule1.Size = new System.Drawing.Size(555, 2);
-            this.horizontalRule1.TabIndex = 11;
+            this.horizontalRule1.Size = new System.Drawing.Size(591, 2);
+            this.horizontalRule1.TabIndex = 19;
             // 
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyButton.Location = new System.Drawing.Point(499, 196);
+            this.applyButton.Location = new System.Drawing.Point(533, 353);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
-            this.applyButton.TabIndex = 15;
+            this.applyButton.TabIndex = 23;
             this.applyButton.Text = "&Apply";
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.onClickApply);
             // 
             // albumArtLabel
             // 
+            this.albumArtLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.albumArtLabel.AutoSize = true;
-            this.albumArtLabel.Location = new System.Drawing.Point(13, 105);
+            this.albumArtLabel.Location = new System.Drawing.Point(14, 230);
             this.albumArtLabel.Name = "albumArtLabel";
             this.albumArtLabel.Size = new System.Drawing.Size(92, 13);
-            this.albumArtLabel.TabIndex = 8;
+            this.albumArtLabel.TabIndex = 14;
             this.albumArtLabel.Text = "Save a&lbum art as";
             // 
             // albumArtBrowseButton
             // 
-            this.albumArtBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.albumArtBrowseButton.Location = new System.Drawing.Point(499, 100);
+            this.albumArtBrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.albumArtBrowseButton.Location = new System.Drawing.Point(533, 226);
             this.albumArtBrowseButton.Name = "albumArtBrowseButton";
-            this.albumArtBrowseButton.Size = new System.Drawing.Size(75, 23);
-            this.albumArtBrowseButton.TabIndex = 10;
-            this.albumArtBrowseButton.Text = "B&rowse…";
+            this.albumArtBrowseButton.Size = new System.Drawing.Size(75, 22);
+            this.albumArtBrowseButton.TabIndex = 16;
+            this.albumArtBrowseButton.Text = "Br&owse…";
             this.albumArtBrowseButton.UseVisualStyleBackColor = true;
             this.albumArtBrowseButton.Click += new System.EventHandler(this.onAlbumArtBrowseButtonClick);
             // 
             // albumArtFilename
             // 
-            this.albumArtFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.albumArtFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.albumArtFilename.Location = new System.Drawing.Point(127, 102);
+            this.albumArtFilename.Location = new System.Drawing.Point(128, 227);
             this.albumArtFilename.Name = "albumArtFilename";
-            this.albumArtFilename.Size = new System.Drawing.Size(366, 20);
-            this.albumArtFilename.TabIndex = 9;
+            this.albumArtFilename.Size = new System.Drawing.Size(398, 20);
+            this.albumArtFilename.TabIndex = 15;
             this.albumArtFilename.TextChanged += new System.EventHandler(this.onFilenameChange);
             // 
             // albumArtFilenameEditor
@@ -691,13 +761,128 @@
             this.albumArtFilenameEditor.Title = "Choose file to save Now Playing album art into";
             this.albumArtFilenameEditor.FileOk += new System.ComponentModel.CancelEventHandler(this.onSubmitFilename);
             // 
+            // preserveAlbumArtWhenNotPlaying
+            // 
+            this.preserveAlbumArtWhenNotPlaying.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.preserveAlbumArtWhenNotPlaying.AutoSize = true;
+            this.preserveAlbumArtWhenNotPlaying.Location = new System.Drawing.Point(128, 254);
+            this.preserveAlbumArtWhenNotPlaying.Name = "preserveAlbumArtWhenNotPlaying";
+            this.preserveAlbumArtWhenNotPlaying.Size = new System.Drawing.Size(180, 17);
+            this.preserveAlbumArtWhenNotPlaying.TabIndex = 17;
+            this.preserveAlbumArtWhenNotPlaying.Text = "Keep album art when not playing";
+            this.preserveAlbumArtWhenNotPlaying.UseVisualStyleBackColor = true;
+            // 
+            // textFileMenu
+            // 
+            this.textFileMenu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textFileMenu.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.textFileMenu.FormattingEnabled = true;
+            this.textFileMenu.Location = new System.Drawing.Point(17, 17);
+            this.textFileMenu.Name = "textFileMenu";
+            this.textFileMenu.Size = new System.Drawing.Size(356, 21);
+            this.textFileMenu.TabIndex = 0;
+            this.textFileMenu.SelectedIndexChanged += new System.EventHandler(this.onTextFileMenuSelectionChanged);
+            // 
+            // newTextFileButton
+            // 
+            this.newTextFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.newTextFileButton.Location = new System.Drawing.Point(380, 16);
+            this.newTextFileButton.Name = "newTextFileButton";
+            this.newTextFileButton.Size = new System.Drawing.Size(111, 23);
+            this.newTextFileButton.TabIndex = 1;
+            this.newTextFileButton.Text = "&New text file";
+            this.newTextFileButton.UseVisualStyleBackColor = true;
+            this.newTextFileButton.Click += new System.EventHandler(this.addTextFile);
+            // 
+            // removeTextFileButton
+            // 
+            this.removeTextFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.removeTextFileButton.Location = new System.Drawing.Point(497, 16);
+            this.removeTextFileButton.Name = "removeTextFileButton";
+            this.removeTextFileButton.Size = new System.Drawing.Size(111, 23);
+            this.removeTextFileButton.TabIndex = 2;
+            this.removeTextFileButton.Text = "&Remove text file";
+            this.removeTextFileButton.UseVisualStyleBackColor = true;
+            this.removeTextFileButton.Click += new System.EventHandler(this.removeTextFile);
+            // 
+            // preserveTextFileWhenNotPlaying
+            // 
+            this.preserveTextFileWhenNotPlaying.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.preserveTextFileWhenNotPlaying.AutoSize = true;
+            this.preserveTextFileWhenNotPlaying.Location = new System.Drawing.Point(128, 178);
+            this.preserveTextFileWhenNotPlaying.Name = "preserveTextFileWhenNotPlaying";
+            this.preserveTextFileWhenNotPlaying.Size = new System.Drawing.Size(154, 17);
+            this.preserveTextFileWhenNotPlaying.TabIndex = 11;
+            this.preserveTextFileWhenNotPlaying.Text = "Keep text when not playing";
+            this.preserveTextFileWhenNotPlaying.UseVisualStyleBackColor = true;
+            this.preserveTextFileWhenNotPlaying.CheckedChanged += new System.EventHandler(this.onCheckboxChange);
+            // 
+            // horizontalRule2
+            // 
+            this.horizontalRule2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.horizontalRule2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.horizontalRule2.Location = new System.Drawing.Point(17, 209);
+            this.horizontalRule2.Name = "horizontalRule2";
+            this.horizontalRule2.Size = new System.Drawing.Size(591, 2);
+            this.horizontalRule2.TabIndex = 13;
+            // 
+            // preserveTextFileDetailsLink
+            // 
+            this.preserveTextFileDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.preserveTextFileDetailsLink.AutoSize = true;
+            this.preserveTextFileDetailsLink.Location = new System.Drawing.Point(315, 179);
+            this.preserveTextFileDetailsLink.Name = "preserveTextFileDetailsLink";
+            this.preserveTextFileDetailsLink.Size = new System.Drawing.Size(37, 13);
+            this.preserveTextFileDetailsLink.TabIndex = 12;
+            this.preserveTextFileDetailsLink.TabStop = true;
+            this.preserveTextFileDetailsLink.Text = "details";
+            this.preserveTextFileDetailsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.onClickPreserveTextFileDetailsLink);
+            // 
+            // preserveAlbumArtDetailsLink
+            // 
+            this.preserveAlbumArtDetailsLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.preserveAlbumArtDetailsLink.AutoSize = true;
+            this.preserveAlbumArtDetailsLink.Location = new System.Drawing.Point(315, 255);
+            this.preserveAlbumArtDetailsLink.Name = "preserveAlbumArtDetailsLink";
+            this.preserveAlbumArtDetailsLink.Size = new System.Drawing.Size(37, 13);
+            this.preserveAlbumArtDetailsLink.TabIndex = 18;
+            this.preserveAlbumArtDetailsLink.TabStop = true;
+            this.preserveAlbumArtDetailsLink.Text = "details";
+            this.preserveAlbumArtDetailsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.onClickPreserveAlbumArtDetailsLink);
+            // 
+            // ratingStarsStripMenuItem
+            // 
+            ratingStarsStripMenuItem.Name = "ratingStarsStripMenuItem";
+            ratingStarsStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            ratingStarsStripMenuItem.Tag = "Rating_Stars";
+            ratingStarsStripMenuItem.Text = "Rating (★–★★★★★)";
+            ratingStarsStripMenuItem.ToolTipText = "Repeated \"★\" of length 1–5, or empty";
+            // 
+            // ratingStarsCustomToolStripMenuItem
+            // 
+            this.ratingStarsCustomToolStripMenuItem.Name = "ratingStarsCustomToolStripMenuItem";
+            this.ratingStarsCustomToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.ratingStarsCustomToolStripMenuItem.Tag = "";
+            this.ratingStarsCustomToolStripMenuItem.Text = "Rating (custom)";
+            this.ratingStarsCustomToolStripMenuItem.ToolTipText = "Custom text repeated for the number of stars (1–5 times), or empty";
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(586, 232);
+            this.ClientSize = new System.Drawing.Size(624, 392);
+            this.Controls.Add(this.preserveAlbumArtDetailsLink);
+            this.Controls.Add(this.preserveTextFileDetailsLink);
+            this.Controls.Add(this.horizontalRule2);
+            this.Controls.Add(this.removeTextFileButton);
+            this.Controls.Add(this.newTextFileButton);
+            this.Controls.Add(this.textFileMenu);
+            this.Controls.Add(this.preserveTextFileWhenNotPlaying);
+            this.Controls.Add(this.preserveAlbumArtWhenNotPlaying);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.horizontalRule1);
             this.Controls.Add(this.explanationLabel);
@@ -718,8 +903,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsDialog";
-            this.Text = "Now Playing to File plug-in configuration";
-            this.Load += new System.EventHandler(this.SettingsDialog_Load);
+            this.TopMost = true;
+            this.Load += new System.EventHandler(this.onSettingsDialogLoad);
             this.insertTemplatePlaceholderMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -753,8 +938,15 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem ifToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ifElseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fileBasenameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fileBasenameWithoutExtensionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem otherToolStripMenuItem;
+        private System.Windows.Forms.CheckBox preserveAlbumArtWhenNotPlaying;
+        private System.Windows.Forms.ComboBox textFileMenu;
+        private System.Windows.Forms.Button newTextFileButton;
+        private System.Windows.Forms.Button removeTextFileButton;
+        private System.Windows.Forms.CheckBox preserveTextFileWhenNotPlaying;
+        private System.Windows.Forms.Label horizontalRule2;
+        private System.Windows.Forms.LinkLabel preserveTextFileDetailsLink;
+        private System.Windows.Forms.LinkLabel preserveAlbumArtDetailsLink;
+        private System.Windows.Forms.ToolStripMenuItem jsonObjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ratingStarsCustomToolStripMenuItem;
     }
 }

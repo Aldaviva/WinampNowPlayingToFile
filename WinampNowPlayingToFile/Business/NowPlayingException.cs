@@ -1,7 +1,7 @@
-﻿#nullable enable
+#nullable enable
 
 using System;
-using WinampNowPlayingToFile.Facade;
+using WinampNowPlayingToFile.Data;
 
 namespace WinampNowPlayingToFile.Business;
 
@@ -11,6 +11,12 @@ public class NowPlayingException: ApplicationException {
 
     public NowPlayingException(string message, Exception innerException, Song? song): base(message, innerException) {
         this.song = song;
+    }
+
+    public class FileAccessException: NowPlayingException {
+
+        public FileAccessException(string message, Exception innerException): base(message, innerException, null) {}
+
     }
 
 }

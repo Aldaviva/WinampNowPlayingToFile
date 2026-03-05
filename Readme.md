@@ -1,9 +1,9 @@
 Winamp Now Playing to File
 ===
 
-[![Build status](https://img.shields.io/github/actions/workflow/status/Aldaviva/WinampNowPlayingToFile/msbuild.yml?branch=master&logo=github)](https://github.com/Aldaviva/WinampNowPlayingToFile/actions/workflows/msbuild.yml) [![Test status](https://img.shields.io/testspace/tests/Aldaviva/Aldaviva:WinampNowPlayingToFile/master?passed_label=passing&failed_label=failing&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NTkgODYxIj48cGF0aCBkPSJtNTk4IDUxMy05NCA5NCAyOCAyNyA5NC05NC0yOC0yN3pNMzA2IDIyNmwtOTQgOTQgMjggMjggOTQtOTQtMjgtMjh6bS00NiAyODctMjcgMjcgOTQgOTQgMjctMjctOTQtOTR6bTI5My0yODctMjcgMjggOTQgOTQgMjctMjgtOTQtOTR6TTQzMiA4NjFjNDEuMzMgMCA3Ni44My0xNC42NyAxMDYuNS00NFM1ODMgNzUyIDU4MyA3MTBjMC00MS4zMy0xNC44My03Ni44My00NC41LTEwNi41UzQ3My4zMyA1NTkgNDMyIDU1OWMtNDIgMC03Ny42NyAxNC44My0xMDcgNDQuNXMtNDQgNjUuMTctNDQgMTA2LjVjMCA0MiAxNC42NyA3Ny42NyA0NCAxMDdzNjUgNDQgMTA3IDQ0em0wLTU1OWM0MS4zMyAwIDc2LjgzLTE0LjgzIDEwNi41LTQ0LjVTNTgzIDE5Mi4zMyA1ODMgMTUxYzAtNDItMTQuODMtNzcuNjctNDQuNS0xMDdTNDczLjMzIDAgNDMyIDBjLTQyIDAtNzcuNjcgMTQuNjctMTA3IDQ0cy00NCA2NS00NCAxMDdjMCA0MS4zMyAxNC42NyA3Ni44MyA0NCAxMDYuNVMzOTAgMzAyIDQzMiAzMDJ6bTI3NiAyODJjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjY3IDE0LjY3LTEwNiA0NHMtNDQgNjUtNDQgMTA3YzAgNDEuMzMgMTQuNjcgNzYuODMgNDQgMTA2LjVTNjY2LjY3IDU4NCA3MDggNTg0em0tNTU3IDBjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjgzIDE0LjY3LTEwNi41IDQ0UzAgMzkxIDAgNDMzYzAgNDEuMzMgMTQuODMgNzYuODMgNDQuNSAxMDYuNVMxMDkuNjcgNTg0IDE1MSA1ODR6IiBmaWxsPSIjZmZmIi8%2BPC9zdmc%2B)](https://aldaviva.testspace.com/spaces/206386) [![Coverage status](https://img.shields.io/coveralls/github/Aldaviva/WinampNowPlayingToFile?logo=coveralls)](https://coveralls.io/github/Aldaviva/WinampNowPlayingToFile?branch=master)
+[![Download count](https://img.shields.io/github/downloads/Aldaviva/WinampNowPlayingToFile/total?logo=github)](https://github.com/Aldaviva/WinampNowPlayingToFile/releases) [![Build status](https://img.shields.io/github/actions/workflow/status/Aldaviva/WinampNowPlayingToFile/msbuild.yml?branch=master&logo=github)](https://github.com/Aldaviva/WinampNowPlayingToFile/actions/workflows/msbuild.yml) [![Test status](https://img.shields.io/testspace/tests/Aldaviva/Aldaviva:WinampNowPlayingToFile/master?passed_label=passing&failed_label=failing&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NTkgODYxIj48cGF0aCBkPSJtNTk4IDUxMy05NCA5NCAyOCAyNyA5NC05NC0yOC0yN3pNMzA2IDIyNmwtOTQgOTQgMjggMjggOTQtOTQtMjgtMjh6bS00NiAyODctMjcgMjcgOTQgOTQgMjctMjctOTQtOTR6bTI5My0yODctMjcgMjggOTQgOTQgMjctMjgtOTQtOTR6TTQzMiA4NjFjNDEuMzMgMCA3Ni44My0xNC42NyAxMDYuNS00NFM1ODMgNzUyIDU4MyA3MTBjMC00MS4zMy0xNC44My03Ni44My00NC41LTEwNi41UzQ3My4zMyA1NTkgNDMyIDU1OWMtNDIgMC03Ny42NyAxNC44My0xMDcgNDQuNXMtNDQgNjUuMTctNDQgMTA2LjVjMCA0MiAxNC42NyA3Ny42NyA0NCAxMDdzNjUgNDQgMTA3IDQ0em0wLTU1OWM0MS4zMyAwIDc2LjgzLTE0LjgzIDEwNi41LTQ0LjVTNTgzIDE5Mi4zMyA1ODMgMTUxYzAtNDItMTQuODMtNzcuNjctNDQuNS0xMDdTNDczLjMzIDAgNDMyIDBjLTQyIDAtNzcuNjcgMTQuNjctMTA3IDQ0cy00NCA2NS00NCAxMDdjMCA0MS4zMyAxNC42NyA3Ni44MyA0NCAxMDYuNVMzOTAgMzAyIDQzMiAzMDJ6bTI3NiAyODJjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjY3IDE0LjY3LTEwNiA0NHMtNDQgNjUtNDQgMTA3YzAgNDEuMzMgMTQuNjcgNzYuODMgNDQgMTA2LjVTNjY2LjY3IDU4NCA3MDggNTg0em0tNTU3IDBjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjgzIDE0LjY3LTEwNi41IDQ0UzAgMzkxIDAgNDMzYzAgNDEuMzMgMTQuODMgNzYuODMgNDQuNSAxMDYuNVMxMDkuNjcgNTg0IDE1MSA1ODR6IiBmaWxsPSIjZmZmIi8%2BPC9zdmc%2B)](https://aldaviva.testspace.com/spaces/206386) [![Coverage status](https://img.shields.io/coveralls/github/Aldaviva/WinampNowPlayingToFile?logo=coveralls)](https://coveralls.io/github/Aldaviva/WinampNowPlayingToFile?branch=master)
 
-This is a plugin for [Winamp](http://www.winamp.com/) that saves text information and album art for the currently playing song to files on your computer. You can customize where the files are saved, as well as the format of the text.
+This is a plugin for [Winamp](https://winamp.com/player) that saves text information and album art for the currently playing song to files on your computer. You can customize where the files are saved, as well as the format of the text.
 
 <!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" levels="1,2,3,4" -->
 
@@ -19,13 +19,14 @@ This is a plugin for [Winamp](http://www.winamp.com/) that saves text informatio
         - [Fallback artwork](#fallback-artwork)
 - [Integration](#integration)
     - [OBS](#obs)
+    - [Screensaver](#screensaver)
 - [Uninstallation](#uninstallation)
 
 <!-- /MarkdownTOC -->
 
 ## Problem
 
-I was broadcasting video game streams on [my Twitch.tv channel](https://twitch.tv/aldaviva), in which I also play music in the background. I wanted viewers to be able to tell which song I was playing at any given time in case they liked it and wanted to find it for themselves. I started using the [Advanced mIRC Integration Plug-In (AMIP)](http://amip.tools-for.net/wiki/), which is generally used for showing your Now Playing status in IRC using [mIRC](https://www.mirc.com/). It also lets you save the status to a text file, which I added as a Text Source in [OBS](https://obsproject.com/).
+I was broadcasting video game streams on [my Twitch.tv channel](https://twitch.tv/aldaviva), in which I also play music in the background. I wanted viewers to be able to tell which song I was playing at any given time in case they liked it and wanted to find it for themselves. I started using the [Advanced mIRC Integration Plug-In (AMIP)](https://amip.tools-for.net/wiki/), which is generally used for showing your Now Playing status in IRC using [mIRC](https://www.mirc.com/). It also lets you save the status to a text file, which I added as a Text Source in [OBS](https://obsproject.com/).
 
 Unfortunately, AMIP only supports encoding the text using ANSI, OEM (DOS), FIDO, or KOI8 character encodings, none of which are UTF-8, which OBS requires. For example, [Jävla Sladdar](https://www.youtube.com/watch?v=zaCZ9VkJ-so) was being shown in the video stream as `J�vla Sladdar`, because even though AMIP was saving `ä` using ANSI (`0xe4`), OBS was decoding the file with UTF-8, so the character was not properly decoded. In UTF-8, `ä` is supposed to be encoded as `0xc3 0xa4` because `0xe4` is greater than `0x7f` (i.e. `0xe4` requires more than 7 bits to represent), so it spills over into a second code unit (it's a multibyte character).
 
@@ -36,20 +37,22 @@ I wrote my own Winamp plugin to save information about the currently playing son
 ## Installation
 
 1. Ensure you have [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework) Runtime or later installed.
-    - This is included in Windows 10 version 1803 and later.
+    - This is included in Windows 10 version 1803, Server 2019, and later versions.
     - If you are not sure which .NET version you have, you can check using [ASoft .NET Version Detector](https://www.asoft.be/prod_netver.html).
 1. Ensure you have [Microsoft Visual C++ 2015–2022 Redistributable x86](https://aka.ms/vs/17/release/vc_redist.x86.exe) installed.
 1. Exit Winamp if it's already running.
 1. Download [**`WinampNowPlayingToFile.zip`**](https://github.com/Aldaviva/WinampNowPlayingToFile/releases/latest/download/WinampNowPlayingToFile.zip) from the [latest release](https://github.com/Aldaviva/WinampNowPlayingToFile/releases) (not the source code ZIP file).
-1. Extract the archive to your Winamp installation directory.
+1. Extract the archive to your Winamp installation directory, preserving the relative directory structure. Note that not all of the files go in the same directory.
     ```
     📁 C:\Program Files (x86)\Winamp
     ├── 📁 plugins
     │   └── 📄 gen_WinampNowPlayingToFile.dll
-    ├── 📄 WinampNowPlayingToFile.dll
     ├── 📄 Daniel15.Sharpamp.dll
     ├── 📄 mustache-sharp.dll
-    └── 📄 taglib-sharp.dll
+    ├── 📄 Plugins.dll
+    ├── 📄 taglib-sharp.dll
+    ├── 📄 WinampNowPlayingToFile.dll
+    └── 📄 WinampNowPlayingToFile.Abstractions.dll
     ```
 
 ## Configuration
@@ -73,38 +76,39 @@ U2 – Exit – The Joshua Tree
 
 To customize the text file location and contents, go to the plugin preferences in Winamp.
 
-1. You can change the file contents by editing the **Text template** and inserting placeholders inside `{{` `}}`, either with the **Insert** button or by typing them manually. See [Placeholder fields](#placeholder-fields) below for all the fields you can use in a placeholder. For example, a simple template that could render the above example text is
+1. You can change the file contents by editing the **Text template** and inserting placeholders inside `{{` `}}`, either with the **Insert placeholder** button or by typing them manually. See [Placeholder fields](#placeholder-fields) below for all the fields you can use in a placeholder. For example, a simple template that could render the above example text is
     ```handlebars
     {{Artist}} – {{Title}} – {{Album}}
     ```
 1. As you fill in the template, the **Text preview** will be updated to show how the currently playing song would be rendered, or an example song if no song is available.
 1. You can change where the file is written in your filesystem by selecting a different path for **Save text as**.
 
-When Winamp is not playing a song, this text file will be truncated to 0 bytes.
+When Winamp is not playing a song &mdash; for example, when it is paused, stopped, or you exit Winamp &mdash; this text file will be truncated to 0 bytes. To override this behavior and preserve the text from the most recently played track, check the "Keep text when not playing" checkbox in the configuration dialog box. This will make the text file remain unchanged when, for example, you press the Stop button.
 
 #### Placeholder fields
 
-Placeholder values that are missing or empty will be rendered as the empty string.
+Placeholder values that are missing, null, or empty will be rendered as the empty string. Field names are case-insensitive.
 
 |Field name|Type|Examples|Notes|
 |-|-|-|-|
 |`Album`|string|`The Joshua Tree`||
 |`AlbumArtist`|string|`U2`||
 |`Artist`|string|`U2`||
-|`Bitrate`|int|`320`||
+|`Bitrate`|int|`320`|Kilobits per second (kbps)|
 |`BPM`|int|`123`|Beats per minute|
 |`Category`|string|`Rock`||
 |`Comment`|string|||
 |`Composer`|string|`U2`||
 |`Conductor`|string|||
 |`Director`|string||Most commonly used for video files|
-|`Disc`|int|`1`|If it can't be parsed as an int (like `1/2`) it will be a string|
+|`Directory`|string|`C:\Users\Ben\Music`|Folder name|
+|`Disc`|int|`1`|Fractions like `1/2` will be converted to just the numerator (`1`)|
 |`Elapsed`|TimeSpan|`00:00:28.5080000`|Updated 1hz, millisecond resolution. See [formatting](#formatting) for `m:ss` and other formats.|
 |`Family`|string|`MPEG Layer 3 Audio File`|Codec or container format|
 |`FileBasename`|string|`Exit.mp3`|Filename without path|
 |`FileBasenameWithoutExtension`|string|`Exit`|Filename without path or extension|
 |`Filename`|string|`C:\Users\Ben\Music\Exit.mp3`|Absolute path to file, or a stream URL|
-|`Gain`|string|`+0.92 dB`||
+|`Gain`|double|`0.92`|Decibels (dB)|
 |`Genre`|string|`Rock`||
 |`ISRC`|string|`GBUM70709782`|12-character [International Standard Recording Code](https://en.wikipedia.org/wiki/International_Standard_Recording_Code) for the track|
 |`Key`|string|`E minor`||
@@ -112,21 +116,23 @@ Placeholder values that are missing or empty will be rendered as the empty strin
 |`Lossless`|bool|`false`|`true` for lossless compression, `false` for lossy|
 |`Lyricist`|string|`Bono`||
 |`Media`|string|`LP`||
+|`PlaybackState`|string|`playing`|`playing`, `paused`, or `stopped`|
 |`Producer`|string|`Brian Eno, Daniel Lanois`||
 |`Publisher`|string|`Island Records`||
-|`Rating`|int|`2`|In the range [1, 5]|
-|`ReplayGain_Album_Gain`|string|`-3.03 dB`||
+|`Rating`|int|`2`|In the range [1, 5]. From file metadata. To show Media Library ratings, enable Preferences › Media Library › Options › Save ratings to file for compatible formats.|
+|`Rating_Stars`|string|`★★`|1 to 5 repeated star characters, or `null` for unrated. See `Rating` note and [helpers](#helpers).|
+|`ReplayGain_Album_Gain`|double|`-3.03`|Decibels (dB)|
 |`ReplayGain_Album_Peak`|double|`1.022630334`||
-|`ReplayGain_Track_Gain`|string|`-0.77 dB`||
+|`ReplayGain_Track_Gain`|double|`-0.77`|Decibels (dB)|
 |`ReplayGain_Track_Peak`|double|`1.006227493`||
 |`Stereo`|bool|`true`|`true` for stereo, `false` for mono|
 |`Subtitle`|string|||
 |`Title`|string|`Exit`||
 |`Tool`|string|`iTunes 10.5.1`|From the `ENCODEDBY` ID3v2 tag|
-|`Track`|int|`1`|If it can't be parsed as an int (like `1/5`) it will be a string|
+|`Track`|int|`1`|Fractions like `1/5` will be converted to just the numerator (`1`)|
 |`Type`|string|`audio`|`audio` or `video`|
 |`VBR`|bool|`false`|`true` for variable bitrate, `false` for constant bitrate|
-|`Year`|int|`1987`|If it can't be parsed as an int (like `1987-01-01`) it will be a string|
+|`Year`|int|`1987`|Dates like `1987-01-01` and `1987-01` will be converted to the year only (`1987`), otherwise it will be `null`|
 
 Any other values you use in a placeholder will be requested directly from Winamp as file metadata, and the response will be output as-is. If you can find other fields that Winamp handles for audio files, please [file an enhancement issue](https://github.com/Aldaviva/WinampNowPlayingToFile/issues/new?labels=enhancement&title=New%20metadata%20field:%20) so it can be added to this program and documentation.
 
@@ -144,40 +150,63 @@ You can also render strings depending on a boolean value.
 {{#if Lossless}}lossless{{#else}}lossy{{/if}}
 ```
 
+To replace the ★ character in `Rating_Stars` with a custom or multiple characters, use the built-in [`{{#each}}`](https://github.com/jehugaleahsa/mustache-sharp/blob/v1.0/README.md#the-each-tag) helper. For example, you can use the ⭐ emoji, or a 10-star scale.
+```handlebars
+Default:          {{Rating_Stars}}{{#newline}}
+Custom width:     {{#each Rating_Stars}}★★{{/each}}{{#newline}}
+Custom character: {{#each Rating_Stars}}⭐{{/each}}
+```
+```text
+Default:          ★★★★★
+Custom width:     ★★★★★★★★★★
+Custom character: ⭐⭐⭐⭐⭐
+```
+
+There is also a custom helper for JSON object serialization, in case you're trying to generate structured text that can be easily parsed by another program. Pass a space-delimited list of the field names to include in the object. When used, this helper must be the only text in the template, or it won't render.
+```handlebars
+{{#json artist title album}}
+```
+```json
+{ "artist": "U2", "title": "Exit", "album": "The Joshua Tree" }
+```
+
 #### Formatting
 
 Metadata values may optionally be formatted using the [.NET string formatting syntax](https://learn.microsoft.com/en-us/dotnet/api/system.string.format?view=netframework-4.7.2&redirectedfrom=MSDN#remarks).
 
-|Topic|Example Input|Output|Notes|
+|Topic|Example input|Output|Notes|
 |-|-|-|-|
 |Timespan|<pre lang="handlebars">{{Length:m\\:ss}}</pre>|`4:33`|See [standard](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-timespan-format-strings) and [custom TimeSpan format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-timespan-format-strings)|
 |Timespan|<pre lang="handlebars">{{Length:hh\\:mm\\:ss}}</pre>|`00:04:33`|See [standard](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-timespan-format-strings) and [custom TimeSpan format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-timespan-format-strings)|
 |Digit grouping|<pre lang="handlebars">{{Bitrate:N0}}kbps</pre>|`1,226kbps`|See [standard numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#numeric-format-specifier-n)|
 |Floating point precision|<pre lang="handlebars">{{ReplayGain_Album_Peak:F6}}</pre>|`0.986115`|See [standard numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#fixed-point-format-specifier-f)|
 |Zero padding|<pre lang="handlebars">#{{Track:00}}</pre>|`#06`|See [custom numeric format strings](https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-numeric-format-strings#the-0-custom-specifier)|
-|Space padding|<pre lang="handlebars">{{Track,3}}.</pre>|`  1.`|See [spacing](https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-string-format#control-spacing)|
+|Space padding|<pre lang="handlebars">{{Track,3}}.</pre>|`  1.`|The width argument is a positive number for left padding and negative for right. See [spacing](https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-string-format#control-spacing).|
 
 ### Album art
 
 This plugin also copies the currently playing song's album art from the song metadata or from an image in the song's folder. By default, it is copied to `%TEMP%\winamp_now_playing.png`.
 
-Note that the file extension is always the one you specify in the preferences, even if the album art has a different file type, to make it easier to refer to this file from other programs like OBS without having to deal with multiple possible file extensions. This means that this file may be created as a JPEG with the `.png` file extension, for example. Most programs, including OBS, can handle this case just fine, but the mismatch is a little silly. Feel free to change the file extension using the preferences.
-
 You can customize the album art filename and path using **Save album art as** in the same plugin configuration dialog as the text file above.
+
+Note that the file extension is always the one you specify in the preferences, even if the album art has a different file type, to make it easier to refer to this file from other programs like OBS without having to deal with multiple possible file extensions. This means that this file may be created as a JPEG with the `.png` file extension, for example. Most programs, including OBS, can handle this case just fine, but the mismatch is a little silly. Feel free to change the file extension using the preferences.
 
 #### Fallback artwork
 
 When there is no album art, the copied files will be deleted. However, this may be undesirable because it can leave dependent interfaces in a weird-looking state (like an OBS layout with a big transparent gap where the album art would normally be), and it will also trigger the Missing Files warning dialog box each time you launch OBS.
 
-To resolve this, you can specify custom image files that will be copied instead when there is no album art. Here are some sample [black](https://placehold.co/128x128/000f/0000.png) and [transparent](https://placehold.co/128x128/0000/0000.png) images to get started, or you can use your own. There are no requirements for the format or dimensions of these images besides what your downstream consumer like OBS accepts.
+To resolve this, you can specify custom image files that will be copied instead when there is no album art. Here are some sample [black](https://placehold.co/128x128/000f/0000.png) and [transparent](https://placehold.co/128x128/0000/0000.png) images to get started, or you can use your own. See the following sections for the file paths you should save the fallback images as. There are no requirements for the format or dimensions of these images besides what your downstream consumer like OBS accepts.
 
 ##### Missing artwork
 
-When Winamp is playing a song with no album art, the image file will be deleted. To override this, save your desired image file as `emptyAlbumArt.png` in the Winamp installation directory.
+When Winamp plays a song with no album art, the image file will be deleted. To override this, save your desired image file as `emptyAlbumArt.png` in the Winamp installation directory.
 
 ##### Playback stopped
 
-When Winamp is paused, stopped, or closed, the image file will be deleted. To override this, save your desired image file as `stoppedAlbumArt.png` in the Winamp installation directory.
+When Winamp is paused, stopped, or closed, the image file will be deleted. You have two ways to override this.
+
+- To show a custom image, save your desired image file as `stoppedAlbumArt.png` in the Winamp installation directory.
+- To preserve the album art from the most recently played song, check the "Keep album art when not playing" checkbox in the configuration dialog box.
 
 ## Integration
 
@@ -190,6 +219,17 @@ When Winamp is paused, stopped, or closed, the image file will be deleted. To ov
 1. Create a new Image source in your scene.
 1. In the Properties for your image source, select the image file created by this plugin (by default, `%TEMP%\winamp_now_playing.png`).
 
+### Screensaver
+
+1. Search the Windows Settings app or Start Menu for "screen saver" to open the Screen Saver Settings control panel.
+1. Change the Screen Saver to **Photos**.
+    - If you want the photo to move around the screen periodically, for example to prevent OLED burn-in, you can use the [**My Pictures Slideshow** (`ssmypics.scr`) from Windows XP](https://archive.org/details/windows_xp_screen_savers) instead.
+1. Click Settings, then choose the directory where this plugin creates the image file. By default, this is `%TEMP%`, but you may want to change it to a different folder in order to
+    - make the folder easier to browse to in the screensaver settings without having to show hidden files in Folder Options
+    - ensure no other images created in the same directory by other programs appear in the screensaver
+1. Make the slideshow advance frequently ("fast," or closer to the 6 second end of the range) to reduce the latency between a new song playing and the screensaver rendering the new album art.
+1. Choose a duration for the screensaver to appear that is shorter than the durations for the screen to turn off and for the computer to enter standby or hibernation.
+
 ## Uninstallation
 
 1. In Winamp's Preferences, go to Plug-ins › General Purpose.
@@ -200,10 +240,12 @@ When Winamp is paused, stopped, or closed, the image file will be deleted. To ov
     📁 C:\Program Files (x86)\Winamp
     ├── 📁 plugins
     │   └── 📄 gen_WinampNowPlayingToFile.dll
-    ├── 📄 WinampNowPlayingToFile.dll
     ├── 📄 Daniel15.Sharpamp.dll
     ├── 📄 mustache-sharp.dll
-    └── 📄 taglib-sharp.dll
+    ├── 📄 Plugins.dll
+    ├── 📄 taglib-sharp.dll
+    ├── 📄 WinampNowPlayingToFile.dll
+    └── 📄 WinampNowPlayingToFile.Abstractions.dll
     ```
 1. Delete the song information files (by default, `winamp_now_playing.txt` and `winamp_now_playing.png` in `%TEMP%`).
 1. Delete the plugin settings registry key `HKCU\Software\WinampNowPlayingToFile`.

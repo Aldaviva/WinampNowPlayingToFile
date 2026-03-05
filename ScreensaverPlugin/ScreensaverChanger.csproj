@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net472</TargetFramework>
+        <AssemblyName>WinampNowPlayingToFile.Plugins.$(MSBuildProjectName)</AssemblyName>
+        <RootNamespace>$(AssemblyName)</RootNamespace>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
+        <Authors>Ben Hutchison</Authors>
+        <Copyright>© 2026 $(Authors)</Copyright>
+        <Company>$(Authors)</Company>
+        <DebugType>embedded</DebugType>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="WinampNowPlayingToFile.Abstractions" Version="0.0.0" ExcludeAssets="runtime" />
+    </ItemGroup>
+
+</Project>

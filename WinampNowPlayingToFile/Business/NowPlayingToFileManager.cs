@@ -1,16 +1,18 @@
-﻿#nullable enable
+#nullable enable
 
-using Daniel15.Sharpamp;
-using Mustache;
+using Plugins;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Timers;
+using WinampNowPlayingToFile.Data;
 using WinampNowPlayingToFile.Facade;
+using WinampNowPlayingToFile.Facade.Templating;
+using WinampNowPlayingToFile.Plugins;
 using WinampNowPlayingToFile.Settings;
-using Song = WinampNowPlayingToFile.Facade.Song;
+using Song = WinampNowPlayingToFile.Data.Song;
 
 namespace WinampNowPlayingToFile.Business;
 
@@ -24,26 +26,28 @@ public interface INowPlayingToFileManager {
 
 public class NowPlayingToFileManager: INowPlayingToFileManager {
 
-    private static readonly UTF8Encoding        UTF8               = new(false, true);
-    private static readonly IEnumerable<string> ARTWORK_EXTENSIONS = new[] { ".bmp", ".gif", ".jpeg", ".jpg", ".png" };
-    private static readonly IEnumerable<string> ARTWORK_BASE_NAMES = new[] { "cover", "folder", "front", "albumart" };
+    private static readonly UTF8Encoding        UTF8                = new(false, true);
+    private static readonly ISet<string>        ARTWORK_EXTENSIONS  = new HashSet<string> { ".bmp", ".gif", ".jpeg", ".jpg", ".png" };
+    private static readonly IEnumerable<string> ARTWORK_BASE_NAMES  = ["cover", "folder", "front", "albumart"];
+    private static readonly ISet<string>        DYNAMIC_FIELD_NAMES = new HashSet<string> { "elapsed", "rating", "rating_stars" };
 
     private static byte[]? albumArtWhenMissingFromSong => getInstallationDirectoryImageOrFallback("emptyAlbumArt.png");
     private static byte[]? albumArtWhenStopped => getInstallationDirectoryImageOrFallback("stoppedAlbumArt.png");
 
-    private readonly  WinampController winampController;
-    private readonly  ISettings        settings;
-    private readonly  FormatCompiler   templateCompiler = new();
-    internal readonly Timer            renderTextTimer  = new(1000);
+    private readonly  WinampController                              winampController;
+    private readonly  ISettings                                     settings;
+    private readonly  UnfuckedTemplateCompiler                      templateCompiler = new UnfuckedMustacheCompiler();
+    internal readonly Timer                                         renderTextTimer  = new(1000);
+    private readonly  List<UnfuckedGenerator?>                      cachedTemplates;
+    private readonly  IPluginManager<IWinampNowPlayingToFilePlugin> pluginManager = new PluginManager<IWinampNowPlayingToFilePlugin>("Plugins\\WinampNowPlayingToFile");
 
-    private Generator? cachedTemplate;
-    private bool       _textTemplateDependsOnTime;
+    private Song? previousSong;
 
-    private bool textTemplateDependsOnTime {
-        get => _textTemplateDependsOnTime;
+    private bool textTemplateDependsOnDynamicFields {
+        get;
         set {
-            if (_textTemplateDependsOnTime != value) {
-                _textTemplateDependsOnTime = value;
+            if (field != value) {
+                field = value;
                 startOrStopTextRenderingTimer();
             }
         }
@@ -55,37 +59,66 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         this.winampController = winampController;
         this.settings         = settings;
 
-        this.winampController.songChanged += delegate { update(); };
+        cachedTemplates = new List<UnfuckedGenerator?>(settings.textFilenames.Count);
+        cachedTemplates.AddRange(Enumerable.Repeat<UnfuckedGenerator?>(null, cachedTemplates.Capacity));
 
-        this.winampController.statusChanged += (_, args) => {
-            update();
-            startOrStopTextRenderingTimer(args.Status);
-        };
-
-        this.settings.settingsUpdated += delegate {
-            cachedTemplate            = null;
-            textTemplateDependsOnTime = false;
-            update();
-        };
-
-        templateCompiler.PlaceholderFound += (_, args) => {
-            if (args.Key.Equals("Elapsed", StringComparison.CurrentCultureIgnoreCase)) {
-                textTemplateDependsOnTime = true;
+        templateCompiler.placeholderFound += (_, args) => {
+            if (!textTemplateDependsOnDynamicFields && DYNAMIC_FIELD_NAMES.Contains(args.key.ToLowerInvariant())) {
+                textTemplateDependsOnDynamicFields = true;
             }
         };
 
-        renderTextTimer.Elapsed += (_, _) => { update(false); };
+        pluginManager.LoadAll();
+
+        this.winampController.songChanged += delegate { update(); };
+
+        this.winampController.statusChanged += (_, status) => {
+            update();
+            startOrStopTextRenderingTimer(status);
+        };
+
+        settings.settingsUpdated += delegate {
+            int oldTemplateCount = cachedTemplates.Count;
+            int newTemplateCount = settings.textTemplates.Count;
+
+            if (oldTemplateCount > newTemplateCount) {
+                cachedTemplates.RemoveRange(newTemplateCount, oldTemplateCount - newTemplateCount);
+            } else if (oldTemplateCount < newTemplateCount) {
+                cachedTemplates.AddRange(Enumerable.Repeat<UnfuckedGenerator?>(null, newTemplateCount - oldTemplateCount));
+            }
+
+            for (int templateIndex = 0; templateIndex < newTemplateCount; templateIndex++) {
+                cachedTemplates[templateIndex] = null;
+            }
+
+            textTemplateDependsOnDynamicFields = false;
+            update();
+        };
+
+        renderTextTimer.Elapsed += (_, _) => update(true);
 
         update();
     }
 
-    internal void update(bool updateAlbumArt = true) {
+    internal void update(bool causedByTimer = false) {
         try {
             if (winampController.currentSong is { Filename: not "" } currentSong) {
-                saveText(renderText(currentSong));
+                previousSong = currentSong;
 
-                if (updateAlbumArt) {
+                for (int templateIndex = 0; templateIndex < settings.textFilenames.Count; templateIndex++) {
+                    saveText(renderText(currentSong, templateIndex), templateIndex);
+                }
+
+                if (!causedByTimer) {
                     saveImage(findAlbumArt(currentSong));
+
+                    foreach (IWinampNowPlayingToFilePlugin plugin in pluginManager.Plugins) {
+                        try {
+                            plugin.OnSongUpdated(currentSong, winampController.status);
+                        } catch (Exception e) when (e is not OutOfMemoryException) {
+                            error?.Invoke(this, new NowPlayingException($"Exception notifying plugin {plugin.GetType().Name} about song", e, currentSong));
+                        }
+                    }
                 }
             }
         } catch (Exception e) when (e is not OutOfMemoryException) {
@@ -93,42 +126,44 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         }
     }
 
-    internal string renderText(Song currentSong) {
-        return winampController.status == Status.Playing ? getTemplate().Render(currentSong) : string.Empty;
+    internal string renderText(Song currentSong, int templateIndex) {
+        Song? songToRender = winampController.status == Status.Playing || settings.preserveTextFileWhenNotPlaying ? currentSong is { Filename: not "" } ? currentSong : previousSong : null;
+        return songToRender != null ? getTemplate(templateIndex).render(songToRender) : string.Empty;
     }
 
-    private void saveText(string nowPlayingText) {
-        File.WriteAllText(settings.textFilename, nowPlayingText, UTF8);
+    private void saveText(string nowPlayingText, int templateIndex) {
+        using Stream     stream = File.Open(settings.textFilenames[templateIndex], FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+        using TextWriter writer = new StreamWriter(stream, UTF8);
+        writer.Write(nowPlayingText);
     }
 
-    private Generator getTemplate() {
-        if (cachedTemplate == null) {
-            cachedTemplate             =  templateCompiler.Compile(settings.textTemplate);
-            cachedTemplate.KeyNotFound += fetchExtraMetadata;
+    private UnfuckedGenerator getTemplate(int templateIndex) {
+        if (cachedTemplates.ElementAtOrDefault(templateIndex) is not {} cachedTemplate) {
+            cachedTemplate                 =  templateCompiler.compile(settings.textTemplates[templateIndex]);
+            cachedTemplate.keyNotFound     += fetchExtraMetadata;
+            cachedTemplates[templateIndex] =  cachedTemplate;
         }
 
         return cachedTemplate;
     }
 
-    private void fetchExtraMetadata(object sender, KeyNotFoundEventArgs args) {
-        args.Substitute = winampController.fetchMetadataFieldValue(args.Key);
-        args.Handled    = true;
+    private void fetchExtraMetadata(object sender, UnfuckedKeyNotFoundEventArgs args) {
+        args.substitute = winampController.fetchMetadataFieldValue(args.key);
+        args.handled    = true;
     }
 
-    internal byte[]? findAlbumArt(Song currentSong) {
-        return winampController.status == Status.Playing
-            ? extractAlbumArt(currentSong) ?? findAlbumArtSidecarFile(currentSong) ?? albumArtWhenMissingFromSong
-            : albumArtWhenStopped;
-    }
+    internal byte[]? findAlbumArt(Song currentSong) =>
+        string.IsNullOrEmpty(settings.albumArtFilename)
+            ? null
+            : winampController.status == Status.Playing
+                ? extractAlbumArt(currentSong) ?? findAlbumArtSidecarFile(currentSong) ?? albumArtWhenMissingFromSong
+                : settings.preserveAlbumArtFileWhenNotPlaying
+                    ? null
+                    : albumArtWhenStopped;
 
     private static byte[]? extractAlbumArt(Song currentSong) {
         try {
-            return TagLib.File.Create(currentSong.Filename)
-                .Tag
-                .Pictures
-                .ElementAtOrDefault(0)?
-                .Data
-                .Data;
+            return TagLib.File.Create(currentSong.Filename).Tag.Pictures.ElementAtOrDefault(0)?.Data.Data;
         } catch (Exception e) when (e is FileNotFoundException or DirectoryNotFoundException) {
             /*
              * Probably just a race:
@@ -154,7 +189,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         DirectoryInfo songDirectory;
 
         try {
-            if (Path.GetDirectoryName(currentSong.Filename) is { } dir) {
+            if (Path.GetDirectoryName(currentSong.Filename) is {} dir) {
                 songDirectory = new DirectoryInfo(dir);
             } else {
                 return null;
@@ -196,8 +231,10 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     }
 
     private void saveImage(byte[]? imageData) {
-        string filename = settings.albumArtFilename;
-        if (imageData != null) {
+        string? filename = settings.albumArtFilename;
+        if ((settings.preserveAlbumArtFileWhenNotPlaying && winampController.status != Status.Playing) || string.IsNullOrWhiteSpace(filename)) {
+            // #19: user wants to keep old album art while not playing
+        } else if (imageData != null) {
             File.WriteAllBytes(filename, imageData);
         } else {
             File.Delete(filename);
@@ -206,13 +243,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
 
     private void startOrStopTextRenderingTimer(Status? playbackStatus = null) {
         playbackStatus          ??= winampController.status;
-        renderTextTimer.Enabled =   playbackStatus == Status.Playing && textTemplateDependsOnTime;
-    }
-
-    public virtual void onQuit() {
-        renderTextTimer.Stop();
-        saveText(string.Empty);
-        saveImage(albumArtWhenStopped);
+        renderTextTimer.Enabled =   playbackStatus == Status.Playing && textTemplateDependsOnDynamicFields;
     }
 
     private static byte[]? getInstallationDirectoryImageOrFallback(string filename) {
@@ -221,6 +252,12 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         } catch (Exception) {
             return null;
         }
+    }
+
+    public virtual void onQuit() {
+        renderTextTimer.Stop();
+        update();
+        pluginManager.Dispose();
     }
 
 }
