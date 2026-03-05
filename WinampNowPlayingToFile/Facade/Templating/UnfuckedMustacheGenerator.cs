@@ -11,6 +11,8 @@ using System.Web;
 
 namespace WinampNowPlayingToFile.Facade.Templating;
 
+#pragma warning disable CS0067
+
 public interface UnfuckedGenerator {
 
     event EventHandler<UnfuckedKeyNotFoundEventArgs>? keyNotFound;
