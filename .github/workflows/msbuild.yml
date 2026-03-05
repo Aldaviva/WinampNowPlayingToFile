@@ -25,7 +25,7 @@ jobs:
         domain: ${{github.repository_owner}}
 
     - name: Restore
-      run: msbuild -t:restore -p:Configuration=Release -p:RestoreLockedMode=true -m
+      run: msbuild WinampNowPlayingToFile/WinampNowPlayingToFile.csproj -t:restore -p:Configuration=Release -p:RestoreLockedMode=true -m
 
     - name: Build
       run: |

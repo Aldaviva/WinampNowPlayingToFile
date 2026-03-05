@@ -1,21 +1,17 @@
-using Daniel15.Sharpamp;
 using System.Text.RegularExpressions;
+using WinampNowPlayingToFile.Data;
 
 namespace WinampNowPlayingToFile.Facade;
 
 internal static class Extensions {
 
-    extension(Song source) {
-
-        public Data.Song Abstract() => new() {
-            Artist   = source.Artist,
-            Album    = source.Album,
-            Title    = source.Title,
-            Year     = parseYear(source.Year),
-            Filename = source.Filename
-        };
-
-    }
+    public static Song Abstract(this Daniel15.Sharpamp.Song source) => new() {
+        Artist   = source.Artist,
+        Album    = source.Album,
+        Title    = source.Title,
+        Year     = parseYear(source.Year),
+        Filename = source.Filename
+    };
 
     private static int? parseYear(string rawYear) {
         if (int.TryParse(rawYear, out int year)) {
@@ -27,10 +23,6 @@ internal static class Extensions {
         }
     }
 
-    extension(Status source) {
-
-        public Data.Status Abstract() => (Data.Status) source;
-
-    }
+    public static Status Abstract(this Daniel15.Sharpamp.Status source) => (Status) source;
 
 }
