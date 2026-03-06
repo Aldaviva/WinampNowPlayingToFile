@@ -28,9 +28,9 @@
       },
       "WinampNowPlayingToFile.Abstractions": {
         "type": "Direct",
-        "requested": "[0.0.0, )",
-        "resolved": "0.0.0",
-        "contentHash": "yxkiYKPQSGbxfXz1l6evge3GGoG8WPt8qEhDEu2/cnGh6YWFe6p+RX0ufvH0yBTmIaTx7eT93D5H14om5s2/uQ=="
+        "requested": "[0.0.1, )",
+        "resolved": "0.0.1",
+        "contentHash": "VBzoCGE+b4ET40t+xEJx83vsO1h3RKkzA9U0r0xZiLroqNP7xPcqTAeexwqSml1nA8cd0Dr8ih7Ux/hqABGS6g=="
       }
     },
     ".NETFramework,Version=v4.7.2/win": {},
