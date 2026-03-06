@@ -3,7 +3,7 @@ using WinampNowPlayingToFile.Data;
 
 namespace WinampNowPlayingToFile.Plugins.ScreensaverChanger;
 
-public class ScreensaverChangerPlugin: WinampNowPlayingToFilePlugin, IDisposable {
+public class ScreensaverChangerPlugin: IWinampNowPlayingToFilePlugin, IDisposable {
 
     private static readonly string SYSTEM32 = Environment.ExpandEnvironmentVariables(@"%WINDIR%\system32");
 

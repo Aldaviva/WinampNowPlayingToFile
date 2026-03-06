@@ -1,9 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>0.0.0</Version>
+        <Version>0.0.1</Version>
         <AssemblyName>WinampNowPlayingToFile.$(MSBuildProjectName)</AssemblyName>
+        <RootNamespace>WinampNowPlayingToFile</RootNamespace>
         <Authors>Ben Hutchison</Authors>
         <Copyright>© 2026 $(Authors)</Copyright>
         <Company>$(Authors)</Company>
@@ -18,12 +19,17 @@
         <Description>Interfaces and other abstractions used to write plugins that extend the functionality of WinampNowPlayingToFile</Description>
         <PackageTags>WinampNowPlayingToFile plugin abstraction addin extension</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
         <IncludeSource>true</IncludeSource>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <RootNamespace>WinampNowPlayingToFile</RootNamespace>
-        <DevelopmentDependency>true</DevelopmentDependency>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="Readme.md;icon.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.103" PrivateAssets="All" />

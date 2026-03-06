@@ -1,5 +1,3 @@
-#nullable enable
-
 using WinampNowPlayingToFile.Data;
 
 namespace WinampNowPlayingToFile.Plugins;

@@ -1,7 +1,7 @@
-Winamp Now Playing to File
+<img src="WinampNowPlayingToFile/winampIcon.ico" height="24" alt="Winamp" /> Winamp Now Playing to File
 ===
 
-[![Download count](https://img.shields.io/github/downloads/Aldaviva/WinampNowPlayingToFile/total?logo=github)](https://github.com/Aldaviva/WinampNowPlayingToFile/releases) [![Build status](https://img.shields.io/github/actions/workflow/status/Aldaviva/WinampNowPlayingToFile/msbuild.yml?branch=master&logo=github)](https://github.com/Aldaviva/WinampNowPlayingToFile/actions/workflows/msbuild.yml) [![Test status](https://img.shields.io/testspace/tests/Aldaviva/Aldaviva:WinampNowPlayingToFile/master?passed_label=passing&failed_label=failing&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NTkgODYxIj48cGF0aCBkPSJtNTk4IDUxMy05NCA5NCAyOCAyNyA5NC05NC0yOC0yN3pNMzA2IDIyNmwtOTQgOTQgMjggMjggOTQtOTQtMjgtMjh6bS00NiAyODctMjcgMjcgOTQgOTQgMjctMjctOTQtOTR6bTI5My0yODctMjcgMjggOTQgOTQgMjctMjgtOTQtOTR6TTQzMiA4NjFjNDEuMzMgMCA3Ni44My0xNC42NyAxMDYuNS00NFM1ODMgNzUyIDU4MyA3MTBjMC00MS4zMy0xNC44My03Ni44My00NC41LTEwNi41UzQ3My4zMyA1NTkgNDMyIDU1OWMtNDIgMC03Ny42NyAxNC44My0xMDcgNDQuNXMtNDQgNjUuMTctNDQgMTA2LjVjMCA0MiAxNC42NyA3Ny42NyA0NCAxMDdzNjUgNDQgMTA3IDQ0em0wLTU1OWM0MS4zMyAwIDc2LjgzLTE0LjgzIDEwNi41LTQ0LjVTNTgzIDE5Mi4zMyA1ODMgMTUxYzAtNDItMTQuODMtNzcuNjctNDQuNS0xMDdTNDczLjMzIDAgNDMyIDBjLTQyIDAtNzcuNjcgMTQuNjctMTA3IDQ0cy00NCA2NS00NCAxMDdjMCA0MS4zMyAxNC42NyA3Ni44MyA0NCAxMDYuNVMzOTAgMzAyIDQzMiAzMDJ6bTI3NiAyODJjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjY3IDE0LjY3LTEwNiA0NHMtNDQgNjUtNDQgMTA3YzAgNDEuMzMgMTQuNjcgNzYuODMgNDQgMTA2LjVTNjY2LjY3IDU4NCA3MDggNTg0em0tNTU3IDBjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjgzIDE0LjY3LTEwNi41IDQ0UzAgMzkxIDAgNDMzYzAgNDEuMzMgMTQuODMgNzYuODMgNDQuNSAxMDYuNVMxMDkuNjcgNTg0IDE1MSA1ODR6IiBmaWxsPSIjZmZmIi8%2BPC9zdmc%2B)](https://aldaviva.testspace.com/spaces/206386) [![Coverage status](https://img.shields.io/coveralls/github/Aldaviva/WinampNowPlayingToFile?logo=coveralls)](https://coveralls.io/github/Aldaviva/WinampNowPlayingToFile?branch=master)
+[![Download count](https://img.shields.io/github/downloads/Aldaviva/WinampNowPlayingToFile/total?logo=github)](https://github.com/Aldaviva/WinampNowPlayingToFile/releases) [![Build status](https://img.shields.io/github/actions/workflow/status/Aldaviva/WinampNowPlayingToFile/msbuild.yml?branch=master&logo=github)](https://github.com/Aldaviva/WinampNowPlayingToFile/actions/workflows/msbuild.yml)<!-- [![Test status](https://img.shields.io/testspace/tests/Aldaviva/Aldaviva:WinampNowPlayingToFile/master?passed_label=passing&failed_label=failing&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NTkgODYxIj48cGF0aCBkPSJtNTk4IDUxMy05NCA5NCAyOCAyNyA5NC05NC0yOC0yN3pNMzA2IDIyNmwtOTQgOTQgMjggMjggOTQtOTQtMjgtMjh6bS00NiAyODctMjcgMjcgOTQgOTQgMjctMjctOTQtOTR6bTI5My0yODctMjcgMjggOTQgOTQgMjctMjgtOTQtOTR6TTQzMiA4NjFjNDEuMzMgMCA3Ni44My0xNC42NyAxMDYuNS00NFM1ODMgNzUyIDU4MyA3MTBjMC00MS4zMy0xNC44My03Ni44My00NC41LTEwNi41UzQ3My4zMyA1NTkgNDMyIDU1OWMtNDIgMC03Ny42NyAxNC44My0xMDcgNDQuNXMtNDQgNjUuMTctNDQgMTA2LjVjMCA0MiAxNC42NyA3Ny42NyA0NCAxMDdzNjUgNDQgMTA3IDQ0em0wLTU1OWM0MS4zMyAwIDc2LjgzLTE0LjgzIDEwNi41LTQ0LjVTNTgzIDE5Mi4zMyA1ODMgMTUxYzAtNDItMTQuODMtNzcuNjctNDQuNS0xMDdTNDczLjMzIDAgNDMyIDBjLTQyIDAtNzcuNjcgMTQuNjctMTA3IDQ0cy00NCA2NS00NCAxMDdjMCA0MS4zMyAxNC42NyA3Ni44MyA0NCAxMDYuNVMzOTAgMzAyIDQzMiAzMDJ6bTI3NiAyODJjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjY3IDE0LjY3LTEwNiA0NHMtNDQgNjUtNDQgMTA3YzAgNDEuMzMgMTQuNjcgNzYuODMgNDQgMTA2LjVTNjY2LjY3IDU4NCA3MDggNTg0em0tNTU3IDBjNDIgMCA3Ny42Ny0xNC44MyAxMDctNDQuNXM0NC02NS4xNyA0NC0xMDYuNWMwLTQyLTE0LjY3LTc3LjY3LTQ0LTEwN3MtNjUtNDQtMTA3LTQ0Yy00MS4zMyAwLTc2LjgzIDE0LjY3LTEwNi41IDQ0UzAgMzkxIDAgNDMzYzAgNDEuMzMgMTQuODMgNzYuODMgNDQuNSAxMDYuNVMxMDkuNjcgNTg0IDE1MSA1ODR6IiBmaWxsPSIjZmZmIi8%2BPC9zdmc%2B)](https://aldaviva.testspace.com/spaces/206386) [![Coverage status](https://img.shields.io/coveralls/github/Aldaviva/WinampNowPlayingToFile?logo=coveralls)](https://coveralls.io/github/Aldaviva/WinampNowPlayingToFile?branch=master)-->
 
 This is a plugin for [Winamp](https://winamp.com/player) that saves text information and album art for the currently playing song to files on your computer. You can customize where the files are saved, as well as the format of the text.
 
@@ -20,6 +20,7 @@ This is a plugin for [Winamp](https://winamp.com/player) that saves text informa
 - [Integration](#integration)
     - [OBS](#obs)
     - [Screensaver](#screensaver)
+    - [Custom callbacks](#custom-callbacks)
 - [Uninstallation](#uninstallation)
 
 <!-- /MarkdownTOC -->
@@ -230,6 +231,14 @@ When Winamp is paused, stopped, or closed, the image file will be deleted. You h
 1. Make the slideshow advance frequently ("fast," or closer to the 6 second end of the range) to reduce the latency between a new song playing and the screensaver rendering the new album art.
 1. Choose a duration for the screensaver to appear that is shorter than the durations for the screen to turn off and for the computer to enter standby or hibernation.
 
+### Custom callbacks
+
+If you want to trigger your own actions whenever the Winamp playback state or song changes, and you don't want to write a filesystem watcher for the generated text or image file, you can use or write a plugin that hooks into WinampNowPlayingToFile. This takes the form of a .NET DLL that implements an interface from a shared library and is saved to a specific folder.
+
+If you already have a plugin DLL file, you can move it to the directory `%ProgramFiles(x86)%\Winamp\plugins\WinampNowPlayingToFile\`, which you will have to create if it doesn't already exist, and assuming Winamp's default installation directory. Next, restart Winamp and the new plugin should be loaded.
+
+You can also [create your own plugin](https://github.com/Aldaviva/WinampNowPlayingToFile/wiki/Plugin-Authoring) if there isn't already one that does what you want.
+
 ## Uninstallation
 
 1. In Winamp's Preferences, go to Plug-ins › General Purpose.
@@ -239,6 +248,7 @@ When Winamp is paused, stopped, or closed, the image file will be deleted. You h
     ```
     📁 C:\Program Files (x86)\Winamp
     ├── 📁 plugins
+    │   ├── 📁 WinampNowPlayingToFile
     │   └── 📄 gen_WinampNowPlayingToFile.dll
     ├── 📄 Daniel15.Sharpamp.dll
     ├── 📄 mustache-sharp.dll
