@@ -19,10 +19,10 @@ jobs:
     - name: Clone
       uses: actions/checkout@v6
 
-    - name: Initialize test reporting
-      uses: testspace-com/setup-testspace@v1
-      with:
-        domain: ${{github.repository_owner}}
+    # - name: Initialize test reporting
+    #   uses: testspace-com/setup-testspace@v1
+    #   with:
+    #     domain: ${{github.repository_owner}}
 
     - name: Restore
       run: msbuild WinampNowPlayingToFile/WinampNowPlayingToFile.csproj -t:restore -p:Configuration=Release -p:RestoreLockedMode=true -m

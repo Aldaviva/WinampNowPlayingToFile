@@ -39,6 +39,8 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     private readonly  UnfuckedTemplateCompiler                      templateCompiler = new UnfuckedMustacheCompiler();
     internal readonly Timer                                         renderTextTimer  = new(1000);
     private readonly  List<UnfuckedGenerator?>                      cachedTemplates;
+    private readonly  List<object>                                  textFileLocks;
+    private readonly  object                                        imageFileLock = new();
     private readonly  IPluginManager<IWinampNowPlayingToFilePlugin> pluginManager = new PluginManager<IWinampNowPlayingToFilePlugin>("Plugins\\WinampNowPlayingToFile");
 
     private Song? previousSong;
@@ -60,7 +62,8 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         this.settings         = settings;
 
         cachedTemplates = new List<UnfuckedGenerator?>(settings.textFilenames.Count);
-        cachedTemplates.AddRange(Enumerable.Repeat<UnfuckedGenerator?>(null, cachedTemplates.Capacity));
+        cachedTemplates.AddRange(Enumerable.Repeat<UnfuckedGenerator?>(null, settings.textFilenames.Count));
+        textFileLocks = Enumerable.Repeat(new object(), settings.textFilenames.Count).ToList();
 
         templateCompiler.placeholderFound += (_, args) => {
             if (!textTemplateDependsOnDynamicFields && DYNAMIC_FIELD_NAMES.Contains(args.key.ToLowerInvariant())) {
@@ -78,20 +81,22 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
         };
 
         settings.settingsUpdated += delegate {
+            textTemplateDependsOnDynamicFields = false;
             int oldTemplateCount = cachedTemplates.Count;
             int newTemplateCount = settings.textTemplates.Count;
 
             if (oldTemplateCount > newTemplateCount) {
                 cachedTemplates.RemoveRange(newTemplateCount, oldTemplateCount - newTemplateCount);
+                textFileLocks.RemoveRange(newTemplateCount, oldTemplateCount - newTemplateCount);
             } else if (oldTemplateCount < newTemplateCount) {
                 cachedTemplates.AddRange(Enumerable.Repeat<UnfuckedGenerator?>(null, newTemplateCount - oldTemplateCount));
+                textFileLocks.AddRange(Enumerable.Repeat(new object(), newTemplateCount - oldTemplateCount));
             }
 
             for (int templateIndex = 0; templateIndex < newTemplateCount; templateIndex++) {
                 cachedTemplates[templateIndex] = null;
             }
 
-            textTemplateDependsOnDynamicFields = false;
             update();
         };
 
@@ -132,9 +137,11 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     }
 
     private void saveText(string nowPlayingText, int templateIndex) {
-        using Stream     stream = File.Open(settings.textFilenames[templateIndex], FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-        using TextWriter writer = new StreamWriter(stream, UTF8);
-        writer.Write(nowPlayingText);
+        lock (textFileLocks[templateIndex]) {
+            using Stream stream = File.Open(settings.textFilenames[templateIndex], FileMode.Create, FileAccess.Write, FileShare.ReadWrite); //FileShare.ReadWrite lets SettingsDialog validate writes
+            using TextWriter writer = new StreamWriter(stream, UTF8);
+            writer.Write(nowPlayingText);
+        }
     }
 
     private UnfuckedGenerator getTemplate(int templateIndex) {
@@ -231,13 +238,15 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     }
 
     private void saveImage(byte[]? imageData) {
-        string? filename = settings.albumArtFilename;
-        if ((settings.preserveAlbumArtFileWhenNotPlaying && winampController.status != Status.Playing) || string.IsNullOrWhiteSpace(filename)) {
-            // #19: user wants to keep old album art while not playing
-        } else if (imageData != null) {
-            File.WriteAllBytes(filename, imageData);
-        } else {
-            File.Delete(filename);
+        lock (imageFileLock) {
+            string? filename = settings.albumArtFilename;
+            if ((settings.preserveAlbumArtFileWhenNotPlaying && winampController.status != Status.Playing) || string.IsNullOrWhiteSpace(filename)) {
+                // #19: user wants to keep old album art while not playing
+            } else if (imageData != null) {
+                File.WriteAllBytes(filename, imageData);
+            } else {
+                File.Delete(filename);
+            }
         }
     }
 
