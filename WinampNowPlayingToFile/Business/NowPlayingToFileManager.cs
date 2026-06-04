@@ -41,7 +41,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     private readonly  List<UnfuckedGenerator?>                      cachedTemplates;
     private readonly  List<object>                                  textFileLocks;
     private readonly  object                                        imageFileLock = new();
-    private readonly  IPluginManager<IWinampNowPlayingToFilePlugin> pluginManager = new PluginManager<IWinampNowPlayingToFilePlugin>("Plugins\\WinampNowPlayingToFile");
+    private readonly  IPluginManager<IWinampNowPlayingToFilePlugin> pluginManager = new PluginManager<IWinampNowPlayingToFilePlugin>("Plugins\\WinampNowPlayingToFile", false);
 
     private Song? previousSong;
 
