@@ -60,7 +60,7 @@ jobs:
         move .\artifact\gen_WinampNowPlayingToFile.dll .\artifact\plugins\
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: WinampNowPlayingToFile
         path: .\artifact\

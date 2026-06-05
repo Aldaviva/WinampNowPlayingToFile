@@ -13,6 +13,6 @@ public interface IWinampNowPlayingToFilePlugin {
     /// </summary>
     /// <param name="currentSong">The song that is currently playing, or <c>null</c> if the playlist is empty.</param>
     /// <param name="playbackStatus">Whether Winamp is currently stopped, playing, or paused.</param>
-    void OnSongUpdated(Song? currentSong, Status playbackStatus);
+    void OnSongUpdated(Song? currentSong, Status playbackStatus, IReadOnlySettings settings);
 
 }

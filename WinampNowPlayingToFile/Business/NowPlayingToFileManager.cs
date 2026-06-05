@@ -119,7 +119,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
 
                     foreach (IWinampNowPlayingToFilePlugin plugin in pluginManager.Plugins) {
                         try {
-                            plugin.OnSongUpdated(currentSong, winampController.status);
+                            plugin.OnSongUpdated(currentSong, winampController.status, settings);
                         } catch (Exception e) when (e is not OutOfMemoryException) {
                             error?.Invoke(this, new NowPlayingException($"Exception notifying plugin {plugin.GetType().Name} about song", e, currentSong));
                         }
