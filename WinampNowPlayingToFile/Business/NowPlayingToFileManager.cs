@@ -132,7 +132,7 @@ public class NowPlayingToFileManager: INowPlayingToFileManager {
     }
 
     internal string renderText(Song currentSong, int templateIndex) {
-        Song? songToRender = winampController.status == Status.Playing || settings.preserveTextFileWhenNotPlaying ? currentSong is { Filename: not "" } ? currentSong : previousSong : null;
+        Song? songToRender = winampController.status == Status.Playing || settings.preserveTextFilesWhenNotPlaying ? currentSong is { Filename: not "" } ? currentSong : previousSong : null;
         return songToRender != null ? getTemplate(templateIndex).render(songToRender) : string.Empty;
     }
 

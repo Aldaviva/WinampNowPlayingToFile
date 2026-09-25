@@ -12,7 +12,7 @@ public abstract class BaseSettings: ISettings {
     public IList<string> textTemplates { get; } = [];
     public string? albumArtFilename { get; set; }
     public bool preserveAlbumArtFileWhenNotPlaying { get; set; }
-    public bool preserveTextFileWhenNotPlaying { get; set; }
+    public bool preserveTextFilesWhenNotPlaying { get; set; }
 
     public event EventHandler? settingsUpdated;
 
@@ -37,7 +37,7 @@ public abstract class BaseSettings: ISettings {
 
     public void load(ISettings source) {
         preserveAlbumArtFileWhenNotPlaying = source.preserveAlbumArtFileWhenNotPlaying;
-        preserveTextFileWhenNotPlaying     = source.preserveTextFileWhenNotPlaying;
+        preserveTextFilesWhenNotPlaying    = source.preserveTextFilesWhenNotPlaying;
         albumArtFilename                   = source.albumArtFilename;
         textFilenames.Clear();
         foreach (string textFilename in source.textFilenames) {

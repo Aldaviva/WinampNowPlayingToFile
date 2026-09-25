@@ -14,7 +14,7 @@ public class RegistrySettings: BaseSettings {
         if (key != null) {
             albumArtFilename                   = key.GetValue(nameof(albumArtFilename)) as string ?? albumArtFilename;
             preserveAlbumArtFileWhenNotPlaying = Convert.ToBoolean(key.GetValue(nameof(preserveAlbumArtFileWhenNotPlaying)) as int? ?? 0);
-            preserveTextFileWhenNotPlaying     = Convert.ToBoolean(key.GetValue(nameof(preserveTextFileWhenNotPlaying)) as int? ?? 0);
+            preserveTextFilesWhenNotPlaying    = Convert.ToBoolean(key.GetValue(nameof(preserveTextFilesWhenNotPlaying)) as int? ?? 0);
 
             for (int textIndex = 0;; textIndex++) {
                 string registryNameSuffix        = getTextRegistryNameSuffix(textIndex);
@@ -46,7 +46,7 @@ public class RegistrySettings: BaseSettings {
         if (key != null) {
             key.SetValue(nameof(albumArtFilename), albumArtFilename ?? string.Empty);
             key.SetValue(nameof(preserveAlbumArtFileWhenNotPlaying), Convert.ToInt32(preserveAlbumArtFileWhenNotPlaying), RegistryValueKind.DWord);
-            key.SetValue(nameof(preserveTextFileWhenNotPlaying), Convert.ToInt32(preserveTextFileWhenNotPlaying), RegistryValueKind.DWord);
+            key.SetValue(nameof(preserveTextFilesWhenNotPlaying), Convert.ToInt32(preserveTextFilesWhenNotPlaying), RegistryValueKind.DWord);
 
             int textFilenameIndex;
             for (textFilenameIndex = 0; textFilenameIndex < textFilenames.Count; textFilenameIndex++) {

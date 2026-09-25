@@ -93,7 +93,7 @@ public partial class SettingsDialog: Form {
         albumArtFilenameEditor.FileName         = workingSettings.albumArtFilename ?? string.Empty;
         albumArtFilename.Text                   = workingSettings.albumArtFilename ?? string.Empty;
 
-        preserveTextFileWhenNotPlaying.Checked = workingSettings.preserveTextFileWhenNotPlaying;
+        preserveTextFileWhenNotPlaying.Checked = workingSettings.preserveTextFilesWhenNotPlaying;
         preserveAlbumArtWhenNotPlaying.Checked = workingSettings.preserveAlbumArtFileWhenNotPlaying;
 
         foreach (string filename in workingSettings.textFilenames) {
@@ -327,7 +327,7 @@ public partial class SettingsDialog: Form {
             workingSettings.albumArtFilename                   = albumArtFilename.Text;
             workingSettings.textTemplates[textFileIndex]       = templateEditor.Text;
             workingSettings.preserveAlbumArtFileWhenNotPlaying = preserveAlbumArtWhenNotPlaying.Checked;
-            workingSettings.preserveTextFileWhenNotPlaying     = preserveTextFileWhenNotPlaying.Checked;
+            workingSettings.preserveTextFilesWhenNotPlaying    = preserveTextFileWhenNotPlaying.Checked;
         } catch (FormatException e) {
             MessageBox.Show($"Invalid template:\n\n{e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             throw;

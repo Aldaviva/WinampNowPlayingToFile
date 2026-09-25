@@ -15,7 +15,7 @@ public class ScreensaverChangerPlugin: IWinampNowPlayingToFilePlugin, IDisposabl
         setScreensaver(_wasPlaying == 1);
     }
 
-    public void OnSongUpdated(Song? currentSong, Status playbackStatus) {
+    public void OnSongUpdated(Song? currentSong, Status playbackStatus, IReadOnlySettings settings) {
         int newValue = playbackStatus == Status.Playing ? 1 : 0;
         if (newValue != Interlocked.Exchange(ref _wasPlaying, newValue)) {
             setScreensaver(newValue == 1);
